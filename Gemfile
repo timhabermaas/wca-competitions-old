@@ -30,9 +30,11 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
-group :development, :test do
+gem 'rspec-rails', :group => [:development, :test]
+
+group :test do
   gem 'turn', '0.8.2', :require => false
-  gem 'rspec-rails'
   gem 'shoulda'
   gem 'factory_girl_rails'
+  gem 'capybara'
 end
