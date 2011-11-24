@@ -4,7 +4,6 @@ class CreateCompetitions < ActiveRecord::Migration
       t.string :name, :null => false
       t.datetime :starts_at, :null => false
       t.datetime :ends_at, :null => false
-
       t.timestamps
     end
   end

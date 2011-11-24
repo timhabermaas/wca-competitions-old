@@ -8,4 +8,9 @@ FactoryGirl.define do
   factory :event do
     name "3x3x3"
   end
+
+  factory :news do
+    content "Sorry, we're closed, BITCHES! MUHAHAHAHA"
+    competition
+  end
 end
