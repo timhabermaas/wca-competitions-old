@@ -1,3 +1,5 @@
+require "spec_helper"
+
 describe "Competitions" do
   describe "GET /competitions" do
     before :each do
