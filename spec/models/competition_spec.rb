@@ -6,7 +6,7 @@ describe Competition do
     it { should validate_presence_of :starts_at }
     it { should validate_presence_of :ends_at }
 
-    it "should validate uniqueness of name" do
+    it "validates uniqueness of name" do
       c1 = create(:competition)
       c2 = build(:competition, :name => c1.name)
       c2.should_not be_valid
