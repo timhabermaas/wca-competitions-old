@@ -2,4 +2,21 @@ class CompetitionsController < ApplicationController
   def index
     @competitions = Competition.all
   end
+
+  def new
+    @competition = Competition.new
+  end
+
+  def create
+    @competition = Competition.new params[:competition]
+    if @competition.save
+      redirect_to @competition
+    else
+      render :new
+    end
+  end
+
+  def show
+    @competition = Competition.find params[:id]
+  end
 end

@@ -1,0 +1,17 @@
+<%= form_for @competition do |f| %>
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :starts_at %>
+    <%= f.date_select :starts_at %>
+  </p>
+  <p>
+    <%= f.label :ends_at %>
+    <%= f.date_select :ends_at %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
