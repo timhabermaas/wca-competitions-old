@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(:version => 20111124235206) do
     t.string   "name",       :null => false
     t.date     "starts_at",  :null => false
     t.date     "ends_at",    :null => false
+    t.integer  "user_id",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -30,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20111124235206) do
   create_table "news", :force => true do |t|
     t.text     "content",        :null => false
     t.integer  "competition_id", :null => false
+    t.integer  "user_id",        :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

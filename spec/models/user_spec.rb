@@ -17,5 +17,19 @@ describe User do
       user.should_not be_valid
       user.errors[:password].should_not be_empty
     end
+
+    it "validates uniqueness of name" do
+      u1 = create :user
+      u2 = build :user, :name => u1.name
+      u2.should_not be_valid
+      u2.errors[:name].should_not be_empty
+    end
+
+    it "validates uniqueness of email" do
+      u1 = create :user
+      u2 = build :user, :email => u1.email
+      u2.should_not be_valid
+      u2.errors[:email].should_not be_empty
+    end
   end
 end

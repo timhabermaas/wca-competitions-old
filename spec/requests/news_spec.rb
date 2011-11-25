@@ -14,9 +14,13 @@ describe "News" do
   end
 
   describe "POST /news" do
+    before :each do
+      @competition = create :competition
+      log_in
+    end
+
     it "creates a news entry for an existing competition" do
-      competition = create :competition
-      visit new_competition_news_path(competition)
+      visit new_competition_news_path(@competition)
       fill_in "Content", :with => "This competition sucks, just stay away! Seriously!"
       click_on "Create News"
       page.should have_content "Seriously!"

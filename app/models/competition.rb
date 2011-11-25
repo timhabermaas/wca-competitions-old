@@ -1,7 +1,10 @@
 class Competition < ActiveRecord::Base
-  has_many :news
+  attr_accessible :name, :starts_at, :ends_at
 
-  validates :name, :starts_at, :ends_at, :presence => true
+  has_many :news
+  belongs_to :user
+
+  validates :name, :starts_at, :ends_at, :user_id, :presence => true
   validates :name, :uniqueness => true
   validate :cannot_end_before_it_started
 

@@ -15,6 +15,10 @@ describe "Competitions" do
   end
 
   describe "POST /competitions" do
+    before :each do
+      log_in
+    end
+
     it "creates new competition" do
       visit new_competition_path
       fill_in "Name", :with => "Aachen Open 2012"
