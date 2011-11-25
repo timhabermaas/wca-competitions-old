@@ -13,4 +13,11 @@ FactoryGirl.define do
     content "Sorry, we're closed, BITCHES! MUHAHAHAHA"
     competition
   end
+
+  factory :user do
+    name "user"
+    email "foo@bar.com"
+    password "secret"
+    password_confirmation "secret"
+  end
 end
