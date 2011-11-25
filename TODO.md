@@ -4,5 +4,3 @@
 
 Tests
 =====
-
-* validate uniqueness of
