@@ -11,13 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111124235206) do
+ActiveRecord::Schema.define(:version => 20111129014523) do
 
   create_table "competitions", :force => true do |t|
     t.string   "name",       :null => false
     t.date     "starts_at",  :null => false
     t.date     "ends_at",    :null => false
     t.integer  "user_id",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "competitors", :force => true do |t|
+    t.string   "first_name",    :null => false
+    t.string   "last_name"
+    t.string   "wca_id"
+    t.date     "date_of_birth", :null => false
+    t.string   "gender",        :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

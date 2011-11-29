@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 FactoryGirl.define do
   factory :competition do
     sequence :name do |n|
@@ -27,5 +29,17 @@ FactoryGirl.define do
     end
     password "secret"
     password_confirmation "secret"
+  end
+
+  factory :competitor do
+    sequence :first_name do |n|
+      "Peter#{n}"
+    end
+    sequence :last_name do |n|
+      "Müller#{n}"
+    end
+    wca_id "2008MUEL01"
+    date_of_birth Date.new(1981, 4, 21)
+    gender "m"
   end
 end
