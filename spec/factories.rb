@@ -38,8 +38,10 @@ FactoryGirl.define do
     sequence :last_name do |n|
       "Müller#{n}"
     end
-    wca_id "2008MUEL01"
     date_of_birth Date.new(1981, 4, 21)
     gender "m"
+    factory :competitor_with_wca_id do
+      wca_id "2008MUEL01"
+    end
   end
 end

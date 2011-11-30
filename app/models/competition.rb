@@ -2,6 +2,8 @@ class Competition < ActiveRecord::Base
   attr_accessible :name, :starts_at, :ends_at
 
   has_many :news
+  has_many :registrations
+  has_many :competitors, :through => :registrations
   belongs_to :user
 
   validates :name, :starts_at, :ends_at, :user_id, :presence => true

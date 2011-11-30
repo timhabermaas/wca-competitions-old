@@ -1,0 +1,10 @@
+<table>
+  <thead></thead>
+  <tbody>
+    <% @competitors.each do |competitor| %>
+      <tr>
+        <td><%= link_to_if competitor.wca_id, competitor.full_name, wca(competitor.wca_id) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

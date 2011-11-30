@@ -1,0 +1,27 @@
+<%= form_for [@competition, @registration] do |f| %>
+  <%= f.fields_for :competitor_attributes, @registration.competitor do |competitor_form| %>
+    <p>
+      <%= competitor_form.label :first_name %>
+      <%= competitor_form.text_field :first_name %>
+    </p>
+    <p>
+      <%= competitor_form.label :last_name %>
+      <%= competitor_form.text_field :last_name %>
+    </p>
+    <p>
+      <%= competitor_form.label :gender %>
+      <%= competitor_form.select :gender, [["male", "m"], ["female", "f"]] %>
+    </p>
+    <p>
+      <%= competitor_form.label :date_of_birth %>
+      <%= competitor_form.date_select :date_of_birth, :start_year => Time.now.year - 120, :end_year => Time.now.year %>
+    </p>
+  <% end %>
+  <p>
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.submit "Register" %>
+  </p>
+<% end %>
