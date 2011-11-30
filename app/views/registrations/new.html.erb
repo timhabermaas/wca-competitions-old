@@ -1,6 +1,10 @@
 <%= form_for [@competition, @registration] do |f| %>
   <%= f.fields_for :competitor_attributes, @registration.competitor do |competitor_form| %>
     <p>
+      <%= competitor_form.label :wca_id, "WCA ID" %>
+      <%= competitor_form.text_field :wca_id %>
+    </p>
+    <p>
       <%= competitor_form.label :first_name %>
       <%= competitor_form.text_field :first_name %>
     </p>
