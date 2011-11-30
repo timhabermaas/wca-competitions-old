@@ -44,4 +44,10 @@ FactoryGirl.define do
       wca_id "2008MUEL01"
     end
   end
+
+  factory :registration do
+    competition
+    competitor
+    email "muh@cow.com"
+  end
 end
