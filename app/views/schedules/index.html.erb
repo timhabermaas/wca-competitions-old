@@ -1,0 +1,17 @@
+<div id="schedule">
+  <% @competition.days.times do |day| %>
+    <table class="day<%= day %>">
+      <thead>
+      </thead>
+      <tbody>
+        <% @schedules[day].each do |schedule| %>
+          <tr>
+            <td><%= schedule.starts_at %></td>
+            <td><%= schedule.ends_at %></td>
+            <td><%= schedule.event.name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

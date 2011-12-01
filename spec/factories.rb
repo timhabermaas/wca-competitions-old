@@ -11,7 +11,17 @@ FactoryGirl.define do
   end
 
   factory :event do
-    name "3x3x3"
+    sequence :name do |n|
+      "#{n}x#{n}x#{n}"
+    end
+  end
+
+  factory :schedule do
+    event
+    competition
+    starts_at Time.utc(2010, 1, 1, 13, 0)
+    ends_at Time.utc(2010, 1, 1, 13, 30)
+    day 0
   end
 
   factory :news do

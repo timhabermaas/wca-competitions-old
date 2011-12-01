@@ -6,6 +6,7 @@ WCACompetitions::Application.routes.draw do
   resources :competitions do
     resources :news
     resources :registrations
+    resources :schedules
   end
   resources :events
 
