@@ -22,4 +22,11 @@ describe Competition do
       competition.should be_valid
     end
   end
+
+  it "knows how many days it lasts" do
+    competition = Competition.new :starts_at => Date.new(2011, 1, 1), :ends_at => Date.new(2011, 1, 4)
+    competition.days.should == 4
+    competition = Competition.new :starts_at => Date.new(2011, 1, 31), :ends_at => Date.new(2011, 2, 1)
+    competition.days.should == 2
+  end
 end

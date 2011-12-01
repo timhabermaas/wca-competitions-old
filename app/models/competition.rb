@@ -10,6 +10,10 @@ class Competition < ActiveRecord::Base
   validates :name, :uniqueness => true
   validate :cannot_end_before_it_started
 
+  def days
+    (ends_at - starts_at).to_i + 1
+  end
+
   private
   def cannot_end_before_it_started
     unless starts_at.nil? or ends_at.nil?
