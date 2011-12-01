@@ -10,8 +10,8 @@ module Capybara
         select date.day.to_s, :from => "#{from}_3i"
       end
       if date.is_a? DateTime or date.is_a? Time
-        select date.minute.to_s, :from => "#{from}_4i"
-        select date.second, :from => "#{from}_5i"
+        select date.hour.to_s, :from => "#{from}_4i"
+        select date.min.to_s, :from => "#{from}_5i"
       end
     end
   end
