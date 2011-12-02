@@ -29,4 +29,10 @@ describe Schedule do
       schedule.should be_valid
     end
   end
+
+  it "ignores the year, month and day of the time attribute when sorting" do
+    schedule1 = create :schedule, :starts_at => Time.new(2011, 12, 1, 13, 0), :ends_at => Time.new(2011, 12, 1, 14, 0)
+    schedule2 = create :schedule, :starts_at => Time.new(2011, 11, 1, 14, 0), :ends_at => Time.new(2011, 11, 1, 14, 30)
+    Schedule.order("starts_at").first.should == schedule1
+  end
 end
