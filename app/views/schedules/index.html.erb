@@ -1,13 +1,14 @@
 <div id="schedule">
   <% @competition.days.times do |day| %>
+    <h3><%=l @competition.starts_at + day.days, :format => :descriptive %></h3>
     <table class="day<%= day %>">
       <thead>
       </thead>
       <tbody>
         <% @schedules[day].each do |schedule| %>
           <tr>
-            <td><%= schedule.starts_at %></td>
-            <td><%= schedule.ends_at %></td>
+            <td><%=l schedule.starts_at, :format => :time %></td>
+            <td><%=l(schedule.ends_at, :format => :time) unless schedule.ends_at.nil? %></td>
             <td><%= schedule.event.name %></td>
           </tr>
         <% end %>
