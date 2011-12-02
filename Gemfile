@@ -40,6 +40,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'launchy'
+  gem 'spork', '~> 0.9.0.rc'
 end
 
 # JavaScript engine
