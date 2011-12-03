@@ -5,6 +5,7 @@ class Competition < ActiveRecord::Base
   has_many :registrations
   has_many :competitors, :through => :registrations
   has_many :schedules
+  has_many :events, :through => :schedules, :uniq => true
   belongs_to :user
 
   validates :name, :starts_at, :ends_at, :user_id, :presence => true

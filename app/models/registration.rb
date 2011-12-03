@@ -1,6 +1,7 @@
 class Registration < ActiveRecord::Base
   belongs_to :competitor#, :inverse_of => :registrations
   belongs_to :competition
+  has_and_belongs_to_many :events
 
   validates :competitor, :competition_id, :email, :presence => true
   validates :competitor_id, :uniqueness => { :scope => :competition_id }

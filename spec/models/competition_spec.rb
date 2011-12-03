@@ -29,4 +29,16 @@ describe Competition do
     competition = Competition.new :starts_at => Date.new(2011, 1, 31), :ends_at => Date.new(2011, 2, 1)
     competition.days.should == 2
   end
+
+  it "knows all available events" do
+    competition = create :competition
+    three = create(:event, :name => "3x3x3")
+    four = create(:event, :name => "4x4x4")
+    create :schedule, :competition => competition, :event => three
+    create :schedule, :competition => competition, :event => three
+    create :schedule, :competition => competition, :event => four
+    competition.events.should have(2).items
+    competition.events.should include(three)
+    competition.events.should include(four)
+  end
 end
