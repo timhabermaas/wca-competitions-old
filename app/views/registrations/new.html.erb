@@ -22,9 +22,13 @@
     </p>
   <% end %>
 
-  <% @competition.events.each do |event| %>
-    <%= label_tag "registration_event_ids_#{event.id}", event.name %>
-    <%= check_box_tag "registration[event_ids][]", event.id, false, :id => "registration_event_ids_#{event.id}" %>
+  <% @competition.days.times do |day| %>
+    <div class="day<%= day %>">
+      <% @competition.events.for(day).each do |event| %>
+        <%= label_tag "registration_event_ids_#{event.id}", event.name %>
+        <%= check_box_tag "registration[event_ids][]", event.id, false, :id => "registration_event_ids_#{event.id}" %>
+      <% end %>
+    </div>
   <% end %>
 
   <p>

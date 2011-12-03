@@ -8,6 +8,7 @@ describe "Registrations" do
     @three = create :event, :name => "3x3x3"
     @four = create :event, :name => "4x4x4"
     @pyraminx = create :event, :name => "Pyraminx"
+    @megaminx = create :event, :name => "Megaminx"
   end
 
   describe "GET /registrations" do
@@ -53,20 +54,27 @@ describe "Registrations" do
     it "registers Peter for 3x3x3 and 4x4x4" do
       create :schedule, :event => @three, :competition => @competition, :day => 0
       create :schedule, :event => @four, :competition => @competition, :day => 0
+      create :schedule, :event => @pyraminx, :competition => @competition, :day => 1
 
       visit new_competition_registration_path(@competition)
       fill_in "First name", :with => "Peter"
       fill_in "Last name", :with => "Mustermann"
       fill_in "Email", :with => "peter@mustermann.de"
       fill_in "WCA ID", :with => "2010ERTZ01"
-      check "3x3x3"
-      check "4x4x4"
+      within(".day0") do
+        check "3x3x3"
+        check "4x4x4"
+      end
+      within(".day1") do
+        check "Pyraminx"
+      end
       click_on "Register"
       page.should have_content("Peter Mustermann")
 
       @competition.registrations.first.events.should include(@three)
       @competition.registrations.first.events.should include(@four)
-      @competition.registrations.first.events.should_not include(@pyraminx)
+      @competition.registrations.first.events.should include(@pyraminx)
+      @competition.registrations.first.events.should_not include(@megaminx)
     end
   end
 end
