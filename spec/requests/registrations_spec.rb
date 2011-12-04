@@ -4,7 +4,7 @@ require "spec_helper"
 
 describe "Registrations" do
   before :each do
-    @competition = create :competition, :name => "Munich Open 2011"
+    @competition = create :competition, :name => "Munich Open 2011", :starts_at => Date.new(2011, 11, 26), :ends_at => Date.new(2011, 11, 27)
     @three = create :event, :name => "3x3x3"
     @four = create :event, :name => "4x4x4"
     @pyraminx = create :event, :name => "Pyraminx"
@@ -75,6 +75,19 @@ describe "Registrations" do
       @competition.registrations.first.events.should include(@four)
       @competition.registrations.first.events.should include(@pyraminx)
       @competition.registrations.first.events.should_not include(@megaminx)
+    end
+
+    it "registers Peter for Sunday only" do
+      visit new_competition_registration_path(@competition)
+
+      fill_in "First name", :with => "Peter"
+      fill_in "Last name", :with => "Mustermann"
+      fill_in "Email", :with => "peter@mustermann.de"
+      check "Sunday"
+      click_on "Register"
+
+      page.should have_content("Peter Mustermann")
+      @competition.registrations.first.days.should == [1]
     end
   end
 end

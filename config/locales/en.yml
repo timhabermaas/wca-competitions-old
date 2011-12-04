@@ -5,6 +5,7 @@ en:
   date:
     formats:
       descriptive: "%A, %B %d, %Y"
+      day: "%A"
   time:
     formats:
       time: "%H:%M"

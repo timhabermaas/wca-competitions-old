@@ -3,12 +3,18 @@ class Registration < ActiveRecord::Base
   belongs_to :competition
   has_and_belongs_to_many :events
 
+  serialize :days
+
   validates :competitor, :competition_id, :email, :presence => true
   validates :competitor_id, :uniqueness => { :scope => :competition_id }
 
   accepts_nested_attributes_for :competitor
 
   before_validation :fetch_competitor
+
+  def days=(days)
+    write_attribute :days, days.map(&:to_i)
+  end
 
   private
   def fetch_competitor

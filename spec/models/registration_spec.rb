@@ -27,4 +27,9 @@ describe Registration do
     }.should_not change(Competitor, :count)
     registration.competitor.should == @competitor
   end
+
+  it "converts an array of strings for days attribute to an array of integers" do
+    registration = build :registration, :days => ["1", "2"]
+    registration.days.should == [1, 2]
+  end
 end
