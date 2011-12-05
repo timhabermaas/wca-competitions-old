@@ -1,7 +1,3 @@
-<% [:notice, :alert, :error].each do |kind| %>
-  <% if flash[kind] %>
-    <p id="flash" class="<%= kind %>">
-      <%= flash[kind] %>
-    </p>
-  <% end %>
+<% flash.each do |name, msg| %>
+  <%= content_tag :div, msg, :id => "flash_#{msg}" %>
 <% end %>
