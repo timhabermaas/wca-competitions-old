@@ -7,10 +7,12 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= render "layouts/header" %>
-<%= render "layouts/notice" %>
-<%= yield %>
-
+  <div id="container">
+    <%= render "layouts/header" %>
+    <%= render "layouts/notice" %>
+    <div id="content">
+      <%= content_for?(:content) ? yield(:content) : yield %>
+    </div>
+  </div>
 </body>
 </html>

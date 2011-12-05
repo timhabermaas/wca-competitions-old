@@ -9,7 +9,9 @@ describe "News" do
 
     it "displays the latest news" do
       visit competition_path(@competition)
-      page.should have_content("huhu")
+      within "#news" do
+        page.should have_content("huhu")
+      end
     end
   end
 

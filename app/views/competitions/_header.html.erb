@@ -1,0 +1,11 @@
+<header>
+  <h1><%= @competition.name %></h1>
+  <nav>
+    <ul>
+      <li><%= link_to "Informationen", @competition %></li>
+      <li><%= link_to "Teilnehmer", competition_registrations_path(@competition) %></li>
+      <li><%= link_to "Zeitplan", competition_schedules_path(@competition) %></li>
+      <li><%= link_to "Impressum (screw this!)", @competition %></li>
+    </ul>
+  </nav>
+</header>

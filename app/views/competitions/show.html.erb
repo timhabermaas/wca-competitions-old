@@ -1,7 +1,9 @@
-<h1><%= @competition.name %></h1>
-<h2>News</h2>
-<ul>
-  <% @competition.news.each do |news| %>
-    <li><%= news.content %></li>
-  <% end %>
-</ul>
+<%= render "header" %>
+<section id="news">
+  <h2>News</h2>
+  <ul>
+    <% @competition.news.each do |news| %>
+      <li><%= news.content %></li>
+    <% end %>
+  </ul>
+</section>
