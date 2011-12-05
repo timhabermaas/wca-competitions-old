@@ -1,0 +1,7 @@
+<% [:notice, :alert, :error].each do |kind| %>
+  <% if flash[kind] %>
+    <p id="flash" class="<%= kind %>">
+      <%= flash[kind] %>
+    </p>
+  <% end %>
+<% end %>
