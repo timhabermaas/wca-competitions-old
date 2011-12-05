@@ -32,6 +32,7 @@ describe "Registrations" do
       visit new_competition_registration_path(@competition)
       fill_in "First name", :with => "Peter"
       fill_in "Last name", :with => "Mustermann"
+      choose("male")
       fill_in "Email", :with => "peter@mustermann.de"
       click_on "Register"
       page.should have_content("Successfully registered")
@@ -43,6 +44,7 @@ describe "Registrations" do
       visit new_competition_registration_path(@competition)
       fill_in "First name", :with => "Dieter"
       fill_in "Last name", :with => "Müller"
+      choose("male")
       fill_in "Email", :with => "peter@mustermann.de"
       fill_in "WCA ID", :with => "2008MULL01"
       click_on "Register"
@@ -61,6 +63,7 @@ describe "Registrations" do
       fill_in "Last name", :with => "Mustermann"
       fill_in "Email", :with => "peter@mustermann.de"
       fill_in "WCA ID", :with => "2010ERTZ01"
+      choose("male")
       within(".day0") do
         check "3x3x3"
         check "4x4x4"
@@ -82,6 +85,7 @@ describe "Registrations" do
 
       fill_in "First name", :with => "Peter"
       fill_in "Last name", :with => "Mustermann"
+      choose("male")
       fill_in "Email", :with => "peter@mustermann.de"
       check "Sunday"
       click_on "Register"

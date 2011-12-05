@@ -1,21 +1,7 @@
-<%= form_for [@competition, @schedule] do |f| %>
-  <p>
-    <%= f.label :event_id, "Event" %>
-    <%= f.select :event_id, Event.all.collect { |e| [e.name, e.id] } %>
-  </p>
-  <p>
-    <%= f.label :day %>
-    <%= f.select :day, 0..(@competition.days-1) %>
-  </p>
-  <p>
-    <%= f.label :starts_at %>
-    <%= f.time_select :starts_at %>
-  </p>
-  <p>
-    <%= f.label :ends_at %>
-    <%= f.time_select :ends_at, :include_blank => true %>
-  </p>
-  <p>
-    <%= f.submit %>
-  </p>
+<%= simple_form_for [@competition, @schedule] do |f| %>
+  <%= f.association :event, :include_blank => false %>
+  <%= f.input :day, :collection => 0..(@competition.days - 1), :include_blank => false %>
+  <%= f.input :starts_at %>
+  <%= f.input :ends_at, :include_blank => true %>
+  <%= f.button :submit %>
 <% end %>

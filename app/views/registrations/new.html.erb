@@ -1,43 +1,27 @@
-<%= form_for [@competition, @registration] do |f| %>
-  <%= f.fields_for :competitor_attributes, @registration.competitor do |competitor_form| %>
-    <p>
-      <%= competitor_form.label :wca_id, "WCA ID" %>
-      <%= competitor_form.text_field :wca_id %>
-    </p>
-    <p>
-      <%= competitor_form.label :first_name %>
-      <%= competitor_form.text_field :first_name %>
-    </p>
-    <p>
-      <%= competitor_form.label :last_name %>
-      <%= competitor_form.text_field :last_name %>
-    </p>
-    <p>
-      <%= competitor_form.label :gender %>
-      <%= competitor_form.select :gender, [["male", "m"], ["female", "f"]] %>
-    </p>
-    <p>
-      <%= competitor_form.label :date_of_birth %>
-      <%= competitor_form.date_select :date_of_birth, :start_year => Time.now.year - 120, :end_year => Time.now.year %>
-    </p>
+<%= simple_form_for [@competition, @registration] do |f| %>
+  <%= f.simple_fields_for :competitor_attributes, @registration.competitor do |competitor_form| %>
+    <%= competitor_form.input :wca_id, :label => "WCA ID" %>
+    <%= competitor_form.input :first_name %>
+    <%= competitor_form.input :last_name %>
+    <%= competitor_form.input :gender, :collection => [["Male", "m"], ["Female", "f"]], :as => :radio, :include_blank => false %>
+    <%= competitor_form.input :date_of_birth, :as => :date, :start_year => Date.today.year - 120, :end_year => Date.today.year %>
   <% end %>
 
   <% @competition.days.times do |day| %>
     <div class="day<%= day %>">
-      <%= label_tag "registration_days_#{day}", l(@competition.starts_at + day.days, :format => :day) %>
-      <%= check_box_tag "registration[days][]", day, false, :id => "registration_days_#{day}" %>
+      <p>
+        <%= label_tag "registration_days_#{day}", l(@competition.starts_at + day.days, :format => :day) %>
+        <%= check_box_tag "registration[days][]", day, false, :id => "registration_days_#{day}" %>
+      </p>
       <% @competition.events.for(day).each do |event| %>
-        <%= label_tag "registration_event_ids_#{event.id}", event.name %>
-        <%= check_box_tag "registration[event_ids][]", event.id, false, :id => "registration_event_ids_#{event.id}" %>
+        <p>
+          <%= label_tag "registration_event_ids_#{event.id}", event.name %>
+          <%= check_box_tag "registration[event_ids][]", event.id, false, :id => "registration_event_ids_#{event.id}" %>
+        </p>
       <% end %>
     </div>
   <% end %>
 
-  <p>
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-  </p>
-  <p>
-    <%= f.submit "Register" %>
-  </p>
+  <%= f.input :email %>
+  <%= f.submit "Register" %>
 <% end %>
