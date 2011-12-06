@@ -4,6 +4,8 @@ describe Registration do
   before :each do
     @competition = create :competition
     @competitor = create :competitor, :wca_id => "2008MUHA01"
+    @schedule = create :schedule, :competition => @competition, :day => 0
+    @schedule2 = create :schedule, :competition => @competition, :day => 1
   end
 
   describe "validations" do
@@ -16,6 +18,11 @@ describe Registration do
       reg = build :registration, :competition_id => @competition.id, :competitor_id => @competitor.id
       reg.should_not be_valid
       reg.errors[:competitor_id].should_not be_empty
+    end
+
+    it "it sets days to 1 if user is registered for events on day 1" do
+      registration = create :registration, :competition => @competition, :competitor => @competitor, :schedules => [@schedule2]
+      registration.days.should == [1]
     end
   end
 
@@ -31,5 +38,18 @@ describe Registration do
   it "converts an array of strings for days attribute to an array of integers" do
     registration = build :registration, :days => ["1", "2"]
     registration.days.should == [1, 2]
+  end
+
+  it "is guest if the competitor doesn't compete in any events" do
+    registration = build :registration, :days => [0, 1], :schedules => [@schedule]
+    registration.should_not be_guest
+    registration.schedules = []
+    registration.should be_guest
+  end
+
+  it "is guest on day 0, if he doesn't compete in anything on day 0" do
+    registration = build :registration, :days => [0, 1], :schedules => [@schedule2]
+    registration.guest_on?(0).should be_true
+    registration.guest_on?(1).should be_false
   end
 end

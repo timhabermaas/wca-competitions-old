@@ -4,12 +4,12 @@ class Competition < ActiveRecord::Base
   has_many :news
   has_many :registrations
   has_many :competitors, :through => :registrations
-  has_many :schedules
-  has_many :events, :through => :schedules, :uniq => true do
+  has_many :schedules do
     def for(day)
-      where("schedules.day" => day).uniq
+      where("schedules.day" => day)
     end
   end
+  has_many :events, :through => :schedules, :uniq => true
   belongs_to :user
 
   validates :name, :starts_at, :ends_at, :user_id, :presence => true

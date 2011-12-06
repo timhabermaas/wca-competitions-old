@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111203155620) do
+ActiveRecord::Schema.define(:version => 20111206031303) do
 
   create_table "competitions", :force => true do |t|
     t.string   "name",       :null => false
@@ -38,13 +38,6 @@ ActiveRecord::Schema.define(:version => 20111203155620) do
     t.datetime "updated_at"
   end
 
-  create_table "events_registrations", :force => true do |t|
-    t.integer  "event_id",        :null => false
-    t.integer  "registration_id", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "news", :force => true do |t|
     t.text     "content",        :null => false
     t.integer  "competition_id", :null => false
@@ -62,14 +55,22 @@ ActiveRecord::Schema.define(:version => 20111203155620) do
     t.datetime "updated_at"
   end
 
-  create_table "schedules", :force => true do |t|
-    t.integer  "event_id",       :null => false
-    t.integer  "competition_id", :null => false
-    t.time     "starts_at"
-    t.time     "ends_at"
-    t.integer  "day",            :null => false
+  create_table "registrations_schedules", :force => true do |t|
+    t.integer  "schedule_id",     :null => false
+    t.integer  "registration_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "schedules", :force => true do |t|
+    t.integer  "event_id",                          :null => false
+    t.integer  "competition_id",                    :null => false
+    t.time     "starts_at"
+    t.time     "ends_at"
+    t.integer  "day",                               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "registerable",   :default => false, :null => false
   end
 
   create_table "users", :force => true do |t|

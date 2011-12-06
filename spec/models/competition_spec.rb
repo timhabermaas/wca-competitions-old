@@ -30,15 +30,15 @@ describe Competition do
     competition.days.should == 2
   end
 
-  it "knows all available events for each day" do
+  it "knows all available schedules for each day" do
     competition = create :competition
     three = create(:event, :name => "3x3x3")
     four = create(:event, :name => "4x4x4")
-    create :schedule, :competition => competition, :event => three, :day => 0
-    create :schedule, :competition => competition, :event => three, :day => 0
-    create :schedule, :competition => competition, :event => four, :day => 1
-    competition.events.for(0).should have(1).item
-    competition.events.for(0).should include(three)
-    competition.events.for(1).should include(four)
+    s1 = create :schedule, :competition => competition, :event => three, :day => 0
+    s2 = create :schedule, :competition => competition, :event => three, :day => 0
+    s3 = create :schedule, :competition => competition, :event => four, :day => 1
+    competition.schedules.for(0).should include(s1)
+    competition.schedules.for(0).should include(s2)
+    competition.schedules.for(1).should include(s3)
   end
 end

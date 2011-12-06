@@ -28,6 +28,14 @@ describe "Registrations" do
   end
 
   describe "POST /registrations" do
+    before :each do
+      @s1 = create :schedule, :event => @three, :competition => @competition, :day => 0, :registerable => true
+      @s2 = create :schedule, :event => @four, :competition => @competition, :day => 0, :registerable => true
+      @s3 = create :schedule, :event => @pyraminx, :competition => @competition, :day => 1, :registerable => true
+      @s4 = create :schedule, :event => @megaminx, :competition => @competition, :day => 1, :registerable => true
+      @lunch = create :schedule, :competition => @competition, :day => 1, :registerable => false
+    end
+
     def fill_in_with_peter
       fill_in "First name", :with => "Peter"
       fill_in "Last name", :with => "Mustermann"
@@ -55,10 +63,6 @@ describe "Registrations" do
     end
 
     it "registers Peter for 3x3x3 and 4x4x4" do
-      create :schedule, :event => @three, :competition => @competition, :day => 0
-      create :schedule, :event => @four, :competition => @competition, :day => 0
-      create :schedule, :event => @pyraminx, :competition => @competition, :day => 1
-
       visit new_competition_registration_path(@competition)
       fill_in_with_peter
       within(".day0") do
@@ -71,21 +75,28 @@ describe "Registrations" do
       click_on "Register"
       page.should have_content("Peter Mustermann")
 
-      @competition.registrations.first.events.should include(@three)
-      @competition.registrations.first.events.should include(@four)
-      @competition.registrations.first.events.should include(@pyraminx)
-      @competition.registrations.first.events.should_not include(@megaminx)
+      @competition.registrations.first.schedules.should include(@s1)
+      @competition.registrations.first.schedules.should include(@s2)
+      @competition.registrations.first.schedules.should include(@s3)
+      @competition.registrations.first.schedules.should_not include(@s4)
     end
 
     it "registers Peter for Sunday only" do
       visit new_competition_registration_path(@competition)
 
       fill_in_with_peter
-      check "Sunday"
+      check "Guest on Sunday"
       click_on "Register"
 
       page.should have_content("Peter Mustermann")
       @competition.registrations.first.days.should == [1]
+      @competition.registrations.first.should be_guest
+    end
+
+    it "doesn't show events which aren't available for registration" do
+      visit new_competition_registration_path(@competition)
+
+      page.should_not have_content(@lunch.event.name)
     end
   end
 end

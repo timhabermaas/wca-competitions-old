@@ -1,7 +1,8 @@
 class Registration < ActiveRecord::Base
   belongs_to :competitor#, :inverse_of => :registrations
   belongs_to :competition
-  has_and_belongs_to_many :events
+  has_many :registration_schedules
+  has_many :schedules, :through => :registration_schedules
 
   serialize :days
 
@@ -14,6 +15,14 @@ class Registration < ActiveRecord::Base
 
   def days=(days)
     write_attribute :days, days.map(&:to_i)
+  end
+
+  def guest?
+    schedules.empty?
+  end
+
+  def guest_on?(day)
+    !schedules.any? { |s| s.day == day }
   end
 
   private
