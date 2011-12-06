@@ -28,28 +28,29 @@ describe "Registrations" do
   end
 
   describe "POST /registrations" do
-    it "registers Peter at the Competition" do
-      visit new_competition_registration_path(@competition)
+    def fill_in_with_peter
       fill_in "First name", :with => "Peter"
       fill_in "Last name", :with => "Mustermann"
       choose("male")
       fill_in "Email", :with => "peter@mustermann.de"
+    end
+
+    it "registers Peter at the Competition" do
+      visit new_competition_registration_path(@competition)
+      fill_in_with_peter
       click_on "Register"
       page.should have_content("Successfully registered")
       page.should have_content("Peter Mustermann")
     end
 
     it "doesn't create a new competitor if his WCA ID already exists" do
-      create :competitor, :first_name => "Dieter", :last_name => "Müller", :wca_id => "2008MULL01"
+      create :competitor, :first_name => "Peter", :last_name => "Mustermann", :wca_id => "2008MUST01"
       visit new_competition_registration_path(@competition)
-      fill_in "First name", :with => "Dieter"
-      fill_in "Last name", :with => "Müller"
-      choose("male")
-      fill_in "Email", :with => "peter@mustermann.de"
-      fill_in "WCA ID", :with => "2008MULL01"
+      fill_in_with_peter
+      fill_in "WCA ID", :with => "2008MUST01"
       click_on "Register"
       page.should have_content("Successfully registered")
-      page.should have_content("Dieter Müller")
+      page.should have_content("Peter Mustermann")
       Competitor.count.should == 1
     end
 
@@ -59,11 +60,7 @@ describe "Registrations" do
       create :schedule, :event => @pyraminx, :competition => @competition, :day => 1
 
       visit new_competition_registration_path(@competition)
-      fill_in "First name", :with => "Peter"
-      fill_in "Last name", :with => "Mustermann"
-      fill_in "Email", :with => "peter@mustermann.de"
-      fill_in "WCA ID", :with => "2010ERTZ01"
-      choose("male")
+      fill_in_with_peter
       within(".day0") do
         check "3x3x3"
         check "4x4x4"
@@ -83,10 +80,7 @@ describe "Registrations" do
     it "registers Peter for Sunday only" do
       visit new_competition_registration_path(@competition)
 
-      fill_in "First name", :with => "Peter"
-      fill_in "Last name", :with => "Mustermann"
-      choose("male")
-      fill_in "Email", :with => "peter@mustermann.de"
+      fill_in_with_peter
       check "Sunday"
       click_on "Register"
 
