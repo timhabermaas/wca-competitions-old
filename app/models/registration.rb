@@ -12,6 +12,7 @@ class Registration < ActiveRecord::Base
   accepts_nested_attributes_for :competitor
 
   before_validation :fetch_competitor
+  before_save :set_days
 
   def days=(days)
     write_attribute :days, days.map(&:to_i)
@@ -31,5 +32,9 @@ class Registration < ActiveRecord::Base
       existing_competitor = Competitor.find_by_wca_id competitor.wca_id
       self.competitor = existing_competitor unless existing_competitor.nil?
     end
+  end
+
+  def set_days
+    self.days = (schedules.map(&:day) + (days || [])).uniq
   end
 end

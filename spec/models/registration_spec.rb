@@ -20,9 +20,19 @@ describe Registration do
       reg.errors[:competitor_id].should_not be_empty
     end
 
-    it "it sets days to 1 if user is registered for events on day 1" do
-      registration = create :registration, :competition => @competition, :competitor => @competitor, :schedules => [@schedule2]
-      registration.days.should == [1]
+    describe "#days" do
+      it "it sets days to [1] if user is registered for events on day 1" do
+        registration = create :registration, :competition => @competition, :competitor => @competitor, :schedules => [@schedule2]
+        registration.days.should == [1]
+      end
+
+      it "keeps existing days entries" do
+        registration = create :registration, :competition => @competition, :competitor => @competitor, :schedules => [@schedule2], :days => [0]
+        registration.days.should include(0)
+        registration.days.should include(1)
+      end
+
+      # FIXME what about removing events?
     end
   end
 
