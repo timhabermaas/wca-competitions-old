@@ -49,6 +49,10 @@ describe "Schedules" do
   end
 
   describe "POST /schedules" do
+    before :each do
+      log_in
+    end
+
     it "successfully creates a schedule entry" do
       visit new_competition_schedule_path(@competition)
       select "Pyraminx", :from => "Event"

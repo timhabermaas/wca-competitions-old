@@ -1,5 +1,6 @@
 class SchedulesController < ApplicationController
-  before_filter :fetch_competition
+  load_and_authorize_resource :competition
+  load_and_authorize_resource :schedule, :through => :competition
 
   def index
     @schedules = @competition.schedules.order("starts_at").group_by(&:day)
@@ -17,10 +18,5 @@ class SchedulesController < ApplicationController
     else
       render :new
     end
-  end
-
-  private
-  def fetch_competition
-    @competition = Competition.find params[:competition_id]
   end
 end

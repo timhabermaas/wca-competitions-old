@@ -27,6 +27,7 @@ class Ability
 
     if user.nil? # not logged in
       can :read, Competition
+      can :read, Schedule
     else
       # TODO news
       can :manage, :all
