@@ -1,10 +1,10 @@
 class CompetitionsController < ApplicationController
+  load_and_authorize_resource
+
   def index
-    @competitions = Competition.all
   end
 
   def new
-    @competition = Competition.new
   end
 
   def create
@@ -17,6 +17,5 @@ class CompetitionsController < ApplicationController
   end
 
   def show
-    @competition = Competition.find params[:id]
   end
 end

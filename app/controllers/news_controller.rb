@@ -1,13 +1,11 @@
 class NewsController < ApplicationController
+  load_and_authorize_resource :competition
+  load_and_authorize_resource :news, :through => :competition
+
   def new
-    @competition = Competition.find params[:competition_id]
-    @news = @competition.news.build
   end
 
   def create
-    @competition = Competition.find params[:competition_id]
-    @news = current_user.news.build params[:news]
-    @news.competition = @competition
     if @news.save
       redirect_to @competition
     else

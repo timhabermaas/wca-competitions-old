@@ -1,6 +1,10 @@
 require "spec_helper"
 
 describe "Events" do
+  before :each do
+    log_in
+  end
+
   describe "GET /events" do
     before :each do
       create :event, :name => "3x3x3"
