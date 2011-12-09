@@ -1,5 +1,3 @@
-<%= @registration.errors.messages %>
-
 <%= simple_form_for [@competition, @registration] do |f| %>
   <%= f.simple_fields_for :competitor_attributes, @registration.competitor do |competitor_form| %>
     <%= competitor_form.input :wca_id, :label => "WCA ID" %>

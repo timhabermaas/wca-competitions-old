@@ -1,4 +1,8 @@
 <%= render "header" %>
+<% unless @competition.closed? %>
+  <%= link_to "Register", new_competition_registration_path(@competition) %>
+<% end %>
+
 <section id="news">
   <h2>News</h2>
   <ul>

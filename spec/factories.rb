@@ -8,6 +8,7 @@ FactoryGirl.define do
     starts_at Date.new(2010, 2, 12)
     ends_at Date.new(2010, 2, 14)
     user
+    closed false
   end
 
   factory :event do
