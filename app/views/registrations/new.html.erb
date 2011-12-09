@@ -1,3 +1,5 @@
+<%= @registration.errors.messages %>
+
 <%= simple_form_for [@competition, @registration] do |f| %>
   <%= f.simple_fields_for :competitor_attributes, @registration.competitor do |competitor_form| %>
     <%= competitor_form.input :wca_id, :label => "WCA ID" %>
@@ -10,8 +12,8 @@
   <% @competition.days.times do |day| %>
     <div class="day<%= day %>">
       <p>
-        <%= label_tag "registration_days_#{day}", "Guest on #{l(@competition.starts_at + day.days, :format => :day)}" %>
-        <%= check_box_tag "registration[days][]", day, false, :id => "registration_days_#{day}" %>
+        <%= label_tag "registration_days_as_guest_#{day}", "Guest on #{l(@competition.starts_at + day.days, :format => :day)}" %>
+        <%= check_box_tag "registration[days_as_guest][]", day, false, :id => "registration_days_as_guest_#{day}" %>
       </p>
       <% @competition.schedules.registerable.for(day).each do |schedule| %>
         <p>

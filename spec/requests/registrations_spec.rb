@@ -89,7 +89,7 @@ describe "Registrations" do
       click_on "Register"
 
       page.should have_content("Peter Mustermann")
-      @competition.registrations.first.days.should == [1]
+      @competition.registrations.first.days_as_guest.should == [1]
       @competition.registrations.first.should be_guest
     end
 
