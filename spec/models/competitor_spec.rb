@@ -4,6 +4,7 @@ describe Competitor do
   describe "validations" do
     before :each do
       create :competitor_with_wca_id
+      create :competitor, :wca_id => ""
     end
 
     it { should validate_presence_of :first_name }
@@ -15,6 +16,11 @@ describe Competitor do
       should allow_value("m").for(:gender)
       should allow_value("f").for(:gender)
       should_not allow_value("a").for(:gender)
+    end
+
+    it "doesn't complain about duplicated WCA IDs if the WCA ID is left blank" do
+      competitor = build :competitor, :wca_id => ""
+      competitor.should be_valid
     end
   end
 
