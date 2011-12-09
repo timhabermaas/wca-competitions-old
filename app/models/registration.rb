@@ -11,8 +11,8 @@ class Registration < ActiveRecord::Base
 
   accepts_nested_attributes_for :competitor
 
-  before_validation :fetch_competitor
   before_save :set_days
+  before_validation :fetch_existing_competitor
 
   def days=(days)
     write_attribute :days, days.map(&:to_i)
@@ -27,7 +27,7 @@ class Registration < ActiveRecord::Base
   end
 
   private
-  def fetch_competitor
+  def fetch_existing_competitor
     if competitor.try(:wca_id).present?
       existing_competitor = Competitor.find_by_wca_id competitor.wca_id
       self.competitor = existing_competitor unless existing_competitor.nil?
