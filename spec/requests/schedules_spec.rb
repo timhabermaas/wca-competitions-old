@@ -50,7 +50,8 @@ describe "Schedules" do
 
   describe "POST /schedules" do
     before :each do
-      log_in
+      user = log_in
+      @competition = create :competition, :user => user
     end
 
     it "successfully creates a schedule entry" do

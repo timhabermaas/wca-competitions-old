@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111209022142) do
+ActiveRecord::Schema.define(:version => 20111213225000) do
 
   create_table "competitions", :force => true do |t|
     t.string   "name",                          :null => false
@@ -75,11 +75,12 @@ ActiveRecord::Schema.define(:version => 20111209022142) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "name",            :null => false
-    t.string   "email",           :null => false
-    t.string   "password_digest", :null => false
+    t.string   "name",                                     :null => false
+    t.string   "email",                                    :null => false
+    t.string   "password_digest",                          :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "role",            :default => "organizer", :null => false
   end
 
 end

@@ -9,8 +9,13 @@ describe User do
     it { should validate_presence_of :name }
     it { should validate_presence_of :email }
     it { should validate_presence_of :password_digest }
+    it { should validate_presence_of :role }
     it { should validate_uniqueness_of :name }
     it { should validate_uniqueness_of :email }
+
+    it { should allow_value("organizer").for(:role) }
+    it { should allow_value("admin").for(:role) }
+    it { should_not allow_value("user").for(:role) }
 
     it "requires password and password_confirmation to be equal on creation" do
       user = User.new :name => "blub", :email => "muh@cow.com", :password => "1234", :password_confirmation => "12345"

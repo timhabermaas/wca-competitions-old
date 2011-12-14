@@ -1,4 +1,5 @@
 class SchedulesController < ApplicationController
+  skip_load_and_authorize_resource
   load_and_authorize_resource :competition
   load_and_authorize_resource :schedule, :through => :competition
 
@@ -8,11 +9,9 @@ class SchedulesController < ApplicationController
   end
 
   def new
-    @schedule = @competition.schedules.build
   end
 
   def create
-    @schedule = @competition.schedules.build params[:schedule]
     if @schedule.save
       redirect_to competition_schedules_path(@competition)
     else

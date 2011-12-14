@@ -3,8 +3,8 @@ require "spec_helper"
 describe "News" do
   describe "GET /news" do
     before :each do
-      @news = create :news, :content => "huhu"
-      @competition = @news.competition
+      @competition = create :competition
+      @news = create :news, :content => "huhu", :competition => @competition
     end
 
     it "displays the latest news" do
@@ -17,8 +17,8 @@ describe "News" do
 
   describe "POST /news" do
     before :each do
-      @competition = create :competition
-      log_in
+      user = log_in
+      @competition = create :competition, :user => user
     end
 
     it "creates a news entry for an existing competition" do

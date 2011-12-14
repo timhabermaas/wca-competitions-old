@@ -41,6 +41,10 @@ FactoryGirl.define do
     end
     password "secret"
     password_confirmation "secret"
+    role "organizer"
+    factory :admin do
+      role "admin"
+    end
   end
 
   factory :competitor do

@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "Events" do
   before :each do
-    log_in
+    log_in :as => "admin"
   end
 
   describe "GET /events" do
