@@ -1,5 +1,5 @@
 class Competition < ActiveRecord::Base
-  attr_accessible :name, :starts_at, :ends_at, :closed
+  attr_accessible :name, :starts_at, :ends_at, :details, :closed
 
   has_many :news
   has_many :registrations

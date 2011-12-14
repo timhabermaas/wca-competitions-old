@@ -9,5 +9,9 @@ describe ApplicationHelper do
     it "wraps paragraphs in <p>" do
       helper.m("lorem\n\nipsum").should == "<p>lorem</p>\n<p>ipsum</p>"
     end
+
+    it "handles nil gracefully" do
+      helper.m(nil).should == ""
+    end
   end
 end

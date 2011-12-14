@@ -32,6 +32,14 @@ describe "Competitions" do
         page.should have_link "Register"
       end
     end
+
+    describe "details" do
+      it "uses textile for displaying details" do
+        competition = create(:competition, :details => "h2. Price Money")
+        visit competition_path(competition)
+        find("#details h2").should have_content "Price Money"
+      end
+    end
   end
 
   describe "POST /competitions" do
@@ -44,9 +52,11 @@ describe "Competitions" do
       fill_in "Name", :with => "Aachen Open 2012"
       fill_in_date "starts_at", :with => Date.new(2012, 2, 11), :model => "competition"
       fill_in_date "ends_at", :with => Date.new(2012, 2, 13), :model => "competition"
+      fill_in "Details", :with => "h2. Price Money"
       check "Closed"
       click_button "Create Competition"
       page.should have_content("Aachen Open 2012")
+      page.should have_content("Price Money")
     end
   end
 end
