@@ -9,6 +9,7 @@ gem 'sqlite3'
 
 gem 'simple_form'
 gem 'cancan'
+gem 'RedCloth'
 
 
 # Gems used only for assets and not required
