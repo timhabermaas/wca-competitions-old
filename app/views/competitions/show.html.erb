@@ -3,14 +3,14 @@
   <%= link_to "Register", new_competition_registration_path(@competition) %>
 <% end %>
 
-<section id="news">
+<article id="news">
   <h2>News</h2>
   <ul>
     <% @competition.news.each do |news| %>
       <li><%= news.content %></li>
     <% end %>
   </ul>
-  <article id="details">
-    <%=m @competition.details %>
-  </article>
-</section>
+</article>
+<article id="details">
+  <%=m @competition.details %>
+</article>
