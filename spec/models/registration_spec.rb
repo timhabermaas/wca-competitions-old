@@ -25,8 +25,6 @@ describe Registration do
       reg.should_not be_valid
       reg.errors[:days_as_guest].should_not be_empty
     end
-
-    it "doesn't register someone to a closed competition" # TODO or on controller level?
   end
 
   describe "#days" do
