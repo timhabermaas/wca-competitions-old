@@ -1,5 +1,5 @@
 <%= render "header" %>
-<% unless @competition.closed? %>
+<% if can? :create, @competition.registrations.build %>
   <%= link_to "Register", new_competition_registration_path(@competition) %>
 <% end %>
 
