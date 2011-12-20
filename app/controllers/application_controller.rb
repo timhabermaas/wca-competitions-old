@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   load_and_authorize_resource
 
+  before_filter :set_locale
+
   private
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
@@ -17,4 +19,8 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
   helper_method :logged_in?
+
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
 end

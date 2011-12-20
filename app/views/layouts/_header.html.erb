@@ -5,4 +5,14 @@
       <%= link_to "Log out", log_out_path %>
     </p>
   <% end %>
+  <ul id="localeselect">
+    <% I18n.available_locales.each do |locale| %>
+      <li>
+        <%= link_to_flag locale %>
+      </li>
+    <% end %>
+  </ul>
+  <%= link_to "http://www.worldcubeassociation.org/" do %>
+    <%= image_tag "wca_small.png" %>
+  <% end %>
 </header>

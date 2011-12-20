@@ -1,0 +1,17 @@
+#localeselect {
+  a {
+    display: block;
+    width: 18px;
+    height: 12px;
+    text-indent: -9999px;
+    background-position: 18px 0px;
+  }
+  a.active {
+    background-position: 0px 0px;
+  }
+  <% I18n.available_locales.each do |locale| %>
+  a.<%= locale %> {
+    background-image: url(<%= image_path "flags/#{locale}.png" %>);
+  }
+  <% end %>
+}

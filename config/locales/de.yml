@@ -1,0 +1,129 @@
+de:
+
+  date:
+
+    formats:
+      descriptive: "%A, %d. %B %Y"
+      day: "%A"
+      news: "%d.%m.%Y"
+
+    day_names: [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
+    abbr_day_names: [So, Mo, Di, Mi, Do, Fr, Sa]
+    month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
+    abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
+    order: [ :day, :month, :year ]
+
+  activerecord:
+    attributes:
+      competitor:
+        first_name: "Vorname"
+        last_name: "Nachname"
+        wca_id: "WCA ID"
+        mail: "E-Mail"
+        birthday: "Geburtsdatum"
+        country_id: "Land"
+        male: "Geschlecht"
+        user_comment: "Kommentar"
+        events: "Disziplinen"
+    errors:
+      template:
+        header:
+          one: "Ein Fehler ist aufgetreten"
+          other: "{{count}} Fehler sind aufgetreten"
+        body: "Es gab Probleme mit folgenden Angaben:"
+      models:
+        competitor:
+          attributes:
+            wca_id:
+              taken: "wurde bereits bei der Anmeldung eines anderen Teilnehmers verwendet"
+              invalid: "ist nicht gültig"
+              doesnt_exist: "existiert nicht"
+            birthday:
+              inclusion: "ist nicht vollständig bzw. ungültig"
+            mail:
+              invalid: "Adresse ist ungültig"
+      messages:
+        blank: "darf nicht leer sein"
+        days: "Es muss mindestens ein Tag ausgewählt werden"
+
+
+  #### Menu
+
+  information: "Informationen"
+  competitors: "Teilnehmer"
+  schedule: "Zeitplan"
+  disclaimer: "Impressum"
+
+
+
+  ##### Competitors
+
+  # caption of table header for name column
+  name: "Name"
+
+  # caption of table header for country column
+  country: "Land"
+
+  # caption of 'register' button
+  register: "Anmeldung"
+
+  # 'comparison' label
+  comparison: "Vergleich"
+
+
+  ##### Schedule
+
+  # caption of table header for start time column
+  start: "Beginn"
+
+  # caption of table header for stop time column
+  stop: "Ende"
+
+  # caption of table header for event column
+  event: "Event"
+
+  # caption of table header for stage name column
+  stage: "Bühne"
+
+  # caption of table header for round name column
+  round: "Runde"
+
+  # caption of table header for timelimit column
+  timelimit: "Zeitgrenze"
+
+  # caption of table header for format column
+  format: "Format"
+
+
+  ##### Registration
+
+  registertitle: "Anmeldung"
+  local: "Ich wohne in"
+  male_txt: "männlich"
+  female_txt: "weiblich"
+  waitinglist: "Warteliste"
+  closed: "geschlossen"
+  registersubmit: "Melde mich an!"
+  registerok: "Anmeldung erfolgreich. Du wirst bald eine Bestätigung per E-Mail erhalten."
+  register_day_not: "Ich komme nicht am"
+  register_day_guest: "Ich möchte zuschauen (Gast)"
+  register_day_competitor: "Ich möchte teilnehmen"
+  noshirt: "Ich möchte kein T-Shirt kaufen"
+
+
+  ##### Credits
+  programming: "Programmiert von"
+  design: "Design von"
+
+
+
+  ##### Other
+  guests: "Gäste"
+  news: "Neuigkeiten"
+  after: "Nachher"
+  before: "Vorher"
+  days: "Tage"
+  countries: "Nationalitäten"
+  registrations: "Anmeldungen"
+  num_regs: "Anzahl der Anmeldungen"
+  stats: "Statistiken"
