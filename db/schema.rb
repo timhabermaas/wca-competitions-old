@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111217193548) do
+ActiveRecord::Schema.define(:version => 20111221020324) do
 
   create_table "competitions", :force => true do |t|
     t.string   "name",                          :null => false
@@ -48,6 +48,16 @@ ActiveRecord::Schema.define(:version => 20111217193548) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "news_translations", :force => true do |t|
+    t.integer  "news_id"
+    t.string   "locale"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "news_translations", ["news_id"], :name => "index_news_translations_on_news_id"
 
   create_table "registrations", :force => true do |t|
     t.integer  "competition_id", :null => false

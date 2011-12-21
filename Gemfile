@@ -10,6 +10,7 @@ gem 'sqlite3'
 gem 'simple_form'
 gem 'cancan'
 gem 'RedCloth'
+gem 'globalize3'
 
 
 # Gems used only for assets and not required
