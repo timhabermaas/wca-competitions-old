@@ -11,16 +11,27 @@ describe Ability do
       @ability = Ability.new(nil)
     end
 
-    it "should be able to register for open competitions" do
-      competition = create :competition
-      @ability.should be_able_to(:new, Registration.new(:competition => competition))
-      @ability.should be_able_to(:create, Registration.new(:competition => competition))
+    context "open competition" do
+      it "should be able to register for open competitions" do
+        competition = create :competition
+        @ability.should be_able_to(:new, Registration.new(:competition => competition))
+        @ability.should be_able_to(:create, Registration.new(:competition => competition))
+      end
     end
 
-    it "should not be able to register for closed competitions" do
-      competition = create :competition, :closed => true
-      @ability.should_not be_able_to(:new, Registration.new(:competition => competition))
-      @ability.should_not be_able_to(:create, Registration.new(:competition => competition))
+    context "closed competition" do
+      before :each do
+        @competition = create :competition, :closed => true
+      end
+
+      it "should see registrations" do
+        @ability.should be_able_to(:index, Registration.new(:competition => @competition))
+      end
+
+      it "should not be able to register" do
+        @ability.should_not be_able_to(:new, Registration.new(:competition => @competition))
+        @ability.should_not be_able_to(:create, Registration.new(:competition => @competition))
+      end
     end
   end
 

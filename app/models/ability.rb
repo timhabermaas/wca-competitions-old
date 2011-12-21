@@ -28,7 +28,8 @@ class Ability
     # not logged in
     can :read, Competition
     can :read, Schedule
-    can [:read, :new, :create], Registration, :competition => { :closed => false }
+    can :index, Registration
+    can [:new, :create], Registration, :competition => { :closed => false }
 
     if user && user.admin?
       can :manage, :all
