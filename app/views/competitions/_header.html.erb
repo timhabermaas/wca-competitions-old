@@ -1,11 +1,15 @@
 <header>
   <h1><%= @competition.name %></h1>
+  <h2>Speedcubing Competition</h2>
   <nav>
     <ul>
-      <li><%= link_to "Informationen", @competition %></li>
-      <li><%= link_to "Teilnehmer", competition_registrations_path(@competition) %></li>
-      <li><%= link_to "Zeitplan", competition_schedules_path(@competition) %></li>
-      <li><%= link_to "Impressum (screw this!)", @competition %></li>
+      <% { "Informationen" => @competition,
+           "Teilnehmer"    => competition_registrations_path(@competition),
+           "Zeitplan"      => competition_schedules_path(@competition),
+           "Impressum"     => @competition
+         }.each do |title, path| %>
+        <li<%= ' class="active"'.html_safe if current_page?(path)%>><%= link_to title, path %></li>
+      <% end %>
     </ul>
   </nav>
 </header>

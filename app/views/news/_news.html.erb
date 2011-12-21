@@ -1,5 +1,7 @@
 <li>
-  <%= news.content %>
+  <p class="textile">
+    <%=m news.content %>
+  </p>
   <% if can? :update, news %>
     <%= link_to "Edit", edit_competition_news_path(@competition, news) %>
   <% end %>

@@ -1,17 +1,38 @@
-#content { /* TODO should be competition */
+#content {
   #news ul, #details ul {
     padding-left: 40px;
     list-style-type: disc;
   }
-  #details {
-    p, ul {
-      margin-bottom: 1em;
+  header {
+    position: relative;
+    padding-bottom: 15px;
+    border-bottom: dotted #e1e1e1 1px;
+    h1, h2 {
+      margin: 0;
+      padding: 0;
+      border-style: none;
     }
-    em {
-      font-style: italic;
+    h2 {
+      font-size: 130%;
+      color: #a0a0a0;
+      margin-top: -10px;
     }
-    strong {
-      font-weight: bold;
+    nav {
+      position: absolute;
+      right: 10px;
+      top: 20px;
+      li {
+        float: left;
+        padding: 0px 6px 2px 6px;
+        margin-right: 1.5em;
+      }
+      li.active {
+        border-bottom: 5px solid #e40000;
+      }
+    }
+    a, a:visited {
+      text-decoration: none;
+      color: black;
     }
   }
 }
