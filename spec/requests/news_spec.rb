@@ -4,13 +4,15 @@ describe "News" do
   describe "GET /news" do
     before :each do
       @competition = create :competition
-      @news = create :news, :content => "huhu", :competition => @competition
     end
 
     it "displays the latest news" do
+      create :news, :content => "old news", :competition => @competition
+      create :news, :content => "new news", :competition => @competition
       visit competition_path(@competition)
       within "#news" do
-        page.should have_content("huhu")
+        find(:xpath, ".//li[1]").text.should match("new news")
+        find(:xpath, ".//li[2]").text.should match("old news")
       end
     end
   end
