@@ -37,6 +37,16 @@ Spork.prefork do
     config.include FactoryGirl::Syntax::Methods
     config.include Capybara::DateSelect
     config.include Capybara::SessionHelper
+
+    config.before(:each) do
+      if respond_to?(:app)
+        app.default_url_options = { :locale => I18n.locale }
+      end
+    end
+
+    config.after(:each) do
+      I18n.locale = I18n.default_locale
+    end
   end
 end
 
