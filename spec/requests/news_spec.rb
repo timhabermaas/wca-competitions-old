@@ -29,5 +29,16 @@ describe "News" do
       click_on "Create News"
       page.should have_content "Seriously!"
     end
+
+    it "creates a german entry if locale is set to german" do
+      click_on "de"
+      visit new_competition_news_path(@competition)
+      click_on "de"
+      fill_in "Content", :with => "Deutsch"
+      click_on "Create News"
+      page.should have_content "Deutsch"
+      click_on "de"
+      page.should have_content "Deutsch"
+    end
   end
 end
