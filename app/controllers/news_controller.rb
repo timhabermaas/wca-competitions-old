@@ -14,4 +14,15 @@ class NewsController < ApplicationController
       render :new
     end
   end
+
+  def edit
+  end
+
+  def update
+    if @news.update_attributes params[:news]
+      redirect_to @competition, :notice => "Successfully updated news."
+    else
+      render :edit
+    end
+  end
 end

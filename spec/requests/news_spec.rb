@@ -15,6 +15,14 @@ describe "News" do
         find(:xpath, ".//li[2]").text.should match("old news")
       end
     end
+
+    it "doesn't display edit link if not logged in" do
+      create :news, :competition => @competition
+      visit competition_path(@competition)
+      within "#news" do
+        page.should_not have_link("Edit")
+      end
+    end
   end
 
   describe "POST /news" do
@@ -39,6 +47,25 @@ describe "News" do
       page.should have_content "Deutsch"
       click_on "de"
       page.should have_content "Deutsch"
+    end
+  end
+
+  describe "PUT /news" do
+    before :each do
+      user = log_in
+      @competition = create :competition, :user => user
+      create :news, :content => "First news", :competition => @competition, :user => user
+    end
+
+    it "updates news entry" do
+      visit competition_path(@competition)
+      within("#news") do
+        click_on "Edit"
+      end
+      fill_in "Content", :with => "First updated news"
+      click_on "Update News"
+      page.should have_content "First updated news"
+      page.should have_content "Successfully updated news."
     end
   end
 end

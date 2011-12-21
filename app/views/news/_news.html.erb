@@ -1,0 +1,6 @@
+<li>
+  <%= news.content %>
+  <% if can? :update, news %>
+    <%= link_to "Edit", edit_competition_news_path(@competition, news) %>
+  <% end %>
+</li>

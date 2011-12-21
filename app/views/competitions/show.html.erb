@@ -6,9 +6,7 @@
 <article id="news">
   <h2>News</h2>
   <ul>
-    <% @competition.news.each do |news| %>
-      <li><%= news.content %></li>
-    <% end %>
+    <%= render @competition.news %>
   </ul>
 </article>
 <article id="details">
