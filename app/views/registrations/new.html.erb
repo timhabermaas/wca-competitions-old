@@ -3,7 +3,7 @@
     <%= competitor_form.input :wca_id, :label => "WCA ID" %>
     <%= competitor_form.input :first_name %>
     <%= competitor_form.input :last_name %>
-    <%= competitor_form.input :gender, :collection => [["Male", "m"], ["Female", "f"]], :as => :radio, :include_blank => false %>
+    <%= competitor_form.input :gender, :collection => [["Male", "m"], ["Female", "f"]], :as => :radio %>
     <%= competitor_form.input :date_of_birth, :as => :date, :start_year => Date.today.year - 120, :end_year => Date.today.year %>
   <% end %>
 
