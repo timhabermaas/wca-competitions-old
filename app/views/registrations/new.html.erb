@@ -11,12 +11,12 @@
     <div class="day<%= day %>">
       <p>
         <%= label_tag "registration_days_as_guest_#{day}", "Guest on #{l(@competition.starts_at + day.days, :format => :day)}" %>
-        <%= check_box_tag "registration[days_as_guest][]", day, false, :id => "registration_days_as_guest_#{day}" %>
+        <%= check_box_tag "registration[days_as_guest][]", day, @registration.days_as_guest.include?(day), :id => "registration_days_as_guest_#{day}" %>
       </p>
       <% @competition.schedules.registerable.for(day).each do |schedule| %>
         <p>
           <%= label_tag "registration_schedule_ids_#{schedule.id}", schedule.event.name %>
-          <%= check_box_tag "registration[schedule_ids][]", schedule.id, false, :id => "registration_schedule_ids_#{schedule.id}" %>
+          <%= check_box_tag "registration[schedule_ids][]", schedule.id, @registration.schedules.map(&:id).include?(schedule.id), :id => "registration_schedule_ids_#{schedule.id}" %>
         </p>
       <% end %>
     </div>
