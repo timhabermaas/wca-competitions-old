@@ -57,6 +57,22 @@ describe "Competitions" do
       click_button "Create Competition"
       page.should have_content("Aachen Open 2012")
       page.should have_content("Price Money")
+      page.should have_content("Successfully created competition.")
+    end
+  end
+
+  describe "PUT /competitions" do
+    before :each do
+      @user = log_in
+    end
+
+    it "updates competition name" do
+      competition = create :competition, :name => "Karlsruhe Open 2012", :user => @user
+      visit edit_competition_path(competition)
+      fill_in "Name", :with => "Aachen Open 2012"
+      click_button "Update Competition"
+      page.should have_content("Aachen Open 2012")
+      page.should have_content("Successfully updated competition.")
     end
   end
 end
