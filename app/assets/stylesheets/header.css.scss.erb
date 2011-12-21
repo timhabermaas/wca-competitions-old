@@ -1,17 +1,31 @@
+@import "mixins";
+
 #localeselect {
+  margin: 5px 5px;
+  li {
+    margin-right: 5px;
+    float: left;
+  }
   a {
-    display: block;
-    width: 18px;
-    height: 12px;
-    text-indent: -9999px;
     background-position: 18px 0px;
+    @include replace-with-image("<%= image_path "flags/en.png" %>", 18px, 12px);
   }
   a.active {
     background-position: 0px 0px;
   }
   <% I18n.available_locales.each do |locale| %>
   a.<%= locale %> {
-    background-image: url(<%= image_path "flags/#{locale}.png" %>);
+    background-image: url("<%= image_path "flags/#{locale}.png" %>");
   }
   <% end %>
+}
+
+#header .wca {
+  float: right;
+  margin: 5px;
+  @include replace-with-image("<%= image_path "wca_small.png" %>", 50px, 50px);
+}
+
+#header:after {
+  @include clear-both;
 }

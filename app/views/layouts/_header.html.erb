@@ -1,4 +1,4 @@
-<header>
+<header id="header">
   <% if logged_in? %>
     <p>
       Logged in as <%= current_user.name %>
@@ -12,7 +12,5 @@
       </li>
     <% end %>
   </ul>
-  <%= link_to "http://www.worldcubeassociation.org/" do %>
-    <%= image_tag "wca_small.png" %>
-  <% end %>
+  <%= link_to "WCA", "http://www.worldcubeassociation.org/", :class => "wca" %>
 </header>

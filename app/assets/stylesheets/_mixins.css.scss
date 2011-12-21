@@ -1,0 +1,15 @@
+@mixin clear-both {
+  content: ".";
+  display: block;
+  height:  0px;
+  clear: both;
+  visibility: hidden;
+}
+
+@mixin replace-with-image($url, $width, $height) {
+  background-image: url($url);
+  display: block;
+  width: $width;
+  height: $height;
+  text-indent: -9999px;
+}
