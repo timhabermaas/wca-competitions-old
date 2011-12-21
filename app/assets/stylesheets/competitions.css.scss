@@ -1,3 +1,17 @@
-// Place all the styles related to the Competitions controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#content { /* TODO should be competition */
+  #news ul, #details ul {
+    padding-left: 40px;
+    list-style-type: disc;
+  }
+  #details {
+    p, ul {
+      margin-bottom: 1em;
+    }
+    em {
+      font-style: italic;
+    }
+    strong {
+      font-weight: bold;
+    }
+  }
+}
