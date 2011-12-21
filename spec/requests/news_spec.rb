@@ -7,12 +7,15 @@ describe "News" do
     end
 
     it "displays the latest news" do
-      create :news, :content => "old news", :competition => @competition
+      ActiveRecord::Base.record_timestamps = false
+      create :news, :content => "old news", :competition => @competition, :created_at => DateTime.new(2011, 11, 11)
+      ActiveRecord::Base.record_timestamps = true
       create :news, :content => "new news", :competition => @competition
       visit competition_path(@competition)
       within "#news" do
         find(:xpath, ".//li[1]").text.should match("new news")
         find(:xpath, ".//li[2]").text.should match("old news")
+        page.should have_content("November 11, 2011")
       end
     end
 

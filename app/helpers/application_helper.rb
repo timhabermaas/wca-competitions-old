@@ -1,6 +1,6 @@
 module ApplicationHelper
-  def m(text)
-    text.nil? ? "" : RedCloth.new(text).to_html.html_safe
+  def m(text, *options)
+    text.nil? ? "" : RedCloth.new(text, options).to_html.html_safe
   end
 
   def wca(id)

@@ -1,6 +1,7 @@
 <li>
   <p class="textile">
-    <%=m news.content %>
+    <span class="date"><%=l news.created_at.to_date, :format => :news %>:</span>
+    <%=m news.content, :lite_mode %>
   </p>
   <% if can? :update, news %>
     <%= link_to "Edit", edit_competition_news_path(@competition, news) %>

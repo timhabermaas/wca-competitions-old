@@ -6,6 +6,8 @@ en:
     formats:
       descriptive: "%A, %B %d, %Y"
       day: "%A"
+      news: "%Y-%m-%d"
+
   time:
     formats:
       time: "%H:%M"
