@@ -32,8 +32,8 @@
       <tr>
         <td><%= link_to_if registration.competitor.wca_id, registration.competitor.full_name, wca(registration.competitor.wca_id) %></td>
         <td>Germany</td>
-        <% @competition.day_indices.each do |day| %>
-        <td><%= "x" if registration.competitor_on?(day) %></td>
+        <% @competition.days.each_with_index do |day, index| %>
+        <td><%= "x" if registration.competitor_on?(index) %></td>
         <% end %>
         <% @competition.events.each do |event| %>
         <td><%= "x" if registration.participates_in?(event) %></td>

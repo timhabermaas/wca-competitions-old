@@ -52,8 +52,8 @@ class Registration < ActiveRecord::Base
   end
 
   def check_for_being_guest_and_competitor
-    competition.day_indices.each do |day|
-      errors.add(:days_as_guest, "can't compete and be a guest on the same day") if guest_on?(day) and competitor_on?(day)
+    competition.days.each_with_index do |day, index|
+      errors.add(:days_as_guest, "can't compete and be a guest on the same day") if guest_on?(index) and competitor_on?(index)
     end
   end
 

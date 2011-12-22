@@ -34,10 +34,10 @@ describe Competition do
     end
   end
 
-  describe "#day_indices" do
-    it "returns 0..2 for a three day competition" do
+  describe "#amount_of_days" do
+    it "returns 3 for a three day competition" do
       competition = Competition.new :starts_at => Date.new(2011, 1, 31), :ends_at => Date.new(2011, 2, 2)
-      competition.day_indices.should == (0..2)
+      competition.amount_of_days.should == 3
     end
   end
 
