@@ -1,9 +1,43 @@
+<p>
+  Name, WCA ID (falls vorhanden) und angemeldete Events der Teilnehmer werden auf unserer Webseite veröffentlicht. E-Mail Adressen werden nicht auf der Webseite veröffentlicht sondern sind lediglich zur Kontaktaufnahme unsererseits gedacht.
+</p>
+
+<p>
+  Die persönlichen Ergebnisse der Competition (inklusive Name und Nationalität) werden in den öffentlichen Datenbanken der World Cube Association (WCA) gespeichert. Während der Competition gelten die offiziellen Regeln der WCA. Missachtung dieser Regeln kann zur Disqualifikation führen!
+</p>
+
+<p>
+  Die Teilnahme an einem Event steht jedem frei, der voraussichtlich das Zeitlimit erreichen kann (siehe Zeitplan).
+</p>
+
+<p>
+  Gäste bitte auch vorher anmelden!
+</p>
+
 <table>
-  <thead></thead>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Land</th>
+      <% @competition.days.each do |day| %>
+      <th><%=l day, :format => :short_day %></th>
+      <% end %>
+      <% @competition.events.each do |event| %>
+      <th><%= event.short_name %></th>
+      <% end %>
+    </tr>
+  </thead>
   <tbody>
-    <% @competitors.each do |competitor| %>
+    <% @registrations.each do |registration| %>
       <tr>
-        <td><%= link_to_if competitor.wca_id, competitor.full_name, wca(competitor.wca_id) %></td>
+        <td><%= link_to_if registration.competitor.wca_id, registration.competitor.full_name, wca(registration.competitor.wca_id) %></td>
+        <td>Germany</td>
+        <% @competition.day_indices.each do |day| %>
+        <td><%= "x" if registration.competitor_on?(day) %></td>
+        <% end %>
+        <% @competition.events.each do |event| %>
+        <td><%= "x" if registration.participates_in?(event) %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

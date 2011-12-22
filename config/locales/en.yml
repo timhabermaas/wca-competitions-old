@@ -6,6 +6,7 @@ en:
     formats:
       descriptive: "%A, %B %d, %Y"
       day: "%A"
+      short_day: "%a"
       news: "%Y-%m-%d"
 
   time:

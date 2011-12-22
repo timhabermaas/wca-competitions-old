@@ -22,6 +22,7 @@ describe "Events" do
     it "creates a new event" do
       visit new_event_path
       fill_in "Name", :with => "3x3x3"
+      fill_in "Short name", :with => "3"
       click_on "Create Event"
       page.should have_content("3x3x3")
     end

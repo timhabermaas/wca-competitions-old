@@ -39,6 +39,10 @@ class Registration < ActiveRecord::Base
     (schedules.map(&:day) + (days_as_guest)).uniq
   end
 
+  def participates_in?(event)
+    schedules.where(:event_id => event.id).count > 0
+  end
+
   private
   def fetch_existing_competitor
     if competitor.try(:wca_id).present?

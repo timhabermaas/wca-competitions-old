@@ -41,6 +41,14 @@ describe Registration do
     # FIXME what about removing events?
   end
 
+  describe "#participates_in?" do
+    it "returns true if the competitor has registered for the event" do
+      registration = create :registration, :schedules => [@schedule]
+      registration.participates_in?(@schedule.event).should == true
+      registration.participates_in?(@schedule2.event).should == false
+    end
+  end
+
   it "fetches already saved competitor if wca_id is present" do
     competitor = build :competitor, :wca_id => "2008MUHA01"
     registration = build :registration, :competition => @competition, :competitor => competitor

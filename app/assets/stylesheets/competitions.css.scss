@@ -1,4 +1,7 @@
 #content {
+  #news p {
+    margin: 0;
+  }
   #news .date {
     font-weight: bold;
   }
@@ -9,6 +12,7 @@
   header {
     position: relative;
     padding-bottom: 15px;
+    margin-bottom: 1em;
     border-bottom: dotted #e1e1e1 1px;
     h1, h2 {
       margin: 0;

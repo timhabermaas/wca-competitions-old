@@ -8,6 +8,8 @@ describe Event do
 
     it { should validate_presence_of :name }
     it { should validate_uniqueness_of :name }
+    it { should validate_presence_of :short_name }
+  end
 
   describe "#official?" do
     it "is official if wca event id is present" do

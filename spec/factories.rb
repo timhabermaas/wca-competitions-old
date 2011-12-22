@@ -15,6 +15,9 @@ FactoryGirl.define do
     sequence :name do |n|
       "#{n}x#{n}x#{n}"
     end
+    sequence :short_name do |n|
+      n.to_s
+    end
   end
 
   factory :schedule do
