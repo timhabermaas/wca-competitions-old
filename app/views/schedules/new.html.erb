@@ -1,6 +1,6 @@
 <%= simple_form_for [@competition, @schedule] do |f| %>
   <%= f.association :event, :include_blank => false %>
-  <%= f.input :day, :collection => 0..(@competition.days - 1), :include_blank => false %>
+  <%= f.input :day, :collection => @competition.day_indices, :include_blank => false %>
   <%= f.input :starts_at %>
   <%= f.input :ends_at, :include_blank => true %>
   <%= f.input :registerable %>

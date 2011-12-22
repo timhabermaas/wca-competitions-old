@@ -17,7 +17,11 @@ class Competition < ActiveRecord::Base
   validate :starts_before_it_ends
 
   def days
-    (ends_at - starts_at).to_i + 1
+    starts_at..ends_at
+  end
+
+  def day_indices
+    (0..(ends_at - starts_at).to_i)
   end
 
   private

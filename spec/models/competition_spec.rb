@@ -23,11 +23,22 @@ describe Competition do
     end
   end
 
-  it "knows how many days it lasts" do
-    competition = Competition.new :starts_at => Date.new(2011, 1, 1), :ends_at => Date.new(2011, 1, 4)
-    competition.days.should == 4
-    competition = Competition.new :starts_at => Date.new(2011, 1, 31), :ends_at => Date.new(2011, 2, 1)
-    competition.days.should == 2
+  describe "#days" do
+    it "returns all dates for the competition" do
+      competition = Competition.new :starts_at => Date.new(2011, 1, 31), :ends_at => Date.new(2011, 2, 2)
+      days = competition.days.to_a
+      days.size.should == 3
+      days[0].should == Date.new(2011, 1, 31)
+      days[1].should == Date.new(2011, 2, 1)
+      days[2].should == Date.new(2011, 2, 2)
+    end
+  end
+
+  describe "#day_indices" do
+    it "returns 0..2 for a three day competition" do
+      competition = Competition.new :starts_at => Date.new(2011, 1, 31), :ends_at => Date.new(2011, 2, 2)
+      competition.day_indices.should == (0..2)
+    end
   end
 
   it "knows all available schedules for each day" do
