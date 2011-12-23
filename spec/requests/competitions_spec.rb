@@ -53,11 +53,13 @@ describe "Competitions" do
       fill_in_date "starts_at", :with => Date.new(2012, 2, 11), :model => "competition"
       fill_in_date "ends_at", :with => Date.new(2012, 2, 13), :model => "competition"
       fill_in "Details", :with => "h2. Price Money"
+      fill_in "Address", :with => "Fake Street 123\nFake City"
       check "Closed"
       click_button "Create Competition"
       page.should have_content("Aachen Open 2012")
       page.should have_content("Price Money")
       page.should have_content("Successfully created competition.")
+      page.should have_content("Fake Street")
     end
   end
 
