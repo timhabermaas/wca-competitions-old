@@ -81,14 +81,14 @@ describe "Registrations" do
       @competition.registrations.first.schedules.should_not include(@s4)
     end
 
-    it "registers Peter as a guest for Sunday only" do
+    it "registers Peter as a guest for Sunday only and does not list him as a competitor" do
       visit new_competition_registration_path(@competition)
 
       fill_in_with_peter
       check "Guest on Sunday"
       click_on "Register"
 
-      page.should have_content("Peter Mustermann")
+      page.should_not have_content("Peter Mustermann")
       @competition.registrations.first.days_as_guest.should == [1]
       @competition.registrations.first.should be_guest
     end
