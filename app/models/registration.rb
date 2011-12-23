@@ -16,7 +16,7 @@ class Registration < ActiveRecord::Base
   before_validation :check_for_being_guest_and_competitor, :unless => "competition.nil?"
 
   def days_as_guest=(days)
-    write_attribute :days_as_guest, days.map(&:to_i)
+    write_attribute :days_as_guest, days.reject(&:blank?).map(&:to_i)
   end
 
   def guest?

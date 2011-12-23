@@ -63,11 +63,17 @@ describe Registration do
     registration.days_as_guest.should == [1, 2]
   end
 
-  describe "guest" do
-    it "days_as_guest should be an empty array after initialization" do
+  describe "days_as_guest" do
+    it "is an empty array after initialization" do
       Registration.new.days_as_guest.should == []
     end
 
+    it "accepts stuff like ['', '0', ''] and makes it [0]" do
+      Registration.new(:days_as_guest => ["", "0", ""]).days_as_guest.should == [0]
+    end
+  end
+
+  describe "guest" do
     it "is guest if the competitor is guest on at least one day" do
       registration = Registration.new
       registration.should_not be_guest
