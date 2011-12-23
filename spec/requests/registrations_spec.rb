@@ -9,30 +9,30 @@ describe "Registrations" do
     @four = create :event, :name => "4x4x4"
     @pyraminx = create :event, :name => "Pyraminx"
     @megaminx = create :event, :name => "Megaminx"
+    @schedule_3 = create :schedule, :event => @three, :competition => @competition, :day => 0, :registerable => true
+    @schedule_4 = create :schedule, :event => @four, :competition => @competition, :day => 0, :registerable => true
+    @schedule_py = create :schedule, :event => @pyraminx, :competition => @competition, :day => 1, :registerable => true
+    @schedule_mx = create :schedule, :event => @megaminx, :competition => @competition, :day => 1, :registerable => true
   end
 
   describe "GET /registrations" do
     before :each do
       @dieter = create :participant, :first_name => "Dieter", :last_name => "Müller", :wca_id => "2008MULL01"
       @peter = create :participant, :first_name => "Peter", :last_name => "Müller"
-      @registraion = Registration.create :competition => @competition, :participant => @dieter, :email => "muh@cow.com"
+      @registraion = Registration.create :competition => @competition, :participant => @dieter, :schedules => [@schedule_3], :email => "muh@cow.com"
       @registraion = Registration.create :competition => @competition, :participant => @peter, :email => "muh2@cow.com"
     end
 
-    it "lists all registered competitors for Munich Open" do # TODO fix me!
+    it "lists only registered competitors for Munich Open" do
       visit competition_registrations_path(@competition)
-      page.should have_link("Dieter Müller", :href => "http://worldcubeassociation.org/results/p.php?i=2008MULL01")
-      page.should have_content("Peter Müller")
-      page.should_not have_link("Peter Müller") # TODO what about linking to a competitors page instead of linking to the WCA profile?
+      page.should have_link("Dieter Müller", :href => "http://worldcubeassociation.org/results/p.php?i=2008MULL01") # TODO what about linking to a competitors page instead of linking to the WCA profile?
+      page.should_not have_content("Peter Müller")
+      page.should_not have_link("Peter Müller")
     end
   end
 
   describe "POST /registrations" do
     before :each do
-      @s1 = create :schedule, :event => @three, :competition => @competition, :day => 0, :registerable => true
-      @s2 = create :schedule, :event => @four, :competition => @competition, :day => 0, :registerable => true
-      @s3 = create :schedule, :event => @pyraminx, :competition => @competition, :day => 1, :registerable => true
-      @s4 = create :schedule, :event => @megaminx, :competition => @competition, :day => 1, :registerable => true
       @lunch = create :schedule, :competition => @competition, :day => 1, :registerable => false
     end
 
@@ -75,10 +75,10 @@ describe "Registrations" do
       click_on "Register"
       page.should have_content("Peter Mustermann")
 
-      @competition.registrations.first.schedules.should include(@s1)
-      @competition.registrations.first.schedules.should include(@s2)
-      @competition.registrations.first.schedules.should include(@s3)
-      @competition.registrations.first.schedules.should_not include(@s4)
+      @competition.registrations.first.schedules.should include(@schedule_3)
+      @competition.registrations.first.schedules.should include(@schedule_4)
+      @competition.registrations.first.schedules.should include(@schedule_py)
+      @competition.registrations.first.schedules.should_not include(@schedule_mx)
     end
 
     it "registers Peter as a guest for Sunday only and does not list him as a competitor" do
