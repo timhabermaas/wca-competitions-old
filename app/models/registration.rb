@@ -39,7 +39,7 @@ class Registration < ActiveRecord::Base
     (schedules.map(&:day) + (days_as_guest)).uniq
   end
 
-  def participates_in?(event)
+  def competes_in?(event)
     schedules.where(:event_id => event.id).count > 0
   end
 

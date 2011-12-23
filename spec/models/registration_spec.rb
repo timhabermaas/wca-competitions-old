@@ -41,11 +41,11 @@ describe Registration do
     # FIXME what about removing events?
   end
 
-  describe "#participates_in?" do
+  describe "#competes_in?" do
     it "returns true if the participant has registered for the event" do
       registration = create :registration, :schedules => [@schedule]
-      registration.participates_in?(@schedule.event).should == true
-      registration.participates_in?(@schedule2.event).should == false
+      registration.competes_in?(@schedule.event).should == true
+      registration.competes_in?(@schedule2.event).should == false
     end
   end
 

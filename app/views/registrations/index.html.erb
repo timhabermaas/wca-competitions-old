@@ -48,7 +48,7 @@
         <td><%= "x" if registration.competitor_on?(index) %></td>
         <% end %>
         <% @competition.events.registerable.each do |event| %>
-        <td><%= "x" if registration.participates_in?(event) %></td>
+        <td><%= "x" if registration.competes_in?(event) # FIXME produces 12031031 queries %></td>
         <% end %>
       </tr>
     <% end %>
