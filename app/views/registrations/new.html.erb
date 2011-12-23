@@ -7,21 +7,28 @@
     <%= competitor_form.input :date_of_birth, :as => :date, :start_year => Date.today.year - 120, :end_year => Date.today.year %>
   <% end %>
 
+  <%= f.input :email %>
+
   <% @competition.days.each_with_index do |day, index| %>
-    <div class="day<%= index %>">
-      <p>
-        <%= label_tag "registration_days_as_guest_#{index}", "Guest on #{l(day, :format => :day)}" %>
-        <%= check_box_tag "registration[days_as_guest][]", index, @registration.days_as_guest.include?(index), :id => "registration_days_as_guest_#{index}" %>
-      </p>
-      <% @competition.schedules.registerable.for(index).each do |schedule| %>
+    <fieldset class="day day<%= index %>">
+      <h3><%= l(day, :format => :descriptive) %></h3><!-- FIXME: use legend, which behaves in some strange ways -->
+      <fieldset class="guest">
         <p>
-          <%= label_tag "registration_schedule_ids_#{schedule.id}", schedule.event.name %>
-          <%= check_box_tag "registration[schedule_ids][]", schedule.id, @registration.schedules.map(&:id).include?(schedule.id), :id => "registration_schedule_ids_#{schedule.id}" %>
+          <%= check_box_tag "registration[days_as_guest][]", index, @registration.days_as_guest.include?(index), :id => "registration_days_as_guest_#{index}" %>
+          <%= label_tag "registration_days_as_guest_#{index}", "Guest on #{l(day, :format => :day)}" %>
         </p>
-      <% end %>
-    </div>
+      </fieldset>
+      <fieldset class="events">
+        <% @competition.schedules.registerable.for(index).each do |schedule| %>
+          <p>
+            <%= check_box_tag "registration[schedule_ids][]", schedule.id, @registration.schedules.map(&:id).include?(schedule.id), :id => "registration_schedule_ids_#{schedule.id}" %>
+            <%= label_tag "registration_schedule_ids_#{schedule.id}", schedule.event.name %>
+          </p>
+        <% end %>
+      </fieldset>
+    </fieldset>
   <% end %>
 
-  <%= f.input :email %>
+
   <%= f.submit "Register" %>
 <% end %>

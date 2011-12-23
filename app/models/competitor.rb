@@ -4,7 +4,7 @@ class Competitor < ActiveRecord::Base
   has_many :registrations
   has_many :competitions, :through => :registrations
 
-  validates :first_name, :last_name, :date_of_birth, :presence => true
+  validates :first_name, :last_name, :date_of_birth, :gender, :presence => true
   validates :wca_id, :uniqueness => {:allow_blank => true}
   validates :gender, :inclusion => %w(m f)
 

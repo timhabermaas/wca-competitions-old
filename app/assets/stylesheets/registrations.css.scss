@@ -1,0 +1,32 @@
+#content {
+  #new_registration, #edit_registration {
+    fieldset.events, fieldset.guest {
+      padding-left: 1em;
+    }
+  }
+  #competitors {
+    border-collapse: collapse;
+    td, th {
+      padding: 5px;
+    }
+    th {
+      background-color: #476B77;
+      color: white;
+    }
+    tr.even { /* FIXME: use n-th child, doesn't work in IE8, though */
+      background-color: white;
+    }
+    tr.odd {
+      background-color: #eeeeee;
+    }
+    tbody tr:hover {
+      background: silver;
+    }
+    td.competitors_hover {
+      background: silver;
+    }
+    td, th {
+      border: 1px solid #E0E0E0;
+    }
+  }
+}
