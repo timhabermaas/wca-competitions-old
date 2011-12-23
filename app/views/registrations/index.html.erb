@@ -27,6 +27,18 @@
       <% end %>
     </tr>
   </thead>
+  <tfoot>
+    <tr>
+      <th>&sum;: <%= @competition.registrations.size %></th>
+      <th>Land</th>
+      <% @competition.days.each do |day| %>
+      <th><%=l day, :format => :short_day_name %></th>
+      <% end %>
+      <% @competition.events.registerable.each do |event| %>
+      <th><%= event.short_name %></th>
+      <% end %>
+    </tr>
+  </tfoot>
   <tbody>
     <% @registrations.each do |registration| %>
       <tr class=<%= cycle("even", "odd") %>>
