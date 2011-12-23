@@ -1,6 +1,6 @@
 <li>
   <p class="textile">
-    <span class="date"><%=l news.created_at.to_date, :format => :news %>:</span>
+    <span class="date"><%=l news.created_at.to_date %>:</span>
     <%=m news.content, :lite_mode %>
   </p>
   <% if can? :update, news %>

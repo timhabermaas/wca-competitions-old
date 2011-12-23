@@ -4,10 +4,15 @@
 en:
   date:
     formats:
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
       descriptive: "%A, %B %d, %Y"
-      day: "%A"
-      short_day: "%a"
-      news: "%Y-%m-%d"
+      day: "%e"
+      day_name: "%A"
+      short_day_name: "%a"
+      day_month: "%B %d"
+      year_end: ", %Y"
 
   time:
     formats:

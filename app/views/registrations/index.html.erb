@@ -20,7 +20,7 @@
       <th>Name</th>
       <th>Land</th>
       <% @competition.days.each do |day| %>
-      <th><%=l day, :format => :short_day %></th>
+      <th><%=l day, :format => :short_day_name %></th>
       <% end %>
       <% @competition.events.registerable.each do |event| %>
       <th><%= event.short_name %></th>
