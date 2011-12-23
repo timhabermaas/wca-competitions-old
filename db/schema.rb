@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111223125331) do
+ActiveRecord::Schema.define(:version => 20111223172116) do
 
   create_table "competitions", :force => true do |t|
     t.string   "name",                          :null => false
@@ -23,16 +23,6 @@ ActiveRecord::Schema.define(:version => 20111223125331) do
     t.boolean  "closed",     :default => false, :null => false
     t.text     "details"
     t.text     "address"
-  end
-
-  create_table "competitors", :force => true do |t|
-    t.string   "first_name",    :null => false
-    t.string   "last_name"
-    t.string   "wca_id"
-    t.date     "date_of_birth", :null => false
-    t.string   "gender",        :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "events", :force => true do |t|
@@ -61,9 +51,19 @@ ActiveRecord::Schema.define(:version => 20111223125331) do
 
   add_index "news_translations", ["news_id"], :name => "index_news_translations_on_news_id"
 
+  create_table "participants", :force => true do |t|
+    t.string   "first_name",    :null => false
+    t.string   "last_name"
+    t.string   "wca_id"
+    t.date     "date_of_birth", :null => false
+    t.string   "gender",        :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "registrations", :force => true do |t|
     t.integer  "competition_id", :null => false
-    t.integer  "competitor_id",  :null => false
+    t.integer  "participant_id", :null => false
     t.string   "email",          :null => false
     t.string   "days_as_guest"
     t.datetime "created_at"

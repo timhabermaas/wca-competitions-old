@@ -3,7 +3,7 @@ class Competition < ActiveRecord::Base
 
   has_many :news, :order => "created_at desc"
   has_many :registrations
-  has_many :competitors, :through => :registrations
+  has_many :participants, :through => :registrations
   has_many :schedules do
     def for(day)
       where("schedules.day" => day)

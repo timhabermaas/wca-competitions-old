@@ -1,4 +1,4 @@
-class Competitor < ActiveRecord::Base
+class Participant < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :wca_id, :gender, :date_of_birth
 
   has_many :registrations

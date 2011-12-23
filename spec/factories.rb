@@ -50,7 +50,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :competitor do
+  factory :participant do
     sequence :first_name do |n|
       "Peter#{n}"
     end
@@ -59,14 +59,14 @@ FactoryGirl.define do
     end
     date_of_birth Date.new(1981, 4, 21)
     gender "m"
-    factory :competitor_with_wca_id do
+    factory :participant_with_wca_id do
       wca_id "2008MUEL01"
     end
   end
 
   factory :registration do
     competition
-    competitor
+    participant
     email "muh@cow.com"
   end
 end
