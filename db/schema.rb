@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111222031036) do
+ActiveRecord::Schema.define(:version => 20111223125331) do
 
   create_table "competitions", :force => true do |t|
     t.string   "name",                          :null => false
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20111222031036) do
     t.datetime "updated_at"
     t.boolean  "closed",     :default => false, :null => false
     t.text     "details"
+    t.text     "address"
   end
 
   create_table "competitors", :force => true do |t|
