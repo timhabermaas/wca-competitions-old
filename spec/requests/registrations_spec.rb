@@ -81,7 +81,7 @@ describe "Registrations" do
       @competition.registrations.first.schedules.should_not include(@s4)
     end
 
-    it "registers Peter for Sunday only" do
+    it "registers Peter as a guest for Sunday only" do
       visit new_competition_registration_path(@competition)
 
       fill_in_with_peter
