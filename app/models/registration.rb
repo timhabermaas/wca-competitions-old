@@ -4,6 +4,8 @@ class Registration < ActiveRecord::Base
   has_many :registration_schedules
   has_many :schedules, :through => :registration_schedules
 
+  scope :competitor, joins(:registration_schedules)
+
   serialize :days_as_guest
 
   validates :participant, :competition_id, :email, :presence => true

@@ -48,7 +48,7 @@ describe "Registrations" do
       fill_in_with_peter
       click_on "Register"
       page.should have_content("Successfully registered")
-      page.should have_content("Peter Mustermann")
+      Registration.first.participant.first_name.should == "Peter"
     end
 
     it "doesn't create a new competitor if his WCA ID already exists" do
@@ -58,8 +58,8 @@ describe "Registrations" do
       fill_in "WCA ID", :with => "2008MUST01"
       click_on "Register"
       page.should have_content("Successfully registered")
-      page.should have_content("Peter Mustermann")
       Participant.count.should == 1
+      Registration.count.should == 1
     end
 
     it "registers Peter for 3x3x3 and 4x4x4" do

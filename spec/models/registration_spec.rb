@@ -27,6 +27,21 @@ describe Registration do
     end
   end
 
+  describe "scopes" do
+    describe ".competitors" do
+      before :each do
+        @r1 = create :registration, :competition => @competition, :days_as_guest => [0]
+        @r2 = create :registration, :competition => @competition, :schedules => [@schedule]
+        @r3 = create :registration, :competition => @competition, :days_as_guest => [0], :schedules => [@schedule2]
+      end
+
+      it "fetches all cubers and no guests" do
+        Registration.competitor.should include(@r2)
+        Registration.competitor.should include(@r3)
+      end
+    end
+  end
+
   describe "#days" do
     it "it returns [1] if user is registered for events on day 1" do
       registration = build :registration, :competition => @competition, :participant => @participant, :schedules => [@schedule2]

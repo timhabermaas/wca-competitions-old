@@ -4,6 +4,7 @@ class RegistrationsController < ApplicationController
   load_and_authorize_resource :registration, :through => :competition
 
   def index
+    @registrations = @registrations.competitor
   end
 
   def new
