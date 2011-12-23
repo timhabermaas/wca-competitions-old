@@ -19,12 +19,10 @@
         </p>
       </fieldset>
       <fieldset class="events">
-        <% @competition.schedules.registerable.for(index).each do |schedule| %>
-          <p>
-            <%= check_box_tag "registration[schedule_ids][]", schedule.id, @registration.schedules.map(&:id).include?(schedule.id), :id => "registration_schedule_ids_#{schedule.id}" %>
-            <%= label_tag "registration_schedule_ids_#{schedule.id}", schedule.event.name %>
-          </p>
-        <% end %>
+        <%= f.association :schedules, :collection => @competition.schedules.registerable.for(index),
+                                      :as => :check_boxes,
+                                      :label => false,
+                                      :item_wrapper_tag => :p %>
       </fieldset>
     </fieldset>
   <% end %>

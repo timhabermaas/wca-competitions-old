@@ -2,6 +2,8 @@ class Schedule < ActiveRecord::Base
   belongs_to :competition
   belongs_to :event
 
+  delegate :name, :to => :event
+
   scope :registerable, where(:registerable => true)
 
   validates :competition_id, :event_id, :day, :starts_at, :presence => true
