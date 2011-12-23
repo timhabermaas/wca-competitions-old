@@ -9,7 +9,11 @@ class Competition < ActiveRecord::Base
       where("schedules.day" => day)
     end
   end
-  has_many :events, :through => :schedules, :uniq => true, :order => "schedules.day, schedules.starts_at"
+  has_many :events, :through => :schedules, :uniq => true, :order => "schedules.day, schedules.starts_at" do
+    def registerable
+      where("schedules.registerable" => true) # FIXME: duplicated code
+    end
+  end
   belongs_to :user
 
   validates :name, :starts_at, :ends_at, :user_id, :presence => true
