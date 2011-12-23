@@ -14,7 +14,7 @@
   Gäste bitte auch vorher anmelden!
 </p>
 
-<table>
+<table id="competitors">
   <thead>
     <tr>
       <th>Name</th>
@@ -29,7 +29,7 @@
   </thead>
   <tbody>
     <% @registrations.each do |registration| %>
-      <tr>
+      <tr class=<%= cycle("even", "odd") %>>
         <td><%= link_to_if registration.competitor.wca_id, registration.competitor.full_name, wca(registration.competitor.wca_id) %></td>
         <td>Germany</td>
         <% @competition.days.each_with_index do |day, index| %>
