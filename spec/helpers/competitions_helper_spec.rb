@@ -13,6 +13,10 @@ describe CompetitionsHelper do
         helper.date_range(Date.new(2011, 11, 30)..Date.new(2011, 12, 1)).should == "30. November -  1. Dezember 2011"
       end
 
+      it "displays a sylvester competition properly" do
+        helper.date_range(Date.new(2011, 12, 31)..Date.new(2012, 1, 2)).should == "31. Dezember 2011 -  2. Januar 2012"
+      end
+
       it "doesn't mess with a range of one date" do
         helper.date_range(Date.new(2011, 9, 18)..Date.new(2011, 9, 18)).should == "18. September 2011"
       end
@@ -27,6 +31,10 @@ describe CompetitionsHelper do
 
       it "displays two days in different months as 'November 30 - December 01, 2011'" do
         helper.date_range(Date.new(2011, 11, 30)..Date.new(2011, 12, 1)).should == "November 30 - December 01, 2011"
+      end
+
+      it "displays a sylvester competition properly" do
+        helper.date_range(Date.new(2011, 12, 31)..Date.new(2012, 1, 2)).should == "December 31, 2011 - January 02, 2012"
       end
 
       it "doesn't mess with a range of one date" do
