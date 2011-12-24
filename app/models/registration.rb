@@ -4,7 +4,7 @@ class Registration < ActiveRecord::Base
   has_many :registration_schedules
   has_many :schedules, :through => :registration_schedules
 
-  scope :competitor, lambda { joins(:registration_schedules).uniq }
+  scope :competitor, where("id IN (SELECT registration_id FROM registrations_schedules)")
 
   serialize :days_as_guest
 

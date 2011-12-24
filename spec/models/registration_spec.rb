@@ -40,6 +40,10 @@ describe Registration do
         @competition.registrations.competitor.should include(@r2)
         @competition.registrations.competitor.should include(@r3)
       end
+
+      it "should be chainable" do
+        Registration.competitor.where(:competition_id => @competition.id).count.should == 2
+      end
     end
   end
 
