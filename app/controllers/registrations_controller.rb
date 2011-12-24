@@ -4,7 +4,7 @@ class RegistrationsController < ApplicationController
   load_and_authorize_resource :registration, :through => :competition
 
   def index
-    @registrations = @registrations.competitor
+    @registrations = @registrations.includes(:participant, :schedules).competitor # TODO move to model
   end
 
   def new

@@ -42,7 +42,7 @@ class Registration < ActiveRecord::Base
   end
 
   def competes_in?(event)
-    schedules.where(:event_id => event.id).count > 0 # FIXME produces 12031031 queries
+    schedules.any? { |s| s.event_id == event.id }
   end
 
   private
