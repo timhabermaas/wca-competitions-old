@@ -25,13 +25,13 @@ describe "Schedules" do
       visit competition_schedules_path(@competition)
 
       within("#schedule") do
-        within(".day0") do
+        within(".day0 tbody") do
           find(:xpath, ".//tr[1]").text.should match("13:30")
           find(:xpath, ".//tr[1]").text.should match("Megaminx")
           find(:xpath, ".//tr[2]").text.should match("14:30")
           find(:xpath, ".//tr[2]").text.should match("Pyraminx")
         end
-        within(".day1") do
+        within(".day1 tbody") do
           find(:xpath, ".//tr[1]").text.should match("12:00")
           find(:xpath, ".//tr[1]").text.should match("Lunch")
         end
@@ -41,10 +41,8 @@ describe "Schedules" do
     it "displays descriptive dates for each day" do
       visit competition_schedules_path(@competition)
 
-      within("#schedule") do
-        find(:xpath, ".//h3[1]").text.should match("Friday, December 02, 2011")
-        find(:xpath, ".//h3[2]").text.should match("Saturday, December 03, 2011")
-      end
+      find(:xpath, ".//h3[1]").text.should match("Friday, December 02, 2011")
+      find(:xpath, ".//h3[2]").text.should match("Saturday, December 03, 2011")
     end
   end
 
@@ -62,7 +60,7 @@ describe "Schedules" do
       click_button "Create Schedule"
 
       within("#schedule") do
-        within(".day0") do
+        within(".day0 tbody") do
           find(:xpath, ".//tr[1]").text.should match("14:00")
           find(:xpath, ".//tr[1]").text.should match("Pyraminx")
         end
