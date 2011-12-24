@@ -31,13 +31,14 @@ describe Registration do
     describe ".competitors" do
       before :each do
         @r1 = create :registration, :competition => @competition, :days_as_guest => [0]
-        @r2 = create :registration, :competition => @competition, :schedules => [@schedule]
+        @r2 = create :registration, :competition => @competition, :schedules => [@schedule, @schedule2]
         @r3 = create :registration, :competition => @competition, :days_as_guest => [0], :schedules => [@schedule2]
       end
 
-      it "fetches all cubers and no guests" do
-        Registration.competitor.should include(@r2)
-        Registration.competitor.should include(@r3)
+      it "fetches all cubers and no guests through competition" do
+        @competition.registrations.competitor.should have(2).elements
+        @competition.registrations.competitor.should include(@r2)
+        @competition.registrations.competitor.should include(@r3)
       end
     end
   end

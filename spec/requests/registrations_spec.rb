@@ -19,15 +19,14 @@ describe "Registrations" do
     before :each do
       @dieter = create :participant, :first_name => "Dieter", :last_name => "Müller", :wca_id => "2008MULL01"
       @peter = create :participant, :first_name => "Peter", :last_name => "Müller"
-      @registraion = Registration.create :competition => @competition, :participant => @dieter, :schedules => [@schedule_3], :email => "muh@cow.com"
-      @registraion = Registration.create :competition => @competition, :participant => @peter, :email => "muh2@cow.com"
+      create :registration, :competition => @competition, :participant => @dieter, :schedules => [@schedule_3], :email => "muh@cow.com"
+      create :registration, :competition => @competition, :participant => @peter, :email => "muh2@cow.com"
     end
 
     it "lists only registered competitors for Munich Open" do
       visit competition_registrations_path(@competition)
       page.should have_link("Dieter Müller", :href => "http://worldcubeassociation.org/results/p.php?i=2008MULL01") # TODO what about linking to a competitors page instead of linking to the WCA profile?
       page.should_not have_content("Peter Müller")
-      page.should_not have_link("Peter Müller")
     end
   end
 
