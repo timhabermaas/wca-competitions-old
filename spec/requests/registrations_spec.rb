@@ -28,6 +28,19 @@ describe "Registrations" do
       page.should have_link("Dieter Müller", :href => "http://worldcubeassociation.org/results/p.php?i=2008MULL01") # TODO what about linking to a competitors page instead of linking to the WCA profile?
       page.should_not have_content("Peter Müller")
     end
+
+    it "displays amount of competitors and guest" do
+      visit competition_registrations_path(@competition)
+      within("#competitors") do
+        page.should have_content("∑: 1 (1 guest)")
+      end
+      p = create :participant
+      create :registration, :competition => @competition, :participant => p, :days_as_guest => [0]
+      visit competition_registrations_path(@competition)
+      within("#competitors") do
+        page.should have_content("∑: 1 (2 guests)")
+      end
+    end
   end
 
   describe "POST /registrations" do

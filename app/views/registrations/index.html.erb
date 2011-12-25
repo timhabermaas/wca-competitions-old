@@ -29,7 +29,7 @@
   </thead>
   <tfoot>
     <tr>
-      <th>&sum;: <%= @competition.registrations.size %></th>
+      <th>&sum;: <%= @competition.registrations.competitor.size %> (<%= t :guest, :count => @competition.registrations.guest.size %>)</th>
       <th>Land</th>
       <% @competition.days.each do |day| %>
       <th><%=l day, :format => :short_day_name %></th>

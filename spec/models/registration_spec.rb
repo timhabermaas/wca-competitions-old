@@ -28,21 +28,32 @@ describe Registration do
   end
 
   describe "scopes" do
-    describe ".competitors" do
-      before :each do
-        @r1 = create :registration, :competition => @competition, :days_as_guest => [0]
-        @r2 = create :registration, :competition => @competition, :schedules => [@schedule, @schedule2]
-        @r3 = create :registration, :competition => @competition, :days_as_guest => [0], :schedules => [@schedule2]
-      end
+    before :each do
+      @r1 = create :registration, :competition => @competition, :days_as_guest => [0]
+      @r2 = create :registration, :competition => @competition, :schedules => [@schedule, @schedule2]
+      @r3 = create :registration, :competition => @competition, :days_as_guest => [0], :schedules => [@schedule2]
+    end
 
-      it "fetches all cubers and no guests through competition" do
-        @competition.registrations.competitor.should have(2).elements
-        @competition.registrations.competitor.should include(@r2)
-        @competition.registrations.competitor.should include(@r3)
+    describe ".competitor" do
+      it "fetches all cubers and no guests" do
+        Registration.competitor.should have(2).elements
+        Registration.competitor.should include(@r2)
+        Registration.competitor.should include(@r3)
       end
 
       it "should be chainable" do
         Registration.competitor.where(:competition_id => @competition.id).count.should == 2
+      end
+    end
+
+    describe ".guest" do
+      it "fetches guests and no cubers" do
+        Registration.guest.should have(1).elements
+        Registration.guest.should include(@r1)
+      end
+
+      it "should be chainable" do
+        Registration.guest.where(:competition_id => @competition.id).count.should == 1
       end
     end
   end

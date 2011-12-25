@@ -5,6 +5,7 @@ class Registration < ActiveRecord::Base
   has_many :schedules, :through => :registration_schedules
 
   scope :competitor, where("id IN (SELECT registration_id FROM registrations_schedules)")
+  scope :guest, where("id NOT IN (SELECT registration_id FROM registrations_schedules)")
 
   serialize :days_as_guest
 

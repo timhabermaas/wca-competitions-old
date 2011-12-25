@@ -59,6 +59,9 @@ de:
         blank: "darf nicht leer sein"
         days: "Es muss mindestens ein Tag ausgewählt werden"
 
+  guest:
+    one: "1 Gast"
+    other: "%{count} Gäste"
 
   #### Menu
 
