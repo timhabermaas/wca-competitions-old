@@ -5,7 +5,5 @@
 * date and address should get more attention on competitions#show
 * delegate name and stuff from registration to competitor?
 
-* use subclassing with default_scope for competitor and guest?
-
 Tests
 =====
