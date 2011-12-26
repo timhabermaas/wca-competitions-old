@@ -1,0 +1,51 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: http://localhost:9292/persons/2003POCH01.json
+    body: 
+    headers: 
+      accept: 
+      - application/json
+      accept-encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - application/json
+      content-length: 
+      - "89"
+      server: 
+      - WEBrick/1.3.1 (Ruby/1.9.2/2010-08-18)
+      date: 
+      - Mon, 26 Dec 2011 03:08:31 GMT
+    body: "{\"countryId\":\"Germany\",\"gender\":\"m\",\"id\":\"2003POCH01\",\"name\":\"Stefan Pochmann\",\"subid\":1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: http://localhost:9292/persons/2003POCH01/results.json?best=average&event_id=magic
+    body: 
+    headers: 
+      accept: 
+      - application/json
+      accept-encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - application/json
+      content-length: 
+      - "328"
+      server: 
+      - WEBrick/1.3.1 (Ruby/1.9.2/2010-08-18)
+      date: 
+      - Mon, 26 Dec 2011 03:08:31 GMT
+    body: "[{\"result\":{\"average\":166,\"best\":143,\"competitionId\":\"Euro2004\",\"eventId\":\"magic\",\"formatId\":\"a\",\"personCountryId\":\"Germany\",\"personId\":\"2003POCH01\",\"personName\":\"Stefan Pochmann\",\"pos\":2,\"regionalAverageRecord\":\"NR \",\"regionalSingleRecord\":\"WR \",\"roundId\":\"f\",\"value1\":143,\"value2\":147,\"value3\":146,\"value4\":281,\"value5\":206}}]"
+    http_version: "1.1"

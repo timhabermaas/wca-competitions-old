@@ -46,6 +46,8 @@ group :test do
   gem 'capybara'
   gem 'launchy'
   gem 'spork', '~> 0.9.0.rc'
+  gem 'vcr'
+  gem 'fakeweb'
 end
 
 # JavaScript engine
