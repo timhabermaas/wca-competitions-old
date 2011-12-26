@@ -4,7 +4,8 @@ describe Registration do
   before :each do
     @competition = create :competition, :starts_at => Date.new(2011, 12, 10), :ends_at => Date.new(2011, 12, 11)
     @participant = create :participant, :wca_id => "2008MUHA01"
-    @schedule = create :schedule, :competition => @competition, :day => 0
+    @pyraminx = create :event, :name => "Pyraminx"
+    @schedule = create :schedule, :competition => @competition, :day => 0, :event => @pyraminx
     @schedule2 = create :schedule, :competition => @competition, :day => 1
   end
 
@@ -54,6 +55,12 @@ describe Registration do
 
       it "should be chainable" do
         Registration.guest.where(:competition_id => @competition.id).count.should == 1
+      end
+    end
+
+    describe ".for_event" do
+      it "finds all registrations for Pyraminx" do
+        Registration.for_event(@pyraminx).should == [@r2]
       end
     end
   end
