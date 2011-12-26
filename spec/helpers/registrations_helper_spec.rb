@@ -14,6 +14,14 @@ describe RegistrationsHelper do
       it "formats 1304 as 13.04" do
         helper.format_time(1304).should == "13.04"
       end
+
+      it "formats 6000 as 1:00.00" do
+        helper.format_time(6000).should == "1:00.00"
+      end
+
+      it "formats 360000 as 1:00:00.00" do
+        helper.format_time(360000).should == "1:00:00.00"
+      end
     end
 
     context "german locale" do
