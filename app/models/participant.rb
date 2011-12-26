@@ -15,11 +15,11 @@ class Participant < ActiveRecord::Base
   end
 
   def fastest_average_for(event)
-    WCA::Person.find(wca_id).fastest_average_for(event.wca).average
+    WCA::Person.find(wca_id).fastest_average_for(event.wca).try(:average)
   end
 
   def fastest_single_for(event)
-    WCA::Person.find(wca_id).fastest_single_for(event.wca).best
+    WCA::Person.find(wca_id).fastest_single_for(event.wca).try(:best)
   end
 
   private

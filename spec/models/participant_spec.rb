@@ -30,20 +30,35 @@ describe Participant do
 
   describe "#fastest_*_for" do
     before :each do
-      @event = create :event, :name => "Rubik's Cube", :wca => "333"
+      @three = create :event, :name => "Rubik's Cube", :wca => "333"
+      @six = create :event, :name => "6x6x6", :wca => "666"
     end
 
     it "returns 1466 for Stefan's 333 average" do
       VCR.use_cassette "participant/2003POCH01/average" do
         participant = build :participant, :wca_id => "2003POCH01"
-        participant.fastest_average_for(@event).should == 1466
+        participant.fastest_average_for(@three).should == 1466
       end
     end
 
     it "returns 956 for Stefan's 333 single" do
       VCR.use_cassette "participant/2003POCH01/single" do
         participant = build :participant, :wca_id => "2003POCH01"
-        participant.fastest_single_for(@event).should == 956
+        participant.fastest_single_for(@three).should == 956
+      end
+    end
+
+    it "returns nil if the person has no best single for that event" do
+      VCR.use_cassette "participant/2004NOOR01/single" do
+        participant = build :participant, :wca_id => "2004NOOR01"
+        participant.fastest_single_for(@six).should be_nil
+      end
+    end
+
+    it "returns nil if the person has no best average for that event" do
+      VCR.use_cassette "participant/2004NOOR01/average" do
+        participant = build :participant, :wca_id => "2004NOOR01"
+        participant.fastest_average_for(@six).should be_nil
       end
     end
   end

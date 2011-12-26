@@ -6,7 +6,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @competition.registrations.with_wca_id.for_event(@event).sort_by { |r| r.participant.fastest_average_for(@event) }.each do |registration| %>
+    <% @competition.registrations.with_wca_id.for_event(@event).reject { |r| r.participant.fastest_average_for(@event).nil? }.sort_by { |r| r.participant.fastest_average_for(@event) }.each do |registration| %>
       <tr>
         <td><%= registration.participant.full_name %></td>
         <td><%=ft registration.participant.fastest_average_for(@event) %></td>

@@ -119,11 +119,13 @@ describe "Registrations" do
       c3 = create :participant, :wca_id => "2008AURO01", :first_name => "Basti"
       c4 = create :participant, :wca_id => "2003BRUC01", :first_name => "Ron"
       c5 = create :participant, :first_name => "Thomas"
+      c6 = create :participant, :wca_id => "2004CHAN04", :first_name => "Shelley"
       create :registration, :participant => c1, :competition => @competition, :schedules => [@schedule_3]
       create :registration, :participant => c2, :competition => @competition, :schedules => [@schedule_3]
       create :registration, :participant => c3, :competition => @competition, :schedules => [@schedule_3]
       create :registration, :participant => c4, :competition => @competition, :schedules => [@schedule_py]
       create :registration, :participant => c5, :competition => @competition, :schedules => [@schedule_3]
+      create :registration, :participant => c6, :competition => @competition, :schedules => [@schedule_py]
     end
 
     it "displays the competitors in order of their 3x3x3 averages" do
@@ -138,6 +140,15 @@ describe "Registrations" do
           find(:xpath, ".//tr[3]").text.should match("15.79")
           page.should_not have_content("Ron")
           page.should_not have_content("Thomas")
+        end
+      end
+    end
+
+    it "doesn't show people who don't have records for that event" do
+      VCR.use_cassette "compare/pyraminx" do
+        visit compare_competition_registrations_path(@competition, :event_id => @pyraminx.id)
+        within("#compare tbody") do
+          page.should_not have_content("Shelley")
         end
       end
     end

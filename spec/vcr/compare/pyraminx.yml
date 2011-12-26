@@ -1,0 +1,101 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: http://localhost:9292/persons/2003BRUC01.json
+    body: 
+    headers: 
+      accept: 
+      - application/json
+      accept-encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - application/json
+      content-length: 
+      - "93"
+      server: 
+      - WEBrick/1.3.1 (Ruby/1.9.2/2010-08-18)
+      date: 
+      - Mon, 26 Dec 2011 16:16:09 GMT
+    body: "{\"countryId\":\"Netherlands\",\"gender\":\"m\",\"id\":\"2003BRUC01\",\"name\":\"Ron van Bruchem\",\"subid\":1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: http://localhost:9292/persons/2003BRUC01/results.json?best=average&event_id=pyram
+    body: 
+    headers: 
+      accept: 
+      - application/json
+      accept-encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - application/json
+      content-length: 
+      - "339"
+      server: 
+      - WEBrick/1.3.1 (Ruby/1.9.2/2010-08-18)
+      date: 
+      - Mon, 26 Dec 2011 16:16:09 GMT
+    body: "[{\"result\":{\"average\":776,\"best\":691,\"competitionId\":\"GermanOpen2010\",\"eventId\":\"pyram\",\"formatId\":\"a\",\"personCountryId\":\"Netherlands\",\"personId\":\"2003BRUC01\",\"personName\":\"Ron van Bruchem\",\"pos\":8,\"regionalAverageRecord\":\"   \",\"regionalSingleRecord\":\"   \",\"roundId\":\"c\",\"value1\":836,\"value2\":691,\"value3\":730,\"value4\":763,\"value5\":1168}}]"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: http://localhost:9292/persons/2004CHAN04.json
+    body: 
+    headers: 
+      accept: 
+      - application/json
+      accept-encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - application/json
+      content-length: 
+      - "83"
+      server: 
+      - WEBrick/1.3.1 (Ruby/1.9.2/2010-08-18)
+      date: 
+      - Mon, 26 Dec 2011 16:16:09 GMT
+    body: "{\"countryId\":\"USA\",\"gender\":\"f\",\"id\":\"2004CHAN04\",\"name\":\"Shelley Chang\",\"subid\":1}"
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: http://localhost:9292/persons/2004CHAN04/results.json?best=average&event_id=pyram
+    body: 
+    headers: 
+      accept: 
+      - application/json
+      accept-encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - application/json
+      content-length: 
+      - "2"
+      server: 
+      - WEBrick/1.3.1 (Ruby/1.9.2/2010-08-18)
+      date: 
+      - Mon, 26 Dec 2011 16:16:09 GMT
+    body: "[]"
+    http_version: "1.1"
