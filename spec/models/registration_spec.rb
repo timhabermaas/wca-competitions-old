@@ -63,6 +63,13 @@ describe Registration do
         Registration.for_event(@pyraminx).should == [@r2]
       end
     end
+
+    describe ".with_wca_id" do
+      it "finds all people with WCA ID" do
+        r = create :registration, :competition => @competition, :participant => build(:participant_with_wca_id)
+        Registration.with_wca_id.should == [r]
+      end
+    end
   end
 
   describe "#days" do

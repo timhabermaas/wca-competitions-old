@@ -6,7 +6,9 @@ WCACompetitions::Application.routes.draw do
 
     resources :competitions do
       resources :news
-      resources :registrations
+      resources :registrations do
+        get "compare", :on => :collection
+      end
       resources :schedules
     end
     resources :events

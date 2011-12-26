@@ -5,10 +5,10 @@ require "spec_helper"
 describe "Registrations" do
   before :each do
     @competition = create :competition, :name => "Munich Open 2011", :starts_at => Date.new(2011, 11, 26), :ends_at => Date.new(2011, 11, 27)
-    @three = create :event, :name => "3x3x3"
-    @four = create :event, :name => "4x4x4"
-    @pyraminx = create :event, :name => "Pyraminx"
-    @megaminx = create :event, :name => "Megaminx"
+    @three = create :event, :name => "3x3x3", :wca => "333"
+    @four = create :event, :name => "4x4x4", :wca => "444"
+    @pyraminx = create :event, :name => "Pyraminx", :wca => "pyram"
+    @megaminx = create :event, :name => "Megaminx", :wca => "minx"
     @schedule_3 = create :schedule, :event => @three, :competition => @competition, :day => 0, :registerable => true
     @schedule_4 = create :schedule, :event => @four, :competition => @competition, :day => 0, :registerable => true
     @schedule_py = create :schedule, :event => @pyraminx, :competition => @competition, :day => 1, :registerable => true
@@ -109,6 +109,37 @@ describe "Registrations" do
       visit new_competition_registration_path(@competition)
 
       page.should_not have_content(@lunch.event.name)
+    end
+  end
+
+  describe "GET /registrations/compare" do
+    before :each do
+      c1 = create :participant, :wca_id => "2003POCH01", :first_name => "Stefan"
+      c2 = create :participant, :wca_id => "2007HABE01", :first_name => "Tim"
+      c3 = create :participant, :wca_id => "2008AURO01", :first_name => "Basti"
+      c4 = create :participant, :wca_id => "2003BRUC01", :first_name => "Ron"
+      c5 = create :participant, :first_name => "Thomas"
+      create :registration, :participant => c1, :competition => @competition, :schedules => [@schedule_3]
+      create :registration, :participant => c2, :competition => @competition, :schedules => [@schedule_3]
+      create :registration, :participant => c3, :competition => @competition, :schedules => [@schedule_3]
+      create :registration, :participant => c4, :competition => @competition, :schedules => [@schedule_py]
+      create :registration, :participant => c5, :competition => @competition, :schedules => [@schedule_3]
+    end
+
+    it "displays the competitors in order of their 3x3x3 averages" do
+      VCR.use_cassette "compare/3x3x3" do
+        visit compare_competition_registrations_path(@competition, :event_id => @three.id)
+        within("#compare tbody") do
+          find(:xpath, ".//tr[1]").text.should match("Basti")
+          find(:xpath, ".//tr[1]").text.should match("13.50")
+          find(:xpath, ".//tr[2]").text.should match("Stefan")
+          find(:xpath, ".//tr[2]").text.should match("14.66")
+          find(:xpath, ".//tr[3]").text.should match("Tim")
+          find(:xpath, ".//tr[3]").text.should match("15.79")
+          page.should_not have_content("Ron")
+          page.should_not have_content("Thomas")
+        end
+      end
     end
   end
 end

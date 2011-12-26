@@ -7,6 +7,10 @@ class RegistrationsController < ApplicationController
     @registrations = @registrations.includes(:participant, :schedules).competitor # TODO move to model
   end
 
+  def compare
+    @event = Event.find params[:event_id]
+  end
+
   def new
   end
 
