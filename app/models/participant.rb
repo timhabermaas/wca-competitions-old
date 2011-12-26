@@ -17,7 +17,6 @@ class Participant < ActiveRecord::Base
   end
 
   def fastest_single_for(event)
-    result = WCA::Person.find(wca_id).fastest_single_for(event.wca)
-    [result.value1, result.value2, result.value3, result.value4, result.value5].reject { |t| t <= 0 }.min
+    WCA::Person.find(wca_id).fastest_single_for(event.wca).best
   end
 end
