@@ -5,11 +5,11 @@ class WCA::Person < WCA::Base
     WCA::Result.find(:all, :params => { :person_id => self.id }.merge(params))
   end
 
-  def best_single_for(event)
-    results(:event_id => event, :best => "single")
+  def fastest_single_for(event)
+    results(:event_id => event, :best => "single").first
   end
 
-  def best_average_for(event)
-    results(:event_id => event, :best => "average")
+  def fastest_average_for(event)
+    results(:event_id => event, :best => "average").first
   end
 end
