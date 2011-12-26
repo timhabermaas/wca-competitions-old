@@ -5,8 +5,10 @@ class Participant < ActiveRecord::Base
   has_many :competitions, :through => :registrations
 
   validates :first_name, :last_name, :date_of_birth, :gender, :presence => true
-  validates :wca_id, :uniqueness => {:allow_blank => true}
+  validates :wca_id, :uniqueness => true
   validates :gender, :inclusion => %w(m f)
+
+  before_save :set_wca_id_to_nil, :if => "wca_id.blank?"
 
   def full_name
     first_name + " " + last_name
@@ -18,5 +20,10 @@ class Participant < ActiveRecord::Base
 
   def fastest_single_for(event)
     WCA::Person.find(wca_id).fastest_single_for(event.wca).best
+  end
+
+  private
+  def set_wca_id_to_nil # FIXME: there must be a nicer solution...
+    self.wca_id = nil
   end
 end
