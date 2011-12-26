@@ -28,4 +28,24 @@ describe Participant do
     participant = Participant.new :first_name => "Thom", :last_name => "Pochmann"
     participant.full_name.should == "Thom Pochmann"
   end
+
+  describe "#fastest_*_for" do
+    before :each do
+      @event = create :event, :name => "Rubik's Cube", :wca => "333"
+    end
+
+    it "returns 1466 for Stefan's 333 average" do
+      VCR.use_cassette "participant/2003POCH01/average" do
+        participant = build :participant, :wca_id => "2003POCH01"
+        participant.fastest_average_for(@event).should == 1466
+      end
+    end
+
+    it "returns 956 for Stefan's 333 single" do
+      VCR.use_cassette "participant/2003POCH01/single" do
+        participant = build :participant, :wca_id => "2003POCH01"
+        participant.fastest_single_for(@event).should == 956
+      end
+    end
+  end
 end

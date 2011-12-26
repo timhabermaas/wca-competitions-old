@@ -11,4 +11,13 @@ class Participant < ActiveRecord::Base
   def full_name
     first_name + " " + last_name
   end
+
+  def fastest_average_for(event)
+    WCA::Person.find(wca_id).fastest_average_for(event.wca).average
+  end
+
+  def fastest_single_for(event)
+    result = WCA::Person.find(wca_id).fastest_single_for(event.wca)
+    [result.value1, result.value2, result.value3, result.value4, result.value5].reject { |t| t <= 0 }.min
+  end
 end
