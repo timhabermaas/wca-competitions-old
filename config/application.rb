@@ -44,5 +44,7 @@ module WCACompetitions
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.wca_api_url = "http://localhost:9292"
   end
 end
