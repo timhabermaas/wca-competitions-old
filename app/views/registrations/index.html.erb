@@ -41,7 +41,7 @@
   </tfoot>
   <tbody>
     <% @registrations.each do |registration| %>
-      <tr class=<%= cycle("even", "odd") %>>
+      <tr class="<%= cycle("even", "odd") %>">
         <td><%= link_to_if registration.participant.wca_id.present?, registration.participant.full_name, wca(registration.participant.wca_id) %></td>
         <td>Germany</td>
         <% @competition.days.each_with_index do |day, index| %>
