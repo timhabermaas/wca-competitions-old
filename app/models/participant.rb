@@ -15,11 +15,11 @@ class Participant < ActiveRecord::Base
   end
 
   def fastest_average_for(event)
-    WCA::Person.find(wca_id).fastest_average_for(event.wca).try(:average)
+    WCA::Result.find(:first, :params => { :person_id => wca_id, :event_id => event.wca, :best => "average" }).try(:average) # TODO: move to WCA::Result
   end
 
   def fastest_single_for(event)
-    WCA::Person.find(wca_id).fastest_single_for(event.wca).try(:best)
+    WCA::Result.find(:first, :params => { :person_id => wca_id, :event_id => event.wca, :best => "single" }).try(:best)
   end
 
   private
