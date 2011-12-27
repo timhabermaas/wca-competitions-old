@@ -8,6 +8,7 @@ class RegistrationsController < ApplicationController
   end
 
   def compare
+    params[:event_id] ||= Event.find_by_name("Rubik's Cube").id
     @event = Event.find params[:event_id]
 
     @competitors = @competition.registrations.with_wca_id.for_event(@event).includes(:participant).map do |r| # TODO move to model

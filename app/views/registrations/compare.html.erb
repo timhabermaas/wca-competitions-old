@@ -1,18 +1,22 @@
-<table class="compare">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Average</th>
-      <th>Single</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @competitors.each do |competitor| %>
+<div id="compare">
+  <%= select :event, :id, options_for_select(Event.all.map { |event| [event.name, compare_competition_registrations_url(@competition, :event_id => event.id)] }, compare_competition_registrations_url(@competition, :event_id => params[:event_id])) %>
+
+  <table class="compare">
+    <thead>
       <tr>
-        <td class="name"><%= competitor[:participant].full_name %></td>
-        <td class="average"><%=ft competitor[:average] %></td>
-        <td class="single"><%=ft competitor[:single] %></td>
+        <th>Name</th>
+        <th>Average</th>
+        <th>Single</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @competitors.each do |competitor| %>
+        <tr>
+          <td class="name"><%= competitor[:participant].full_name %></td>
+          <td class="average"><%=ft competitor[:average] %></td>
+          <td class="single"><%=ft competitor[:single] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
