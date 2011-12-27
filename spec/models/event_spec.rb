@@ -11,10 +11,21 @@ describe Event do
     it { should validate_presence_of :short_name }
   end
 
-  describe "#official?" do
-    it "is official if wca event id is present" do
-      Event.new(:wca => "333").should be_official
-      Event.new().should_not be_official
+  it "converts blank wca attribute to nil before saving" do
+    event = create :event, :wca => " "
+    Event.first.wca.should be_nil
+  end
+
+  describe "scopes" do
+    describe ".official" do
+      it "is official if wca event id is present" do
+        event1 = create :event, :wca => "333"
+        event2 = create :event, :wca => "444"
+        2.times { create :event }
+        Event.official.should have(2).elements
+        Event.official.should include(event1)
+        Event.official.should include(event2)
+      end
     end
   end
 end
