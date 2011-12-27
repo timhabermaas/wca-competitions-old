@@ -131,7 +131,7 @@ describe "Registrations" do
     it "displays the competitors in order of their 3x3x3 averages" do
       VCR.use_cassette "compare/3x3x3" do
         visit compare_competition_registrations_path(@competition, :event_id => @three.id)
-        within("#compare tbody") do
+        within("table.compare tbody") do
           find(:xpath, ".//tr[1]").text.should match("Basti")
           find(:xpath, ".//tr[1]").text.should match("13.50")
           find(:xpath, ".//tr[1]").text.should match("10.46")
@@ -150,7 +150,7 @@ describe "Registrations" do
     it "doesn't show people who don't have records for that event" do
       VCR.use_cassette "compare/pyraminx" do
         visit compare_competition_registrations_path(@competition, :event_id => @pyraminx.id)
-        within("#compare tbody") do
+        within("table.compare tbody") do
           page.should_not have_content("Shelley")
         end
       end

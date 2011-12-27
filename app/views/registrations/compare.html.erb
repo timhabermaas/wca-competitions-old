@@ -1,16 +1,17 @@
-<table id="compare">
+<table class="compare">
   <thead>
     <tr>
       <th>Name</th>
       <th>Average</th>
+      <th>Single</th>
     </tr>
   </thead>
   <tbody>
-    <% @competition.registrations.with_wca_id.for_event(@event).reject { |r| r.participant.fastest_average_for(@event).nil? }.sort_by { |r| r.participant.fastest_average_for(@event) }.each do |registration| %>
+    <% @competitors.each do |competitor| %>
       <tr>
-        <td><%= registration.participant.full_name %></td>
-        <td><%=ft registration.participant.fastest_average_for(@event) %></td>
-        <td><%=ft registration.participant.fastest_single_for(@event) %></td>
+        <td class="name"><%= competitor[:participant].full_name %></td>
+        <td class="average"><%=ft competitor[:average] %></td>
+        <td class="single"><%=ft competitor[:single] %></td>
       </tr>
     <% end %>
   </tbody>

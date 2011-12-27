@@ -74,6 +74,12 @@
     text-align: center;
   }
 
+  table.compare {
+    td.single, td.average {
+      text-align: right;
+    }
+  }
+
   #new_registration, #edit_registration {
     fieldset.events, fieldset.guest {
       padding-left: 1em;
