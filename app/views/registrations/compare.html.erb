@@ -10,6 +10,7 @@
       <tr>
         <td><%= registration.participant.full_name %></td>
         <td><%=ft registration.participant.fastest_average_for(@event) %></td>
+        <td><%=ft registration.participant.fastest_single_for(@event) %></td>
       </tr>
     <% end %>
   </tbody>

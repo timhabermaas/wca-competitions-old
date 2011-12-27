@@ -134,10 +134,13 @@ describe "Registrations" do
         within("#compare tbody") do
           find(:xpath, ".//tr[1]").text.should match("Basti")
           find(:xpath, ".//tr[1]").text.should match("13.50")
+          find(:xpath, ".//tr[1]").text.should match("10.46")
           find(:xpath, ".//tr[2]").text.should match("Stefan")
           find(:xpath, ".//tr[2]").text.should match("14.66")
+          find(:xpath, ".//tr[2]").text.should match("9.56")
           find(:xpath, ".//tr[3]").text.should match("Tim")
           find(:xpath, ".//tr[3]").text.should match("15.79")
+          find(:xpath, ".//tr[3]").text.should match("12.52")
           page.should_not have_content("Ron")
           page.should_not have_content("Thomas")
         end
