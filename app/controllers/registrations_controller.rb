@@ -13,8 +13,8 @@ class RegistrationsController < ApplicationController
 
     @competitors = @competition.registrations.with_wca_id.for_event(@event).includes(:participant).map do |r| # TODO move to model
       average = r.participant.fastest_average_for @event
-      next if average.nil?
       single = r.participant.fastest_single_for @event
+      next if single.nil?
       { :participant => r.participant, :single => single, :average => average }
     end.compact.sort_by { |r| r[:average] }
   end

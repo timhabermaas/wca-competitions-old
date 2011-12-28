@@ -8,10 +8,12 @@ describe "Registrations" do
     @competition = create :competition, :name => "Munich Open 2011", :starts_at => Date.new(2011, 11, 26), :ends_at => Date.new(2011, 11, 27)
     @three = create :event, :name => "3x3x3", :wca => "333"
     @four = create :event, :name => "4x4x4", :wca => "444"
+    @four_bld = create :event, :name => "4x4x4 BLD", :wca => "444bf"
     @pyraminx = create :event, :name => "Pyraminx", :wca => "pyram"
     @megaminx = create :event, :name => "Megaminx", :wca => "minx"
     @schedule_3 = create :schedule, :event => @three, :competition => @competition, :day => 0, :registerable => true
     @schedule_4 = create :schedule, :event => @four, :competition => @competition, :day => 0, :registerable => true
+    @schedule_4bf = create :schedule, :event => @four_bld, :competition => @competition, :day => 1, :registerable => true
     @schedule_py = create :schedule, :event => @pyraminx, :competition => @competition, :day => 1, :registerable => true
     @schedule_mx = create :schedule, :event => @megaminx, :competition => @competition, :day => 1, :registerable => true
   end
@@ -122,8 +124,8 @@ describe "Registrations" do
       c5 = create :participant, :first_name => "Thomas"
       c6 = create :participant, :wca_id => "2004CHAN04", :first_name => "Shelley"
       create :registration, :participant => c1, :competition => @competition, :schedules => [@schedule_3]
-      create :registration, :participant => c2, :competition => @competition, :schedules => [@schedule_3]
-      create :registration, :participant => c3, :competition => @competition, :schedules => [@schedule_3]
+      create :registration, :participant => c2, :competition => @competition, :schedules => [@schedule_3, @schedule_4bf]
+      create :registration, :participant => c3, :competition => @competition, :schedules => [@schedule_3, @schedule_4bf]
       create :registration, :participant => c4, :competition => @competition, :schedules => [@schedule_py]
       create :registration, :participant => c5, :competition => @competition, :schedules => [@schedule_3]
       create :registration, :participant => c6, :competition => @competition, :schedules => [@schedule_py]
@@ -144,6 +146,21 @@ describe "Registrations" do
           find(:xpath, ".//tr[3]").text.should match("12.52")
           page.should_not have_content("Ron")
           page.should_not have_content("Thomas")
+        end
+      end
+    end
+
+    it "displays 4x4 BLD properly" do
+      VCR.use_cassette "compare/4x4BLD" do
+        visit compare_competition_registrations_path(@competition, :event_id => @four_bld.id)
+        within("table.compare thead") do
+          page.should_not have_content("average")
+        end
+        within("table.compare tbody") do
+          find(:xpath, ".//tr[1]").text.should match("Tim")
+          find(:xpath, ".//tr[1]").text.should match("6:50.53")
+          find(:xpath, ".//tr[2]").text.should match("Basti")
+          find(:xpath, ".//tr[2]").text.should match("13:50.00")
         end
       end
     end
