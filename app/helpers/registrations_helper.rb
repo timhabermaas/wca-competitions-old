@@ -19,7 +19,7 @@ module RegistrationsHelper
     solved = diff + missed
     attempted = solved + missed
     time = s[3..7].to_i
-    "#{solved}/#{attempted} in #{time == 99999 ? "?" : ft(time * 100)}"
+    "#{solved}/#{attempted} in #{time == 99999 ? "?" : format_time(time * 100)}"
   end
 
   def format_result(result, event)
