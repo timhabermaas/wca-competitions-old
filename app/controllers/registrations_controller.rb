@@ -16,7 +16,7 @@ class RegistrationsController < ApplicationController
       single = r.participant.fastest_single_for @event
       next if single.nil?
       { :participant => r.participant, :single => single, :average => average }
-    end.compact.sort_by { |r| r[:average] }
+    end.compact.sort_by { |r| [r[:average] || 8_640_000, r[:single]] } # FIXME remove random 24h number
   end
 
   def new

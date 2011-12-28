@@ -2,6 +2,10 @@ require "spec_helper"
 
 describe RegistrationsHelper do
   describe "#format_time" do
+    it "given nil it returns an empty string" do
+      helper.format_time(nil).should == ""
+    end
+
     context "english locale" do
       before :each do
         I18n.locale = :en

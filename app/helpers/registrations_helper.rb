@@ -1,5 +1,6 @@
 module RegistrationsHelper
   def format_time(time)
+    return "" if time.nil?
     seconds = time / 100.0
     minutes = (seconds / 60).to_i
     hours = minutes / 60

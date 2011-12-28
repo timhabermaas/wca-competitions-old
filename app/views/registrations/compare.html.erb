@@ -5,9 +5,7 @@
     <thead>
       <tr>
         <th>Name</th>
-        <% unless @competitors.empty? || @competitors.first[:average].nil? %>
         <th>Average</th>
-        <% end %>
         <th>Single</th>
       </tr>
     </thead>
@@ -15,9 +13,7 @@
       <% @competitors.each do |competitor| %>
         <tr>
           <td class="name"><%= competitor[:participant].full_name %></td>
-          <% unless competitor[:average].nil? %>
           <td class="average"><%=ft competitor[:average] %></td>
-          <% end %>
           <td class="single"><%=ft competitor[:single] %></td>
         </tr>
       <% end %>
