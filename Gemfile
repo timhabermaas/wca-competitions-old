@@ -12,6 +12,7 @@ gem 'cancan'
 gem 'RedCloth'
 gem 'globalize3'
 
+gem 'newrelic_rpm'
 
 # Gems used only for assets and not required
 # in production environments by default.
