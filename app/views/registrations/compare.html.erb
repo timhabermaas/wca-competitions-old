@@ -16,7 +16,7 @@
           <td class="rank"><%= rank + 1 %></td>
           <td class="name"><%= competitor[:participant].full_name %></td>
           <td class="average"><%=ft competitor[:average] %></td>
-          <td class="single"><%=ft competitor[:single] %></td>
+          <td class="single"><%= @event.wca == "333mbf" ? format_mbld(competitor[:single]) : ft(competitor[:single]) %></td>
         </tr>
       <% end %>
     </tbody>

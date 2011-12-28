@@ -42,4 +42,14 @@ describe RegistrationsHelper do
       end
     end
   end
+
+  describe "#format_mbld" do
+    it "outputs 890333804 as '14/18 in 55:38.00'" do
+      helper.format_mbld(890333804).should == "14/18 in 55:38.00"
+    end
+
+    it "outputs 899999904 as '14/18 in ?'" do
+      helper.format_mbld(899999904).should == "14/18 in ?"
+    end
+  end
 end
