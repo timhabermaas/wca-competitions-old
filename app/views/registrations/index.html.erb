@@ -22,7 +22,7 @@
       <% @competition.days.each do |day| %>
       <th><%=l day, :format => :short_day_name %></th>
       <% end %>
-      <% @competition.events.registerable.each do |event| %>
+      <% @events.each do |event| %>
       <th><%= event.short_name %></th>
       <% end %>
     </tr>
@@ -32,10 +32,10 @@
       <th>&sum;: <%= @competition.registrations.competitor.size %> (<%= t :guest, :count => @competition.registrations.guest.size %>)</th>
       <th>Land</th>
       <% @competition.days.each do |day| %>
-      <th><%=l day, :format => :short_day_name %></th>
+      <th>foo</th>
       <% end %>
-      <% @competition.events.registerable.each do |event| %>
-      <th><%= event.short_name %></th>
+      <% @events.each do |event| %>
+      <th>bar</th>
       <% end %>
     </tr>
   </tfoot>
@@ -47,7 +47,7 @@
         <% @competition.days.each_with_index do |day, index| %>
         <td><%= "x" if registration.competitor_on?(index) %></td>
         <% end %>
-        <% @competition.events.registerable.each do |event| %>
+        <% @events.each do |event| %>
         <td><%= "x" if registration.competes_in?(event) %></td>
         <% end %>
       </tr>
