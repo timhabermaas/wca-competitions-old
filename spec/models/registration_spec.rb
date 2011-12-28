@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Registration do
   before :each do
+    WCA::Person.stub!(:find).and_return(nil) # FIXME...
     @competition = create :competition, :starts_at => Date.new(2011, 12, 10), :ends_at => Date.new(2011, 12, 11)
     @participant = create :participant, :wca_id => "2008MUHA01"
     @pyraminx = create :event, :name => "Pyraminx"

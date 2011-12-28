@@ -4,6 +4,7 @@ require "spec_helper"
 
 describe "Registrations" do
   before :each do
+    WCA::Person.stub!(:find).and_return(nil) # FIXME disable wca_id validation for these tests in a nicer way
     @competition = create :competition, :name => "Munich Open 2011", :starts_at => Date.new(2011, 11, 26), :ends_at => Date.new(2011, 11, 27)
     @three = create :event, :name => "3x3x3", :wca => "333"
     @four = create :event, :name => "4x4x4", :wca => "444"

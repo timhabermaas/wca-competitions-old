@@ -60,7 +60,7 @@ FactoryGirl.define do
     date_of_birth Date.new(1981, 4, 21)
     gender "m"
     factory :participant_with_wca_id do
-      wca_id "2008MUEL01"
+      wca_id "2003POCH01"
     end
   end
 

@@ -2,19 +2,35 @@ require 'spec_helper'
 
 describe Participant do
   describe "validations" do
-    before :each do
-      create :participant_with_wca_id
-    end
 
     it { should validate_presence_of :first_name }
     it { should validate_presence_of :last_name } # there are people who don't have last names. ARGH!
     it { should validate_presence_of :date_of_birth }
-    it { should validate_uniqueness_of :wca_id }
+
+    it "should require case sensitive unique value for wca_id" do
+      WCA::Person.stub!(:find).and_return(nil)
+      create :participant_with_wca_id
+      should validate_uniqueness_of :wca_id
+    end
 
     it "is either male or female" do
       should allow_value("m").for(:gender)
       should allow_value("f").for(:gender)
       should_not allow_value("a").for(:gender)
+    end
+
+    it "needs an existing wca id" do
+      VCR.use_cassette "participant/validations" do
+        build(:participant, :wca_id => "2007HABE01").should be_valid
+        build(:participant, :wca_id => " ").should be_valid
+
+        participant = build(:participant, :wca_id => "2003MUHU02")
+        participant.should_not be_valid
+        participant.errors[:wca_id].should_not be_empty
+        participant = build(:participant, :wca_id => "dasfsfsaf")
+        participant.should_not be_valid
+        participant.errors[:wca_id].should_not be_empty
+      end
     end
   end
 

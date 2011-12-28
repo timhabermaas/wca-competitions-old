@@ -7,6 +7,7 @@ class Participant < ActiveRecord::Base
   validates :first_name, :last_name, :date_of_birth, :gender, :presence => true
   validates :wca_id, :uniqueness => true
   validates :gender, :inclusion => %w(m f)
+  validate :wca_id_is_existent, :unless => "wca_id.blank?"
 
   before_save :set_wca_id_to_nil, :if => "wca_id.blank?"
 
@@ -25,5 +26,13 @@ class Participant < ActiveRecord::Base
   private
   def set_wca_id_to_nil # FIXME: there must be a nicer solution...
     self.wca_id = nil
+  end
+
+  def wca_id_is_existent
+    begin
+      WCA::Person.find(wca_id)
+    rescue ActiveResource::ResourceNotFound
+      errors.add(:wca_id, "doesn't exist")
+    end
   end
 end
