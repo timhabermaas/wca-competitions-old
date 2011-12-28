@@ -1,6 +1,5 @@
 module RegistrationsHelper
   def format_time(time)
-    return "" if time.nil?
     seconds = time / 100.0
     minutes = (seconds / 60).to_i
     hours = minutes / 60
@@ -22,5 +21,18 @@ module RegistrationsHelper
     attempted = solved + missed
     time = s[3..7].to_i
     "#{solved}/#{attempted} in #{time == 99999 ? "?" : ft(time * 100)}"
+  end
+
+  def format_result(result, event)
+    return "" if result.nil?
+
+    case event.wca
+    when "333fm"
+      result.to_s
+    when "333mbf"
+      format_mbld(result)
+    else
+      format_time(result)
+    end
   end
 end
