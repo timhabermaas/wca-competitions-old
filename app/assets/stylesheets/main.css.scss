@@ -36,6 +36,13 @@ h3 {
   }
 }
 
+em {
+  font-style: italic;
+}
+strong {
+  font-weight: bold;
+}
+
 article.textile, p.textile, div.textile {
   p {
     margin-bottom: 1em;
@@ -45,10 +52,34 @@ article.textile, p.textile, div.textile {
     padding-left: 40px;
     list-style-type: disc;
   }
-  em {
-    font-style: italic;
+}
+
+.ui-autocomplete-loading {
+  background: white image-url("ajax-loader.gif") right center no-repeat;;
+}
+
+ul.ui-autocomplete {
+  width: 270px;
+  line-height: 14pt;
+  overflow: auto;
+  max-height: 180px;
+  border: 1px solid black;
+
+  li {
+    line-height: 16px;
   }
-  strong {
-    font-weight: bold;
+  li a {
+    padding: 2px 5px;
+    display: block;
+  }
+  li .ui-state-hover {
+    background-color: #0a246a;
+    color: white;
+  }
+  li:nth-child(2n) {
+    background-color: #eee;
+  }
+  li:nth-child(2n+1) {
+    background-color: #fff;
   }
 }

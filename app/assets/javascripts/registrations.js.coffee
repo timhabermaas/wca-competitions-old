@@ -37,3 +37,6 @@ jQuery ->
       $("#registration_participant_attributes_first_name").val(first_name)
       $("#registration_participant_attributes_last_name").val(last_name)
   )
+  # TODO http://jqueryui.com/demos/autocomplete/#custom-data to support html as label
+  #.data("autocomplete")._renderItem = (ul, item) ->
+  #  $("<li>#{item.value} (<strong>#{item.name}</strong>, #{item.country})</li>").appendTo(ul)
