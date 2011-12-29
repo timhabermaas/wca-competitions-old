@@ -27,7 +27,7 @@ jQuery ->
         data:
           search: request.term
         success: (data, textStatus, muh) ->
-          result = ({label: "#{entry.person.id} (#{entry.person.name}, #{entry.person.countryId})", value: entry.person.id, name: entry.person.name} for entry in data)
+          result = ({label: "#{entry.person.id} (#{entry.person.name}, #{entry.person.countryId})", value: entry.person.id, name: entry.person.name, country: entry.person.countryId, gender: entry.person.gender} for entry in data)
           response(result)
       )
     select: (event, ui) ->
@@ -36,6 +36,8 @@ jQuery ->
       last_name = names.slice(1, names.length).join(" ") # TODO handle chinese characters
       $("#registration_participant_attributes_first_name").val(first_name)
       $("#registration_participant_attributes_last_name").val(last_name)
+      $("#registration_participant_attributes_country").val(ui.item.country)
+      $("#registration_participant_attributes_gender_#{ui.item.gender}").attr("checked", true)
   )
   # TODO http://jqueryui.com/demos/autocomplete/#custom-data to support html as label
   #.data("autocomplete")._renderItem = (ul, item) ->
