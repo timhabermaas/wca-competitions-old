@@ -12,12 +12,7 @@ class RegistrationsController < ApplicationController
     params[:event_id] ||= Event.find_by_name("Rubik's Cube").id
     @event = Event.find params[:event_id]
 
-    @competitors = @competition.registrations.with_wca_id.for_event(@event).includes(:participant).map do |r| # TODO move to model
-      average = r.participant.fastest_average_for @event
-      single = r.participant.fastest_single_for @event
-      next if single.nil?
-      { :participant => r.participant, :single => single, :average => average }
-    end.compact.sort_by { |r| [r[:average] || 8_640_000, r[:single]] } # FIXME remove random 24h number
+    @competitors = @competition.compare_competitors_for @event
   end
 
   def new
