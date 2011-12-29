@@ -119,6 +119,26 @@ describe "Registrations" do
     end
   end
 
+  describe "PUT /registrations/" do
+    use_vcr_cassette "requests/registrations/update", :record => :new_episodes
+
+    before :each do
+      log_in :as => "admin"
+    end
+
+    it "changes name of Peter to Karl and removes him from 3x3x3 to add him to Pyraminx" do
+      r = create :registration, :participant => build(:participant, :first_name => "Peter"), :competition => @competition, :schedules => [@schedule_3]
+      visit edit_competition_registration_path(@competition, r)
+      fill_in "First name", :with => "Karl"
+      check "Pyraminx"
+      uncheck "3x3x3"
+      click_on "Update Registration"
+      page.should have_content "Karl"
+      @competition.registrations.first.schedules.should include(@schedule_py)
+      @competition.registrations.first.schedules.should_not include(@schedule_3)
+    end
+  end
+
   describe "GET /registrations/compare" do
     use_vcr_cassette "requests/registrations/compare", :record => :new_episodes
 

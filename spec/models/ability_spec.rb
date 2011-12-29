@@ -45,7 +45,7 @@ describe Ability do
     end
   end
 
-  context "logged in as user" do
+  context "logged in as organizer" do
     before :each do
       @ability = Ability.new(@user)
       @competition = create :competition, :user => @user
@@ -61,6 +61,13 @@ describe Ability do
         news = create(:news, :competition => @competition, :user => @user)
         @ability.should be_able_to(:update, news)
         @ability.should_not be_able_to(:update, News.new)
+      end
+    end
+
+    describe "registrations" do
+      it "can update registrations for his own competitions" do
+        @ability.should be_able_to(:update, @competition.registrations.build)
+        @ability.should_not be_able_to(:update, Registration.new)
       end
     end
 

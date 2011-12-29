@@ -38,6 +38,7 @@ class Ability
       can [:new, :create], News, :competition => { :user_id => user.id }
       can [:new, :create], Competition
       can [:edit, :update], Competition, :user_id => user.id
+      can [:edit, :update], Registration, :competition => { :user_id => user.id }
       can :manage, Schedule, :competition => { :user_id => user.id }
     end
   end

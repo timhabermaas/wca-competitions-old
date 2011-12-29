@@ -1,0 +1,34 @@
+<%= simple_form_for [@competition, @registration] do |f| %>
+  <%= f.simple_fields_for :participant_attributes, @registration.participant do |participant_form| %>
+    <%= participant_form.input :wca_id, :label => "WCA ID" %>
+    <%= participant_form.input :first_name %>
+    <%= participant_form.input :last_name %>
+    <%= participant_form.input :gender, :collection => [["Male", "m"], ["Female", "f"]], :as => :radio %>
+    <%= participant_form.input :country, :collection => WCA::Country.find(:all).map { |c| [c.id, c.name] }, :include_blank => false %>
+    <%= participant_form.input :date_of_birth, :as => :date, :start_year => Date.today.year - 120, :end_year => Date.today.year %>
+  <% end %>
+
+  <%= f.input :email %>
+
+  <% @competition.days.each_with_index do |day, index| %>
+    <fieldset class="day day<%= index %>">
+      <h3><%= l(day, :format => :descriptive) %></h3><!-- FIXME: use legend, which behaves in some strange ways -->
+      <fieldset class="guest">
+        <%= f.input :days_as_guest, :collection => [["Guest on #{l(day, :format => :day_name)}", index]],
+                                    :as => :check_boxes,
+                                    :label => false %>
+      </fieldset>
+      <fieldset class="events">
+        <%= f.association :schedules, :collection => @competition.schedules.registerable.for(index),
+                                      :as => :check_boxes,
+                                      :label => false,
+                                      :item_wrapper_tag => :p %>
+      </fieldset>
+    </fieldset>
+  <% end %>
+  <% if ["new", "create"].include? params[:action] %>
+    <%= f.submit "Register" %>
+  <% else %>
+    <%= f.submit %>
+  <% end %>
+<% end %>
