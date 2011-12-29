@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Participant do
   describe "validations" do
+    use_vcr_cassette "models/participant/validations", :record => :new_episodes
 
     it { should validate_presence_of :first_name }
     it { should validate_presence_of :last_name } # there are people who don't have last names. ARGH!
@@ -22,25 +23,21 @@ describe Participant do
     end
 
     it "needs an existing wca id" do
-      VCR.use_cassette "participant/validations/wca_id" do
-        build(:participant, :wca_id => "2007HABE01").should be_valid
-        build(:participant, :wca_id => " ").should be_valid
+      build(:participant, :wca_id => "2007HABE01").should be_valid
+      build(:participant, :wca_id => " ").should be_valid
 
-        participant = build(:participant, :wca_id => "2003MUHU02")
-        participant.should_not be_valid
-        participant.errors[:wca_id].should_not be_empty
-        participant = build(:participant, :wca_id => "dasfsfsaf")
-        participant.should_not be_valid
-        participant.errors[:wca_id].should_not be_empty
-      end
+      participant = build(:participant, :wca_id => "2003MUHU02")
+      participant.should_not be_valid
+      participant.errors[:wca_id].should_not be_empty
+      participant = build(:participant, :wca_id => "dasfsfsaf")
+      participant.should_not be_valid
+      participant.errors[:wca_id].should_not be_empty
     end
 
     it "requires country to be included in WCA list of countries" do
-      VCR.use_cassette "participant/validations/country" do
-        p = build(:participant, :country => "Muh")
-        p.should_not be_valid
-        p.errors[:country].should_not be_empty
-      end
+      p = build(:participant, :country => "Muh")
+      p.should_not be_valid
+      p.errors[:country].should_not be_empty
     end
   end
 
@@ -55,37 +52,31 @@ describe Participant do
   end
 
   describe "#fastest_*_for" do
+    use_vcr_cassette "models/participant/fastest_for", :record => :new_episodes
+
     before :each do
       @three = create :event, :name => "Rubik's Cube", :wca => "333"
       @six = create :event, :name => "6x6x6", :wca => "666"
     end
 
     it "returns 1466 for Stefan's 333 average" do
-      VCR.use_cassette "participant/2003POCH01/average" do
-        participant = build :participant, :wca_id => "2003POCH01"
-        participant.fastest_average_for(@three).should == 1466
-      end
+      participant = build :participant, :wca_id => "2003POCH01"
+      participant.fastest_average_for(@three).should == 1466
     end
 
     it "returns 956 for Stefan's 333 single" do
-      VCR.use_cassette "participant/2003POCH01/single" do
-        participant = build :participant, :wca_id => "2003POCH01"
-        participant.fastest_single_for(@three).should == 956
-      end
+      participant = build :participant, :wca_id => "2003POCH01"
+      participant.fastest_single_for(@three).should == 956
     end
 
     it "returns nil if the person has no best single for that event" do
-      VCR.use_cassette "participant/2004NOOR01/single" do
-        participant = build :participant, :wca_id => "2004NOOR01"
-        participant.fastest_single_for(@six).should be_nil
-      end
+      participant = build :participant, :wca_id => "2004NOOR01"
+      participant.fastest_single_for(@six).should be_nil
     end
 
     it "returns nil if the person has no best average for that event" do
-      VCR.use_cassette "participant/2004NOOR01/average" do
-        participant = build :participant, :wca_id => "2004NOOR01"
-        participant.fastest_average_for(@six).should be_nil
-      end
+      participant = build :participant, :wca_id => "2004NOOR01"
+      participant.fastest_average_for(@six).should be_nil
     end
   end
 end
