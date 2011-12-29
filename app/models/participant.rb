@@ -1,15 +1,16 @@
 class Participant < ActiveRecord::Base
-  attr_accessible :first_name, :last_name, :wca_id, :gender, :date_of_birth
+  attr_accessible :first_name, :last_name, :wca_id, :gender, :country, :date_of_birth
 
   has_many :registrations
   has_many :competitions, :through => :registrations
 
-  validates :first_name, :last_name, :date_of_birth, :gender, :presence => true
+  validates :first_name, :last_name, :date_of_birth, :gender, :country, :presence => true
   validates :wca_id, :uniqueness => true
   validates :gender, :inclusion => %w(m f)
   validate :wca_id_is_existent, :unless => "wca_id.blank?"
+  validate :country_is_existent, :unless => "country.blank?"
 
-  before_save :set_wca_id_to_nil, :if => "wca_id.blank?"
+  after_initialize :set_wca_id_to_nil, :if => "wca_id.blank?"
 
   def full_name
     first_name + " " + last_name
@@ -34,5 +35,9 @@ class Participant < ActiveRecord::Base
     rescue ActiveResource::ResourceNotFound
       errors.add(:wca_id, "doesn't exist")
     end
+  end
+
+  def country_is_existent
+    errors.add(:country, "is not an official country") unless WCA::Country.find(:all).any? { |c| c.name == country }
   end
 end

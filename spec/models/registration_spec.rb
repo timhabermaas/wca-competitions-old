@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe Registration do
   before :each do
-    WCA::Person.stub!(:find).and_return(nil) # FIXME...
+    Participant.any_instance.stub(:country_is_existent) # TODO find a decent way for this
+    Participant.any_instance.stub(:wca_id_is_existent)
     @competition = create :competition, :starts_at => Date.new(2011, 12, 10), :ends_at => Date.new(2011, 12, 11)
     @participant = create :participant, :wca_id => "2008MUHA01"
     @pyraminx = create :event, :name => "Pyraminx"

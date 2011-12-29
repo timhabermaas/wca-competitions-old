@@ -4,6 +4,7 @@
     <%= participant_form.input :first_name %>
     <%= participant_form.input :last_name %>
     <%= participant_form.input :gender, :collection => [["Male", "m"], ["Female", "f"]], :as => :radio %>
+    <%= participant_form.input :country, :collection => WCA::Country.find(:all).map { |c| [c.id, c.name] }, :include_blank => false %>
     <%= participant_form.input :date_of_birth, :as => :date, :start_year => Date.today.year - 120, :end_year => Date.today.year %>
   <% end %>
 

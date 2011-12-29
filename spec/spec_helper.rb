@@ -37,6 +37,7 @@ Spork.prefork do
     config.include FactoryGirl::Syntax::Methods
     config.include Capybara::DateSelect
     config.include Capybara::SessionHelper
+    config.extend VCR::RSpec::Macros
 
     config.before(:each) do
       if respond_to?(:app)

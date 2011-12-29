@@ -19,3 +19,6 @@
 
 # Ignore newrelic config file
 /config/newrelic.yml
+
+# Ignore vcr cassettes
+/spec/vcr

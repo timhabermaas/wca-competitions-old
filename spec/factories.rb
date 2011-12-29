@@ -59,6 +59,7 @@ FactoryGirl.define do
     end
     date_of_birth Date.new(1981, 4, 21)
     gender "m"
+    country "Germany"
     factory :participant_with_wca_id do
       wca_id "2003POCH01"
     end

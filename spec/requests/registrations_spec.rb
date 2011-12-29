@@ -3,8 +3,17 @@
 require "spec_helper"
 
 describe "Registrations" do
+  before :all do
+    VCR.insert_cassette "requests/registrations" # TODO not nice at all...
+  end
+
+  after :all do
+    VCR.eject_cassette
+  end
+
   before :each do
-    WCA::Person.stub!(:find).and_return(nil) # FIXME disable wca_id validation for these tests in a nicer way
+    Participant.any_instance.stub(:country_is_existent)
+    Participant.any_instance.stub(:wca_id_is_existent)
     @competition = create :competition, :name => "Munich Open 2011", :starts_at => Date.new(2011, 11, 26), :ends_at => Date.new(2011, 11, 27)
     @three = create :event, :name => "3x3x3", :wca => "333"
     @four = create :event, :name => "4x4x4", :wca => "444"
@@ -54,7 +63,8 @@ describe "Registrations" do
     def fill_in_with_peter
       fill_in "First name", :with => "Peter"
       fill_in "Last name", :with => "Mustermann"
-      choose("male")
+      choose "male"
+      select "Austria", :from => "Country"
       fill_in "Email", :with => "peter@mustermann.de"
     end
 
@@ -132,48 +142,42 @@ describe "Registrations" do
     end
 
     it "displays the competitors in order of their 3x3x3 averages" do
-      VCR.use_cassette "compare/3x3x3" do
-        visit compare_competition_registrations_path(@competition, :event_id => @three.id)
-        within("table.compare tbody") do
-          find(:xpath, ".//tr[1]").text.should match("1")
-          find(:xpath, ".//tr[1]").text.should match("Basti")
-          find(:xpath, ".//tr[1]").text.should match("13.50")
-          find(:xpath, ".//tr[1]").text.should match("10.46")
-          find(:xpath, ".//tr[2]").text.should match("2")
-          find(:xpath, ".//tr[2]").text.should match("Stefan")
-          find(:xpath, ".//tr[2]").text.should match("14.66")
-          find(:xpath, ".//tr[2]").text.should match("9.56")
-          find(:xpath, ".//tr[3]").text.should match("3")
-          find(:xpath, ".//tr[3]").text.should match("Tim")
-          find(:xpath, ".//tr[3]").text.should match("15.79")
-          find(:xpath, ".//tr[3]").text.should match("12.52")
-          page.should_not have_content("Ron")
-          page.should_not have_content("Thomas")
-        end
+      visit compare_competition_registrations_path(@competition, :event_id => @three.id)
+      within("table.compare tbody") do
+        find(:xpath, ".//tr[1]").text.should match("1")
+        find(:xpath, ".//tr[1]").text.should match("Basti")
+        find(:xpath, ".//tr[1]").text.should match("13.50")
+        find(:xpath, ".//tr[1]").text.should match("10.46")
+        find(:xpath, ".//tr[2]").text.should match("2")
+        find(:xpath, ".//tr[2]").text.should match("Stefan")
+        find(:xpath, ".//tr[2]").text.should match("14.66")
+        find(:xpath, ".//tr[2]").text.should match("9.56")
+        find(:xpath, ".//tr[3]").text.should match("3")
+        find(:xpath, ".//tr[3]").text.should match("Tim")
+        find(:xpath, ".//tr[3]").text.should match("15.79")
+        find(:xpath, ".//tr[3]").text.should match("12.52")
+        page.should_not have_content("Ron")
+        page.should_not have_content("Thomas")
       end
     end
 
     it "displays 4x4 BLD properly" do
-      VCR.use_cassette "compare/4x4BLD" do
-        visit compare_competition_registrations_path(@competition, :event_id => @four_bld.id)
-        within("table.compare thead") do
-          page.should_not have_content("average")
-        end
-        within("table.compare tbody") do
-          find(:xpath, ".//tr[1]").text.should match("Tim")
-          find(:xpath, ".//tr[1]").text.should match("6:50.53")
-          find(:xpath, ".//tr[2]").text.should match("Basti")
-          find(:xpath, ".//tr[2]").text.should match("13:50.00")
-        end
+      visit compare_competition_registrations_path(@competition, :event_id => @four_bld.id)
+      within("table.compare thead") do
+        page.should_not have_content("average")
+      end
+      within("table.compare tbody") do
+        find(:xpath, ".//tr[1]").text.should match("Tim")
+        find(:xpath, ".//tr[1]").text.should match("6:50.53")
+        find(:xpath, ".//tr[2]").text.should match("Basti")
+        find(:xpath, ".//tr[2]").text.should match("13:50.00")
       end
     end
 
     it "doesn't show people who don't have records for that event" do
-      VCR.use_cassette "compare/pyraminx" do
-        visit compare_competition_registrations_path(@competition, :event_id => @pyraminx.id)
-        within("table.compare tbody") do
-          page.should_not have_content("Shelley")
-        end
+      visit compare_competition_registrations_path(@competition, :event_id => @pyraminx.id)
+      within("table.compare tbody") do
+        page.should_not have_content("Shelley")
       end
     end
   end

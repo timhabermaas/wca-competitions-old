@@ -6,10 +6,12 @@ describe Participant do
     it { should validate_presence_of :first_name }
     it { should validate_presence_of :last_name } # there are people who don't have last names. ARGH!
     it { should validate_presence_of :date_of_birth }
+    it { should validate_presence_of :country }
 
     it "should require case sensitive unique value for wca_id" do
-      WCA::Person.stub!(:find).and_return(nil)
-      create :participant_with_wca_id
+      Participant.any_instance.stub(:country_is_existent)
+      Participant.any_instance.stub(:wca_id_is_existent)
+      create(:participant_with_wca_id)
       should validate_uniqueness_of :wca_id
     end
 
@@ -20,7 +22,7 @@ describe Participant do
     end
 
     it "needs an existing wca id" do
-      VCR.use_cassette "participant/validations" do
+      VCR.use_cassette "participant/validations/wca_id" do
         build(:participant, :wca_id => "2007HABE01").should be_valid
         build(:participant, :wca_id => " ").should be_valid
 
@@ -32,6 +34,14 @@ describe Participant do
         participant.errors[:wca_id].should_not be_empty
       end
     end
+
+    it "requires country to be included in WCA list of countries" do
+      VCR.use_cassette "participant/validations/country" do
+        p = build(:participant, :country => "Muh")
+        p.should_not be_valid
+        p.errors[:country].should_not be_empty
+      end
+    end
   end
 
   it "responds with full_name" do
@@ -39,9 +49,9 @@ describe Participant do
     participant.full_name.should == "Thom Pochmann"
   end
 
-  it "converts blank wca_id to nil before saving" do
-    participant = create :participant, :wca_id => " "
-    Participant.first.wca_id.should be_nil
+  it "converts blank wca_id to nil after initialization" do
+    participant = Participant.new :wca_id => " "
+    participant.wca_id.should be_nil
   end
 
   describe "#fastest_*_for" do
