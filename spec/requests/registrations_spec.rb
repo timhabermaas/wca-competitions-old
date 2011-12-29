@@ -3,14 +3,6 @@
 require "spec_helper"
 
 describe "Registrations" do
-  before :all do
-    VCR.insert_cassette "requests/registrations" # TODO not nice at all...
-  end
-
-  after :all do
-    VCR.eject_cassette
-  end
-
   before :each do
     Participant.any_instance.stub(:country_is_existent)
     Participant.any_instance.stub(:wca_id_is_existent)
@@ -56,6 +48,8 @@ describe "Registrations" do
   end
 
   describe "POST /registrations" do
+    use_vcr_cassette "requests/registrations/create", :record => :new_episodes
+
     before :each do
       @lunch = create :schedule, :competition => @competition, :day => 1, :registerable => false
     end
@@ -126,6 +120,8 @@ describe "Registrations" do
   end
 
   describe "GET /registrations/compare" do
+    use_vcr_cassette "requests/registrations/compare", :record => :new_episodes
+
     before :each do
       c1 = create :participant, :wca_id => "2003POCH01", :first_name => "Stefan"
       c2 = create :participant, :wca_id => "2007HABE01", :first_name => "Tim"
