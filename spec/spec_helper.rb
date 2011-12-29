@@ -39,6 +39,13 @@ Spork.prefork do
     config.include Capybara::SessionHelper
     config.extend VCR::RSpec::Macros
 
+    config.around(:each, :caching) do |example|
+      caching = ActionController::Base.perform_caching
+      ActionController::Base.perform_caching = example.metadata[:caching]
+      example.run
+      ActionController::Base.perform_caching = caching
+    end
+
     config.before(:each) do
       if respond_to?(:app)
         app.default_url_options = { :locale => I18n.locale }
