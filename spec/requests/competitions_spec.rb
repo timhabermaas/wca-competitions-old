@@ -37,7 +37,7 @@ describe "Competitions" do
       it "uses textile for displaying details" do
         competition = create(:competition, :details => "h2. Price Money")
         visit competition_path(competition)
-        find("#details h2").should have_content "Price Money"
+        find("article.details h2").should have_content "Price Money"
       end
     end
   end
