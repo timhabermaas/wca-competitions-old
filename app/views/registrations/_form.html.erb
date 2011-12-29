@@ -26,9 +26,6 @@
       </fieldset>
     </fieldset>
   <% end %>
-  <% if ["new", "create"].include? params[:action] %>
-    <%= f.submit "Register" %>
-  <% else %>
-    <%= f.submit %>
-  <% end %>
+
+  <%= f.submit %>
 <% end %>
