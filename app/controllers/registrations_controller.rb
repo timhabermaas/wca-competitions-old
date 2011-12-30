@@ -15,6 +15,23 @@ class RegistrationsController < ApplicationController
     @competitors = @competition.compare_competitors_for @event
   end
 
+  def stats
+    # FIXME what a mess...
+    @events = {}
+    @competition.registrations.joins(:schedules).group("schedules.event_id").order("count_all DESC").count.each do |event_id, count|
+      @events[Event.find event_id] = count
+    end
+
+    @countries = @competition.registrations.joins(:participant).group("participants.country").order("count_all DESC").count
+
+    @days = {}
+    registrations = @competition.registrations.includes(:schedules)
+    @competition.days.each_with_index do |day, index|
+      @days[day] = { :competitors => registrations.select { |c| c.competitor_on? index }.size,
+                     :guests => registrations.select { |c| c.guest_on? index }.size }
+    end
+  end
+
   def new
   end
 

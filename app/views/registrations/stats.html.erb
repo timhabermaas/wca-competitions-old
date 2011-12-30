@@ -1,0 +1,50 @@
+<h2>Events</h2>
+<table id="events">
+  <thead>
+    <tr>
+      <th>Event</th>
+      <th>Oldschooler</th>
+      <th>Noobs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @events.each do |event, count| %>
+      <tr>
+        <th><%= event.name %></th>
+        <td><%= count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Countries</h2>
+<table id="countries">
+  <thead>
+  </thead>
+  <tbody>
+    <% @countries.each do |country, count| %>
+      <tr>
+        <th><%= country %></th>
+        <td><%= count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Days</h2>
+<table id="days">
+  <thead>
+    <th>Day</th>
+    <th>Competitors</th>
+    <th>Guests</th>
+  </thead>
+  <tbody>
+    <% @days.each do |day, count| %>
+      <tr>
+        <th><%=l day, :format => :day_name %></th>
+        <td><%= count[:competitors] %></td>
+        <td><%= count[:guests] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -7,11 +7,11 @@ describe "Registrations" do
     Participant.any_instance.stub(:country_is_existent)
     Participant.any_instance.stub(:wca_id_is_existent)
     @competition = create :competition, :name => "Munich Open 2011", :starts_at => Date.new(2011, 11, 26), :ends_at => Date.new(2011, 11, 27)
-    @three = create :event, :name => "3x3x3", :wca => "333"
-    @four = create :event, :name => "4x4x4", :wca => "444"
-    @four_bld = create :event, :name => "4x4x4 BLD", :wca => "444bf"
-    @pyraminx = create :event, :name => "Pyraminx", :wca => "pyram"
-    @megaminx = create :event, :name => "Megaminx", :wca => "minx"
+    @three = create :event, :name => "3x3x3", :wca => "333", :short_name => "3"
+    @four = create :event, :name => "4x4x4", :wca => "444", :short_name => "4"
+    @four_bld = create :event, :name => "4x4x4 BLD", :wca => "444bf", :short_name => "4b"
+    @pyraminx = create :event, :name => "Pyraminx", :wca => "pyram", :short_name => "py"
+    @megaminx = create :event, :name => "Megaminx", :wca => "minx", :short_name => "mx"
     @schedule_3 = create :schedule, :event => @three, :competition => @competition, :day => 0, :registerable => true
     @schedule_4 = create :schedule, :event => @four, :competition => @competition, :day => 0, :registerable => true
     @schedule_4bf = create :schedule, :event => @four_bld, :competition => @competition, :day => 1, :registerable => true
@@ -194,6 +194,65 @@ describe "Registrations" do
       visit compare_competition_registrations_path(@competition, :event_id => @pyraminx.id)
       within("table.compare tbody") do
         page.should_not have_content("Shelley")
+      end
+    end
+  end
+
+  describe "GET /registrations/stats" do
+    before :each do
+      create :registration, :competition => @competition, :schedules => [@schedule_3, @schedule_4, @schedule_py]
+      create :registration, :competition => @competition, :schedules => [@schedule_3, @schedule_4, @schedule_py]
+      create :registration, :competition => @competition, :schedules => [@schedule_3, @schedule_4]
+      create :registration, :competition => @competition, :schedules => [@schedule_3, @schedule_4bf], :participant => build(:participant_with_wca_id)
+      create :registration, :competition => @competition, :days_as_guest => [1], :participant => build(:participant, :country => "France")
+
+      visit stats_competition_registrations_path(@competition)
+    end
+
+    describe "event distribution" do
+      it "displays headers in the correct order" do
+        within("#events tbody") do
+          find(:xpath, ".//tr[1]/th").text.should match("3x3x3")
+          find(:xpath, ".//tr[2]/th").text.should match("4x4x4")
+          find(:xpath, ".//tr[3]/th").text.should match("Pyraminx")
+          find(:xpath, ".//tr[4]/th").text.should match("4x4x4 BLD")
+        end
+      end
+
+      it "displays the correct count for each event" do
+        within("#events tbody") do
+          find(:xpath, ".//tr[1]/td").text.should match("4")
+          find(:xpath, ".//tr[2]/td").text.should match("3")
+          find(:xpath, ".//tr[3]/td").text.should match("2")
+          find(:xpath, ".//tr[4]/td").text.should match("1")
+        end
+      end
+    end
+
+    describe "country distribution" do
+      it "has 1 participant from France and 4 from Germany" do
+        within("#countries tbody") do
+          find(:xpath, ".//tr[1]/th").text.should match("Germany")
+          find(:xpath, ".//tr[2]/th").text.should match("France")
+          find(:xpath, ".//tr[1]/td").text.should match("4")
+          find(:xpath, ".//tr[2]/td").text.should match("1")
+        end
+      end
+    end
+
+    describe "day distribution" do
+      it "has 4 competitors on the first day and 3 competitors on the second day" do
+        within("#days tbody") do
+          find(:xpath, ".//tr[1]/td[1]").text.should match("4")
+          find(:xpath, ".//tr[2]/td[1]").text.should match("3")
+        end
+      end
+
+      it "has 0 guests on the first day and 1 guest on the second day" do
+        within("#days tbody") do
+          find(:xpath, ".//tr[1]/td[2]").text.should match("0")
+          find(:xpath, ".//tr[2]/td[2]").text.should match("1")
+        end
       end
     end
   end

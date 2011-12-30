@@ -8,6 +8,7 @@ WCACompetitions::Application.routes.draw do
       resources :news
       resources :registrations do
         get "compare", :on => :collection
+        get "stats", :on => :collection
       end
       resources :schedules
     end
