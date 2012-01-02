@@ -66,6 +66,21 @@ describe Registration do
       end
     end
 
+    describe ".for_day" do
+      it "finds all registrations for day 0" do
+        Registration.for_day(0).should have(3).elements
+        Registration.for_day(0).should include(@r1)
+        Registration.for_day(0).should include(@r2)
+        Registration.for_day(0).should include(@r3)
+      end
+
+      it "finds all registrations for day 1" do
+        Registration.for_day(1).should have(2).elements
+        Registration.for_day(1).should include(@r2)
+        Registration.for_day(1).should include(@r3)
+      end
+    end
+
     describe ".with_wca_id" do
       it "finds all people with WCA ID" do
         r = create :registration, :competition => @competition, :participant => build(:participant_with_wca_id)

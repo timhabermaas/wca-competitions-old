@@ -35,11 +35,11 @@
     <tr>
       <th>&sum;: <%= @competition.registrations.competitor.size %> (<%= t :guest, :count => @competition.registrations.guest.size %>)</th>
       <th>Land</th>
-      <% @competition.days.each do |day| %>
-      <th>foo</th>
+      <% @competition.days.each_with_index do |day, index| %>
+      <th><%= @competition.registrations.for_day(index).size %></th>
       <% end %>
       <% @events.each do |event| %>
-      <th>bar</th>
+      <th><%= @competition.registrations.for_event(event).size %></th>
       <% end %>
     </tr>
   </tfoot>

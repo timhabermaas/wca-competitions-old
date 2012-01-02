@@ -6,6 +6,10 @@ class Registration < ActiveRecord::Base
 
   scope :competitor, where("id IN (SELECT registration_id FROM registrations_schedules)")
   scope :guest, where("id NOT IN (SELECT registration_id FROM registrations_schedules)")
+  scope :for_day, lambda { |day|
+    q = includes(:schedules)
+    q.where("schedules.day" => day).to_a + q.to_a.select { |r| r.days_as_guest.include? day }
+  }
   scope :for_event, lambda { |event| joins(:schedules).where("schedules.event_id" => event.id) }
   scope :with_wca_id, joins(:participant).where("participants.wca_id IS NOT NULL")
 
