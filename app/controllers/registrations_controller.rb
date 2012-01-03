@@ -16,19 +16,7 @@ class RegistrationsController < ApplicationController
   end
 
   def stats
-    # FIXME what a mess...
-    @events = {}
-    @competition.registrations.joins(:schedules).group("schedules.event_id").order("count_all DESC").count.each do |event_id, count|
-      @events[Event.find event_id] = count
-    end
-
-    @countries = @competition.registrations.joins(:participant).group("participants.country").order("count_all DESC").count
-
-    @days = {}
-    @competition.days.each_with_index do |day, index|
-      @days[day] = { :competitors => @competition.registration_days.for(index).competitor.count,
-                     :guests => @competition.registration_days.for(index).guest.count }
-    end
+    @statistic = Statistic.new @competition
   end
 
   def new

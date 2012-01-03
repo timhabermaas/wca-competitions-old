@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @events.each do |event, count| %>
+    <% @statistic.events.each do |event, count| %>
       <tr>
         <th><%= event.name %></th>
         <td><%= count %></td>
@@ -22,7 +22,7 @@
   <thead>
   </thead>
   <tbody>
-    <% @countries.each do |country, count| %>
+    <% @statistic.countries.each do |country, count| %>
       <tr>
         <th><%= country %></th>
         <td><%= count %></td>
@@ -39,7 +39,7 @@
     <th>Guests</th>
   </thead>
   <tbody>
-    <% @days.each do |day, count| %>
+    <% @statistic.days.each do |day, count| %>
       <tr>
         <th><%=l day, :format => :day_name %></th>
         <td><%= count[:competitors] %></td>

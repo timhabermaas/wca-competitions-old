@@ -211,61 +211,9 @@ describe "Registrations" do
   end
 
   describe "GET /registrations/stats" do
-    before :each do
-      create_registration :competition => @competition, :schedules => [@schedule_3, @schedule_4, @schedule_py]
-      create_registration :competition => @competition, :schedules => [@schedule_3, @schedule_4, @schedule_py]
-      create_registration :competition => @competition, :schedules => [@schedule_3, @schedule_4]
-      create_registration :competition => @competition, :schedules => [@schedule_3, @schedule_4bf], :participant => build(:participant_with_wca_id)
-      create_registration :competition => @competition, :guest_days => [1], :participant => build(:participant, :country => "France")
-
+    it "should display countires" do
       visit stats_competition_registrations_path(@competition)
-    end
-
-    describe "event distribution" do
-      it "displays headers in the correct order" do
-        within("#events tbody") do
-          find(:xpath, ".//tr[1]/th").text.should match("3x3x3")
-          find(:xpath, ".//tr[2]/th").text.should match("4x4x4")
-          find(:xpath, ".//tr[3]/th").text.should match("Pyraminx")
-          find(:xpath, ".//tr[4]/th").text.should match("4x4x4 BLD")
-        end
-      end
-
-      it "displays the correct count for each event" do
-        within("#events tbody") do
-          find(:xpath, ".//tr[1]/td").text.should match("4")
-          find(:xpath, ".//tr[2]/td").text.should match("3")
-          find(:xpath, ".//tr[3]/td").text.should match("2")
-          find(:xpath, ".//tr[4]/td").text.should match("1")
-        end
-      end
-    end
-
-    describe "country distribution" do
-      it "has 1 participant from France and 4 from Germany" do
-        within("#countries tbody") do
-          find(:xpath, ".//tr[1]/th").text.should match("Germany")
-          find(:xpath, ".//tr[2]/th").text.should match("France")
-          find(:xpath, ".//tr[1]/td").text.should match("4")
-          find(:xpath, ".//tr[2]/td").text.should match("1")
-        end
-      end
-    end
-
-    describe "day distribution" do
-      it "has 4 competitors on the first day and 3 competitors on the second day" do
-        within("#days tbody") do
-          find(:xpath, ".//tr[1]/td[1]").text.should match("4")
-          find(:xpath, ".//tr[2]/td[1]").text.should match("3")
-        end
-      end
-
-      it "has 0 guests on the first day and 1 guest on the second day" do
-        within("#days tbody") do
-          find(:xpath, ".//tr[1]/td[2]").text.should match("0")
-          find(:xpath, ".//tr[2]/td[2]").text.should match("1")
-        end
-      end
+      page.should have_content("Countries")
     end
   end
 end
