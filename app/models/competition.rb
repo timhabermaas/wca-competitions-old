@@ -5,7 +5,7 @@ class Competition < ActiveRecord::Base
   has_many :registrations
   has_many :registration_days, :through => :registrations
   has_many :participants, :through => :registrations
-  has_many :schedules do
+  has_many :schedules, :include => :event do
     def for(day)
       where("schedules.day" => day)
     end
