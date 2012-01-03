@@ -14,7 +14,7 @@
   <% @competition.days.each_with_index do |day, index| %>
     <fieldset class="day day<%= index %>">
     <h3><%= l(day, :format => :descriptive) %></h3><!-- FIXME: use legend, which behaves in some strange ways -->
-      <%= f.simple_fields_for :registration_days, @registration.registration_days[index] do |rd_form| %>
+      <%= f.simple_fields_for :registration_days, (@registration.registration_days.select { |rd| rd.day == index }.first || RegistrationDay.new) do |rd_form| %>
         <%= rd_form.input :day, :collection => [["I won't be there", ""], ["I'll be there", index]], :as => :radio, :label => false %>
         <fieldset class="events">
           <%= rd_form.association :schedules, :collection => @competition.schedules.registerable.for(index),

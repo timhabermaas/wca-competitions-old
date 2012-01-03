@@ -32,9 +32,6 @@ class RegistrationsController < ApplicationController
   end
 
   def new
-    @competition.days.each_with_index do |day, index|
-      @registration.registration_days << RegistrationDay.new
-    end
   end
 
   def create

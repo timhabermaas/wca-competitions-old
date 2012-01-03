@@ -137,15 +137,17 @@ describe "Registrations" do
       r = create_registration :participant => build(:participant, :first_name => "Peter"), :competition => @competition, :schedules => [@schedule_3]
       visit edit_competition_registration_path(@competition, r)
       fill_in "First name", :with => "Karl"
-      within(".day0") do
+      within(".day1") do
         choose "I'll be there"
       end
       check "Pyraminx"
       uncheck "3x3x3"
       click_on "Update Registration"
       page.should have_content "Karl"
-      @competition.registrations.first.schedules.should include(@schedule_py)
-      @competition.registrations.first.schedules.should_not include(@schedule_3)
+      Registration.first.schedules.should include(@schedule_py)
+      Registration.first.schedules.should_not include(@schedule_3)
+      Registration.first.registration_days.guest.first.day.should == 0
+      Registration.first.registration_days.competitor.first.day.should == 1
     end
   end
 

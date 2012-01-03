@@ -1,7 +1,7 @@
 class Registration < ActiveRecord::Base
   belongs_to :participant
   belongs_to :competition
-  has_many :registration_days, :inverse_of => :registration
+  has_many :registration_days, :inverse_of => :registration, :order => "day"
   has_many :registration_day_schedules, :through => :registration_days
   has_many :schedules, :through => :registration_day_schedules
 
