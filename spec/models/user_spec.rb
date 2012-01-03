@@ -15,7 +15,8 @@ describe User do
 
     it { should allow_value("organizer").for(:role) }
     it { should allow_value("admin").for(:role) }
-    it { should_not allow_value("user").for(:role) }
+    it { should allow_value("user").for(:role) }
+    it { should_not allow_value("blub").for(:role) }
 
     it "requires password and password_confirmation to be equal on creation" do
       user = User.new :name => "blub", :email => "muh@cow.com", :password => "1234", :password_confirmation => "12345"
@@ -28,5 +29,9 @@ describe User do
       user.should_not be_valid
       user.errors[:password].should_not be_empty
     end
+  end
+
+  it "has 'user' as default for role" do
+    User.new.role.should == "user"
   end
 end

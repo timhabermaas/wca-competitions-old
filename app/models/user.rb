@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  ROLES = ["admin", "organizer"]
+  ROLES = ["admin", "organizer", "user"]
 
   attr_accessible :name, :email, :password, :password_confirmation
 
