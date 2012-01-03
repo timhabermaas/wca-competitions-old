@@ -1,10 +1,8 @@
 require 'spec_helper'
 
 describe Ability do
-  before :each do
-    @admin = create :admin
-    @user = create :user
-  end
+  let(:admin) { create :admin }
+  let(:organizer) { create :organizer }
 
   context "not logged in" do
     before :each do
@@ -37,7 +35,7 @@ describe Ability do
 
   context "logged in as admin" do
     before :each do
-      @ability = Ability.new(@admin)
+      @ability = Ability.new(admin)
     end
 
     it "can update news" do
@@ -47,8 +45,8 @@ describe Ability do
 
   context "logged in as organizer" do
     before :each do
-      @ability = Ability.new(@user)
-      @competition = create :competition, :user => @user
+      @ability = Ability.new(organizer)
+      @competition = create :competition, :user => organizer
     end
 
     describe "news" do
@@ -58,7 +56,7 @@ describe Ability do
       end
 
       it "can only update those he created" do
-        news = create(:news, :competition => @competition, :user => @user)
+        news = create(:news, :competition => @competition, :user => organizer)
         @ability.should be_able_to(:update, news)
         @ability.should_not be_able_to(:update, News.new)
       end

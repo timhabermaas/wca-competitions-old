@@ -48,7 +48,7 @@ describe "Schedules" do
 
   describe "POST /schedules" do
     before :each do
-      user = log_in
+      user = log_in :as => "organizer"
       @competition = create :competition, :user => user
     end
 

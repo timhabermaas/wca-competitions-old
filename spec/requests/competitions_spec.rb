@@ -15,20 +15,37 @@ describe "Competitions" do
   end
 
   describe "GET /competitions/1" do
+    let(:competition) { create :competition }
+
+    describe "news" do
+      it "displays the latest news" do
+        ActiveRecord::Base.record_timestamps = false
+        create :news, :content => "old news", :competition => competition, :created_at => DateTime.new(2011, 11, 12)
+        ActiveRecord::Base.record_timestamps = true
+        create :news, :content => "new news", :competition => competition
+        visit competition_path(competition)
+        within "#news" do
+          find(:xpath, ".//li[1]").text.should match("new news")
+          find(:xpath, ".//li[2]").text.should match("old news")
+          page.should have_content("2011-11-12")
+        end
+      end
+    end
+
     context "when competition is closed" do
-      before { @competition = create(:competition, :closed => true) }
+      let(:competition) { create(:competition, :closed => true) }
 
       it "doesn't display registration link" do
-        visit competition_path(@competition)
+        visit competition_path(competition)
         page.should_not have_link "Register"
       end
     end
 
     context "when competition is open" do
-      before { @competition = create(:competition, :closed => false) }
+      let(:competition) { create(:competition, :closed => false) }
 
       it "does display registration link" do
-        visit competition_path(@competition)
+        visit competition_path(competition)
         page.should have_link "Register"
       end
     end
@@ -44,7 +61,7 @@ describe "Competitions" do
 
   describe "POST /competitions" do
     before :each do
-      log_in
+      log_in :as => "organizer"
     end
 
     it "creates a new competition" do
@@ -65,7 +82,7 @@ describe "Competitions" do
 
   describe "PUT /competitions" do
     before :each do
-      @user = log_in
+      @user = log_in :as => "organizer"
     end
 
     it "updates competition name" do

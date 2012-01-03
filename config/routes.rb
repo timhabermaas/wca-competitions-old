@@ -5,7 +5,6 @@ WCACompetitions::Application.routes.draw do
     resource :session
 
     resources :competitions do
-      resources :news
       resources :registrations do
         get "compare", :on => :collection
         get "stats", :on => :collection
@@ -13,7 +12,15 @@ WCACompetitions::Application.routes.draw do
       resources :schedules
     end
     resources :events
+
+    namespace :admin do
+      resources :competitions do
+        resources :news
+      end
+    end
   end
+
+
 
   match "/:locale" => "competitions#index"
   root :to => "competitions#index"

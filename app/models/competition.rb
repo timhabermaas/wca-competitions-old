@@ -1,7 +1,7 @@
 class Competition < ActiveRecord::Base
   attr_accessible :name, :starts_at, :ends_at, :address, :details, :closed
 
-  has_many :news, :include => :translations, :order => "created_at desc"
+  has_many :news, :include => :translations, :order => "news.created_at desc"
   has_many :registrations
   has_many :registration_days, :through => :registrations
   has_many :participants, :through => :registrations

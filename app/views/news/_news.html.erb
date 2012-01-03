@@ -3,7 +3,4 @@
     <span class="date"><%=l news.created_at.to_date %>:</span>
     <%=m news.content, :lite_mode %>
   </p>
-  <% if can? :update, news %>
-    <%= link_to "Edit", edit_competition_news_path(@competition, news) %>
-  <% end %>
 </li>
