@@ -5,7 +5,7 @@ class Participant < ActiveRecord::Base
   has_many :competitions, :through => :registrations
 
   validates :first_name, :last_name, :date_of_birth, :gender, :country, :presence => true
-  validates :wca_id, :uniqueness => true
+  validates :wca_id, :uniqueness => { :allow_nil => true }
   validates :gender, :inclusion => %w(m f)
   validate :wca_id_is_existent, :unless => "wca_id.blank?"
   validate :country_is_existent, :unless => "country.blank?"
