@@ -12,20 +12,19 @@
 
   <% @competition.days.each_with_index do |day, index| %>
     <fieldset class="day day<%= index %>">
-      <h3><%= l(day, :format => :descriptive) %></h3><!-- FIXME: use legend, which behaves in some strange ways -->
-      <fieldset class="guest">
-        <%= f.input :days_as_guest, :collection => [["Guest on #{l(day, :format => :day_name)}", index]],
-                                    :as => :check_boxes,
-                                    :label => false %>
-      </fieldset>
-      <fieldset class="events">
-        <%= f.association :schedules, :collection => @competition.schedules.registerable.for(index),
-                                      :as => :check_boxes,
-                                      :label => false,
-                                      :item_wrapper_tag => :p %>
-      </fieldset>
+    <h3><%= l(day, :format => :descriptive) %></h3><!-- FIXME: use legend, which behaves in some strange ways -->
+      <%= f.simple_fields_for :registration_days, @registration.registration_days[index] do |rd_form| %>
+        <%= rd_form.input :day, :collection => [["I won't be there", ""], ["I'll be there", index]], :as => :radio, :label => false %>
+        <fieldset class="events">
+          <%= rd_form.association :schedules, :collection => @competition.schedules.registerable.for(index),
+                                              :as => :check_boxes,
+                                              :item_wrapper_tag => :p,
+                                              :label => false %>
+        </fieldset>
+      <% end %>
     </fieldset>
   <% end %>
+
 
   <%= f.submit %>
 <% end %>

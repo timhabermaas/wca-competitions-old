@@ -23,8 +23,8 @@ describe "Registrations" do
     before :each do
       @dieter = create :participant, :first_name => "Dieter", :last_name => "Müller", :wca_id => "2008MULL01"
       @peter = create :participant, :first_name => "Peter", :last_name => "Müller"
-      create :registration, :competition => @competition, :participant => @dieter, :schedules => [@schedule_3], :email => "muh@cow.com"
-      create :registration, :competition => @competition, :participant => @peter, :email => "muh2@cow.com"
+      r1 = create_registration :competition => @competition, :participant => @dieter, :schedules => [@schedule_3], :email => "muh@cow.com"
+      r2 = create_registration :competition => @competition, :participant => @peter, :guest_days => [0], :email => "muh2@cow.com"
     end
 
     it "lists only registered competitors for Munich Open" do
@@ -39,7 +39,7 @@ describe "Registrations" do
         page.should have_content("∑: 1 (1 guest)")
       end
       p = create :participant
-      create :registration, :competition => @competition, :participant => p, :days_as_guest => [0]
+      create_registration :competition => @competition, :participant => p, :guest_days => [0]
       visit competition_registrations_path(@competition)
       within("#competitors") do
         page.should have_content("∑: 1 (2 guests)")
@@ -50,15 +50,17 @@ describe "Registrations" do
   describe "POST /registrations" do
     use_vcr_cassette "requests/registrations/create", :record => :new_episodes
 
-    before :each do
-      @lunch = create :schedule, :competition => @competition, :day => 1, :registerable => false
-    end
-
     def fill_in_with_peter
       fill_in "First name", :with => "Peter"
       fill_in "Last name", :with => "Mustermann"
       choose "male"
       select "Austria", :from => "Country"
+      within(".day0") do
+        choose "I'll be there"
+      end
+      within(".day1") do
+        choose "I'll be there"
+      end
       fill_in "Email", :with => "peter@mustermann.de"
     end
 
@@ -104,18 +106,23 @@ describe "Registrations" do
       visit new_competition_registration_path(@competition)
 
       fill_in_with_peter
-      check "Guest on Sunday"
+      within(".day0") do
+        choose "I won't be there"
+      end
+      within(".day1") do
+        choose "I'll be there"
+      end
       click_on "Register"
 
       page.should_not have_content("Peter Mustermann")
-      @competition.registrations.first.days_as_guest.should == [1]
-      @competition.registrations.first.should be_guest
+      @competition.registrations.guest.should have(1).element
     end
 
     it "doesn't show events which aren't available for registration" do
+      lunch = create :schedule, :competition => @competition, :day => 1, :registerable => false
       visit new_competition_registration_path(@competition)
 
-      page.should_not have_content(@lunch.event.name)
+      page.should_not have_content(lunch.event.name)
     end
   end
 
@@ -127,9 +134,12 @@ describe "Registrations" do
     end
 
     it "changes name of Peter to Karl and removes him from 3x3x3 to add him to Pyraminx" do
-      r = create :registration, :participant => build(:participant, :first_name => "Peter"), :competition => @competition, :schedules => [@schedule_3]
+      r = create_registration :participant => build(:participant, :first_name => "Peter"), :competition => @competition, :schedules => [@schedule_3]
       visit edit_competition_registration_path(@competition, r)
       fill_in "First name", :with => "Karl"
+      within(".day0") do
+        choose "I'll be there"
+      end
       check "Pyraminx"
       uncheck "3x3x3"
       click_on "Update Registration"
@@ -149,12 +159,12 @@ describe "Registrations" do
       c4 = create :participant, :wca_id => "2003BRUC01", :first_name => "Ron"
       c5 = create :participant, :first_name => "Thomas"
       c6 = create :participant, :wca_id => "2004CHAN04", :first_name => "Shelley"
-      create :registration, :participant => c1, :competition => @competition, :schedules => [@schedule_3]
-      create :registration, :participant => c2, :competition => @competition, :schedules => [@schedule_3, @schedule_4bf]
-      create :registration, :participant => c3, :competition => @competition, :schedules => [@schedule_3, @schedule_4bf]
-      create :registration, :participant => c4, :competition => @competition, :schedules => [@schedule_py]
-      create :registration, :participant => c5, :competition => @competition, :schedules => [@schedule_3]
-      create :registration, :participant => c6, :competition => @competition, :schedules => [@schedule_py]
+      create_registration :participant => c1, :competition => @competition, :schedules => [@schedule_3]
+      create_registration :participant => c2, :competition => @competition, :schedules => [@schedule_3, @schedule_4bf]
+      create_registration :participant => c3, :competition => @competition, :schedules => [@schedule_3, @schedule_4bf]
+      create_registration :participant => c4, :competition => @competition, :schedules => [@schedule_py]
+      create_registration :participant => c5, :competition => @competition, :schedules => [@schedule_3]
+      create_registration :participant => c6, :competition => @competition, :schedules => [@schedule_py]
     end
 
     it "displays the competitors in order of their 3x3x3 averages" do
@@ -200,11 +210,11 @@ describe "Registrations" do
 
   describe "GET /registrations/stats" do
     before :each do
-      create :registration, :competition => @competition, :schedules => [@schedule_3, @schedule_4, @schedule_py]
-      create :registration, :competition => @competition, :schedules => [@schedule_3, @schedule_4, @schedule_py]
-      create :registration, :competition => @competition, :schedules => [@schedule_3, @schedule_4]
-      create :registration, :competition => @competition, :schedules => [@schedule_3, @schedule_4bf], :participant => build(:participant_with_wca_id)
-      create :registration, :competition => @competition, :days_as_guest => [1], :participant => build(:participant, :country => "France")
+      create_registration :competition => @competition, :schedules => [@schedule_3, @schedule_4, @schedule_py]
+      create_registration :competition => @competition, :schedules => [@schedule_3, @schedule_4, @schedule_py]
+      create_registration :competition => @competition, :schedules => [@schedule_3, @schedule_4]
+      create_registration :competition => @competition, :schedules => [@schedule_3, @schedule_4bf], :participant => build(:participant_with_wca_id)
+      create_registration :competition => @competition, :guest_days => [1], :participant => build(:participant, :country => "France")
 
       visit stats_competition_registrations_path(@competition)
     end

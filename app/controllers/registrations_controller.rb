@@ -25,14 +25,16 @@ class RegistrationsController < ApplicationController
     @countries = @competition.registrations.joins(:participant).group("participants.country").order("count_all DESC").count
 
     @days = {}
-    registrations = @competition.registrations.includes(:schedules)
     @competition.days.each_with_index do |day, index|
-      @days[day] = { :competitors => registrations.select { |c| c.competitor_on? index }.size,
-                     :guests => registrations.select { |c| c.guest_on? index }.size }
+      @days[day] = { :competitors => @competition.registration_days.for(index).competitor.count,
+                     :guests => @competition.registration_days.for(index).guest.count }
     end
   end
 
   def new
+    @competition.days.each_with_index do |day, index|
+      @registration.registration_days << RegistrationDay.new
+    end
   end
 
   def create

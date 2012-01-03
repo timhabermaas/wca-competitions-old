@@ -7,8 +7,8 @@ describe Registration do
     @competition = create :competition, :starts_at => Date.new(2011, 12, 10), :ends_at => Date.new(2011, 12, 11)
     @participant = create :participant, :wca_id => "2008MUHA01"
     @pyraminx = create :event, :name => "Pyraminx"
-    @schedule = create :schedule, :competition => @competition, :day => 0, :event => @pyraminx
-    @schedule2 = create :schedule, :competition => @competition, :day => 1
+    @schedule0 = create :schedule, :competition => @competition, :day => 0, :event => @pyraminx
+    @schedule1 = create :schedule, :competition => @competition, :day => 1
   end
 
   describe "validations" do
@@ -23,18 +23,18 @@ describe Registration do
       reg.errors[:participant_id].should_not be_empty
     end
 
-    it "can't be registered for an event and guest on the same day" do
-      reg = build :registration, :competition => @competition, :participant => @participant, :days_as_guest => [0], :schedules => [@schedule]
+    it "must be registered for at least one day" do
+      reg = build(:registration, :registration_days => [])
       reg.should_not be_valid
-      reg.errors[:days_as_guest].should_not be_empty
+      reg.errors[:registration_days].should_not be_empty
     end
   end
 
   describe "scopes" do
     before :each do
-      @r1 = create :registration, :competition => @competition, :days_as_guest => [0]
-      @r2 = create :registration, :competition => @competition, :schedules => [@schedule, @schedule2]
-      @r3 = create :registration, :competition => @competition, :days_as_guest => [0], :schedules => [@schedule2]
+      @r1 = create_registration :competition => @competition, :guest_days => [0]
+      @r2 = create_registration :competition => @competition, :schedules => [@schedule0, @schedule1]
+      @r3 = create_registration :competition => @competition, :guest_days => [0], :schedules => [@schedule1]
     end
 
     describe ".competitor" do
@@ -43,20 +43,12 @@ describe Registration do
         Registration.competitor.should include(@r2)
         Registration.competitor.should include(@r3)
       end
-
-      it "should be chainable" do
-        Registration.competitor.where(:competition_id => @competition.id).count.should == 2
-      end
     end
 
     describe ".guest" do
       it "fetches guests and no cubers" do
         Registration.guest.should have(1).elements
         Registration.guest.should include(@r1)
-      end
-
-      it "should be chainable" do
-        Registration.guest.where(:competition_id => @competition.id).count.should == 1
       end
     end
 
@@ -89,25 +81,12 @@ describe Registration do
     end
   end
 
-  describe "#days" do
-    it "it returns [1] if user is registered for events on day 1" do
-      registration = build :registration, :competition => @competition, :participant => @participant, :schedules => [@schedule2]
-      registration.days.should == [1]
-    end
-
-    it "returns [0, 1] if user is registered for events on day 0 and guest on day 1" do
-      registration = build :registration, :competition => @competition, :participant => @participant, :schedules => [@schedule], :days_as_guest => [1]
-      registration.days.should == [0,1]
-    end
-
-    # FIXME what about removing events?
-  end
-
   describe "#competes_in?" do
     it "returns true if the participant has registered for the event" do
-      registration = create :registration, :schedules => [@schedule]
-      registration.competes_in?(@schedule.event).should == true
-      registration.competes_in?(@schedule2.event).should == false
+      rd = create :registration_day, :schedules => [@schedule0]
+      registration = create :registration, :registration_days => [rd]
+      registration.competes_in?(@schedule0.event).should == true
+      registration.competes_in?(@schedule1.event).should == false
     end
   end
 
@@ -120,39 +99,9 @@ describe Registration do
     registration.participant.should == @participant
   end
 
-  it "converts an array of strings for days_as_guest attribute to an array of integers" do
-    registration = build :registration, :days_as_guest => ["1", "2"]
-    registration.days_as_guest.should == [1, 2]
-  end
-
-  describe "days_as_guest" do
-    it "is an empty array after initialization" do
-      Registration.new.days_as_guest.should == []
-    end
-
-    it "accepts stuff like ['', '0', ''] and makes it [0]" do
-      Registration.new(:days_as_guest => ["", "0", ""]).days_as_guest.should == [0]
-    end
-  end
-
-  describe "guest" do
-    it "is guest if the participant is guest on at least one day" do
-      registration = Registration.new
-      registration.should_not be_guest
-      registration.days_as_guest << 0
-      registration.should be_guest
-    end
-
-    it "is guest on day 0 if days_as_guest contains 0" do
-      registration = Registration.new :days_as_guest => [2, 0]
-      registration.guest_on?(0).should == true
-      registration.guest_on?(1).should == false
-    end
-  end
-
   describe "competitor" do
     it "is competitor on day 0 if he's registered for at least one event on day 0" do
-      registration = Registration.new :schedules => [@schedule]
+      registration = Registration.new :schedules => [@schedule0]
       registration.competitor_on?(0).should == true
       registration.competitor_on?(1).should == false
     end
@@ -160,7 +109,7 @@ describe Registration do
     it "is competitor if the participant is competitor on at least one day" do
       registration = Registration.new
       registration.should_not be_competitor
-      registration.schedules << @schedule
+      registration.schedules << @schedule0
       registration.should be_competitor
     end
   end

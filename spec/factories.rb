@@ -1,6 +1,14 @@
 #encoding: utf-8
 
 FactoryGirl.define do
+  sequence :name do |n|
+    "#{n}x#{n}x#{n}"
+  end
+
+  sequence :day do |n|
+    n
+  end
+
   factory :competition do
     sequence :name do |n|
       "Aachen Open 200#{n}"
@@ -12,9 +20,7 @@ FactoryGirl.define do
   end
 
   factory :event do
-    sequence :name do |n|
-      "#{n}x#{n}x#{n}"
-    end
+    name
     sequence :short_name do |n|
       n.to_s
     end
@@ -68,6 +74,12 @@ FactoryGirl.define do
   factory :registration do
     competition
     participant
+    registration_days { [RegistrationDay.new(:day => Factory.next(:day))] }
     email "muh@cow.com"
+  end
+
+  factory :registration_day do
+    registration
+    day
   end
 end

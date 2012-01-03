@@ -37,6 +37,7 @@ Spork.prefork do
     config.include FactoryGirl::Syntax::Methods
     config.include Capybara::DateSelect
     config.include Capybara::SessionHelper
+    config.include WCACompetitions::SpecHelper
     config.extend VCR::RSpec::Macros
 
     config.around(:each, :caching) do |example|

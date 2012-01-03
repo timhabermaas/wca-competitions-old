@@ -1,40 +1,24 @@
 class Registration < ActiveRecord::Base
-  belongs_to :participant#, :inverse_of => :registrations
+  belongs_to :participant
   belongs_to :competition
-  has_many :registration_schedules
-  has_many :schedules, :through => :registration_schedules
+  has_many :registration_days, :inverse_of => :registration
+  has_many :registration_day_schedules, :through => :registration_days
+  has_many :schedules, :through => :registration_day_schedules
 
-  scope :competitor, where("id IN (SELECT registration_id FROM registrations_schedules)")
-  scope :guest, where("id NOT IN (SELECT registration_id FROM registrations_schedules)")
-  scope :for_day, lambda { |day|
-    q = includes(:schedules)
-    q.where("schedules.day" => day).to_a + q.to_a.select { |r| r.days_as_guest.include? day }
-  }
+  scope :competitor, lambda { joins(:registration_day_schedules).uniq }
+  scope :guest, lambda { all.select { |r| r.registration_day_schedules.empty? } } # TODO find a query for that
+  scope :for_day, lambda { |day| joins(:registration_days).where("registration_days.day" => day) }
   scope :for_event, lambda { |event| joins(:schedules).where("schedules.event_id" => event.id) }
   scope :with_wca_id, joins(:participant).where("participants.wca_id IS NOT NULL")
 
-  serialize :days_as_guest
-
   validates :participant, :competition_id, :email, :presence => true
   validates :participant_id, :uniqueness => { :scope => :competition_id }
+  validate :registered_for_at_least_one_day
 
   accepts_nested_attributes_for :participant
+  accepts_nested_attributes_for :registration_days, :reject_if => lambda { |a| a[:day].blank? }, :allow_destroy => true
 
-  after_initialize :set_default_for_days_as_guest
   before_validation :fetch_existing_participant
-  before_validation :check_for_being_guest_and_competitor, :unless => "competition.nil?"
-
-  def days_as_guest=(days)
-    write_attribute :days_as_guest, days.reject(&:blank?).map(&:to_i)
-  end
-
-  def guest?
-    !days_as_guest.empty?
-  end
-
-  def guest_on?(day)
-    days_as_guest.include? day
-  end
 
   def competitor?
     !schedules.empty?
@@ -44,12 +28,11 @@ class Registration < ActiveRecord::Base
     schedules.map(&:day).include? day
   end
 
-  def days
-    (schedules.map(&:day) + (days_as_guest)).uniq
-  end
-
   def competes_in?(event)
-    schedules.any? { |s| s.event_id == event.id }
+    s = registration_days.map do |r|
+      r.schedules
+    end.flatten # FIXME nested has_many through fail?
+    s.any? { |s| s.event_id == event.id }
   end
 
   private
@@ -60,13 +43,7 @@ class Registration < ActiveRecord::Base
     end
   end
 
-  def check_for_being_guest_and_competitor
-    competition.days.each_with_index do |day, index|
-      errors.add(:days_as_guest, "can't compete and be a guest on the same day") if guest_on?(index) and competitor_on?(index)
-    end
-  end
-
-  def set_default_for_days_as_guest
-    self.days_as_guest ||= []
+  def registered_for_at_least_one_day
+    errors.add(:registration_days, "can't be empty") if registration_days.empty?
   end
 end
