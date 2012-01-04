@@ -4,21 +4,14 @@ WCACompetitions::Application.routes.draw do
     get "/log_out" => "sessions#destroy", :as => "logout"
     resource :session
 
+    ActiveAdmin.routes(self)
+
     resources :competitions do
       resources :registrations do
         get "compare", :on => :collection
         get "stats", :on => :collection
       end
       resources :schedules
-    end
-
-    namespace :admin do
-      resources :events
-      resources :competitions do
-        resources :news
-        resources :registrations
-        resources :schedules
-      end
     end
   end
 

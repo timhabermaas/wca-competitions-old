@@ -1,7 +1,0 @@
-<% I18n.available_locales.each do |locale| %>
-  <ul id="news">
-      <% Globalize.locale = locale # FIXME hack %>
-      <%= render :partial => "news/news", :collection => @news %>
-  </ul>
-<% end %>
-<% Globalize.locale = I18n.locale %>

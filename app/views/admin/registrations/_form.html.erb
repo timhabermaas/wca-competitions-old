@@ -1,0 +1,31 @@
+<%= simple_form_for [:admin, @competition, @registration] do |f| %>
+  <%= f.simple_fields_for :participant_attributes, @registration.participant do |participant_form| %>
+    <%= participant_form.input :id, :as => :hidden %>
+    <%= participant_form.input :wca_id, :label => "WCA ID" %>
+    <%= participant_form.input :first_name %>
+    <%= participant_form.input :last_name %>
+    <%= participant_form.input :gender, :collection => [["Male", "m"], ["Female", "f"]], :as => :radio %>
+    <%= participant_form.input :country, :collection => WCA::Country.find(:all).map { |c| [c.id, c.name] }, :include_blank => false %>
+    <%= participant_form.input :date_of_birth, :as => :date, :start_year => Date.today.year - 120, :end_year => Date.today.year %>
+  <% end %>
+
+  <%= f.input :email %>
+
+  <% @competition.days.each_with_index do |day, index| %>
+    <fieldset class="day day<%= index %>">
+    <h3><%= l(day, :format => :descriptive) %></h3><!-- FIXME: use legend, which behaves in some strange ways -->
+      <%= f.simple_fields_for :registration_days, (@registration.registration_days.select { |rd| rd.day == index }.first || RegistrationDay.new) do |rd_form| %>
+        <%= rd_form.input :day, :collection => [["I won't be there", ""], ["I'll be there", index]], :as => :radio, :label => false %>
+        <fieldset class="events">
+          <%= rd_form.association :schedules, :collection => @competition.schedules.registerable.for(index),
+                                              :as => :check_boxes,
+                                              :item_wrapper_tag => :p,
+                                              :label => false %>
+        </fieldset>
+      <% end %>
+    </fieldset>
+  <% end %>
+
+
+  <%= f.submit %>
+<% end %>

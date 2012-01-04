@@ -45,21 +45,4 @@ describe "Schedules" do
       find(:xpath, ".//h3[2]").text.should match("Saturday, December 03, 2011")
     end
   end
-
-  describe "POST /schedules" do
-    before :each do
-      user = log_in :as => "organizer"
-      @competition = create :competition, :user => user
-    end
-
-    it "successfully creates a schedule entry" do
-      visit new_admin_competition_schedule_path(@competition)
-      select "Pyraminx", :from => "Event"
-      select "0", :from => "Day"
-      fill_in_date "starts_at", :with => Time.new(2011, 1, 1, 14, 0), :model => "schedule"
-      click_button "Create Schedule"
-      page.should have_content "Successfully created schedule."
-      page.should have_content "Pyraminx"
-    end
-  end
 end

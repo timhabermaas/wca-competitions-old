@@ -29,9 +29,9 @@ describe "Admin::Events" do
       visit new_admin_event_path
       fill_in "Name", :with => "3x3x3"
       fill_in "Short name", :with => "3"
-      fill_in "WCA", :with => "333"
+      fill_in "Wca", :with => "333"
       click_on "Create Event"
-      page.should have_content("Successfully created event.")
+      page.should have_content("Event was successfully created.")
       page.should have_content("3x3x3")
     end
   end
@@ -42,7 +42,7 @@ describe "Admin::Events" do
       visit edit_admin_event_path(event)
       fill_in "Name", :with => "2x2x2"
       click_on "Update Event"
-      page.should have_content("Successfully updated event.")
+      page.should have_content("Event was successfully updated.")
       page.should have_content("2x2x2")
     end
   end

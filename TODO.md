@@ -5,6 +5,7 @@
 * pre-select appropriate country in registration form
 * add warning about rules and stuff to registrations#new
 * translate stuff
+* activeadmin is using formtastic - the rest uses simple_form
 
 Missing Features
 ================

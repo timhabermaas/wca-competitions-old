@@ -8,6 +8,12 @@ describe AdminAbility do
     subject { AdminAbility.new(organizer) }
     let(:competition) { create :competition, :user => organizer }
 
+    describe "dashboard" do
+      it "can access dashboard" do
+        should be_able_to(:index, :dashboard)
+      end
+    end
+
     describe "news" do
       it "can only create news to competitions he created" do
         should be_able_to(:create, competition.news.build)

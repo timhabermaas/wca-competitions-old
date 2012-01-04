@@ -1,6 +1,4 @@
 class SessionsController < ApplicationController
-  skip_load_and_authorize_resource
-
   def create
     user = User.find_by_email params[:email]
     if user.try(:authenticate, params[:password])
