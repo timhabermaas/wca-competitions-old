@@ -7,15 +7,4 @@ class SchedulesController < ApplicationController
     @schedules = @competition.schedules.order("starts_at").group_by(&:day)
     @schedules.default = []
   end
-
-  def new
-  end
-
-  def create
-    if @schedule.save
-      redirect_to competition_schedules_path(@competition)
-    else
-      render :new
-    end
-  end
 end

@@ -1,0 +1,32 @@
+<h2>Zeitplan</h2>
+<div id="schedule">
+  <% @competition.days.each_with_index do |day, index| %>
+    <h3><%=l day, :format => :descriptive %></h3>
+    <table class="schedule day<%= index %>">
+      <thead>
+        <tr>
+          <th>Beginn</th>
+          <th>Ende</th>
+          <th>Event</th>
+          <th>Runde</th>
+          <th>Zeitgrenze</th>
+          <th>Format</th>
+          <th>Max.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @schedules[index].each do |schedule| %>
+          <tr>
+            <td><%=l schedule.starts_at, :format => :time %></td>
+            <td><%=l(schedule.ends_at, :format => :time) unless schedule.ends_at.nil? %></td>
+            <td><%= schedule.event.name %></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

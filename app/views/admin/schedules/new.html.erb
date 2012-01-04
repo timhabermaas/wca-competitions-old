@@ -1,4 +1,4 @@
-<%= simple_form_for [@competition, @schedule] do |f| %>
+<%= simple_form_for [:admin, @competition, @schedule] do |f| %>
   <%= f.association :event, :include_blank => false %>
   <%= f.input :day, :collection => (0..(@competition.amount_of_days - 1)), :include_blank => false %>
   <%= f.input :starts_at %>

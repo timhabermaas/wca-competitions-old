@@ -53,18 +53,13 @@ describe "Schedules" do
     end
 
     it "successfully creates a schedule entry" do
-      visit new_competition_schedule_path(@competition)
+      visit new_admin_competition_schedule_path(@competition)
       select "Pyraminx", :from => "Event"
       select "0", :from => "Day"
       fill_in_date "starts_at", :with => Time.new(2011, 1, 1, 14, 0), :model => "schedule"
       click_button "Create Schedule"
-
-      within("#schedule") do
-        within(".day0 tbody") do
-          find(:xpath, ".//tr[1]").text.should match("14:00")
-          find(:xpath, ".//tr[1]").text.should match("Pyraminx")
-        end
-      end
+      page.should have_content "Successfully created schedule."
+      page.should have_content "Pyraminx"
     end
   end
 end
