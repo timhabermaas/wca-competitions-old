@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Events" do
+describe "Admin::Events" do
   before :each do
     log_in :as => "admin"
   end
