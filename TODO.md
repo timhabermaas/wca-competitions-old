@@ -6,6 +6,8 @@
 * add warning about rules and stuff to registrations#new
 * translate stuff
 * activeadmin is using formtastic - the rest uses simple_form
+* autocompletion lists old versions of people
+* cache expiration for countries could be like forever
 
 Missing Features
 ================
