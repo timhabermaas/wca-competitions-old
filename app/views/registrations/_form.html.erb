@@ -1,4 +1,4 @@
-<%= simple_form_for [@competition, @registration] do |f| %>
+<%= simple_form_for path do |f| %>
   <%= f.simple_fields_for :participant_attributes, @registration.participant do |participant_form| %>
     <%= participant_form.input :id, :as => :hidden %>
     <%= participant_form.input :wca_id, :label => "WCA ID" %>

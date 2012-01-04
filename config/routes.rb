@@ -16,12 +16,11 @@ WCACompetitions::Application.routes.draw do
       resources :events
       resources :competitions do
         resources :news
+        resources :registrations
         resources :schedules
       end
     end
   end
-
-
 
   match "/:locale" => "competitions#index"
   root :to => "competitions#index"
