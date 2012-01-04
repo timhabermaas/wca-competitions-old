@@ -57,4 +57,6 @@ WCACompetitions::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  
+  config.wca_api_url = "http://wca-api.herokuapp.com"
 end
