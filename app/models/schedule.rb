@@ -21,7 +21,7 @@ class Schedule < ActiveRecord::Base
   end
 
   def day_lies_within_competition
-    errors.add(:day, "must lie within (0, #{competition.days}") unless (0..(competition.days.to_a.size - 1)).include? day
+    errors.add(:day, "must lie within [0, #{competition.amount_of_days - 1}]") unless (0..(competition.amount_of_days - 1)).include? day
   end
 
   def fix_time_objects
