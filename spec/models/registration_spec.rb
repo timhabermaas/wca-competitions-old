@@ -99,18 +99,11 @@ describe Registration do
     registration.participant.should == @participant
   end
 
-  describe "competitor" do
+  describe "#competitor_on?" do
     it "is competitor on day 0 if he's registered for at least one event on day 0" do
       registration = Registration.new :schedules => [@schedule0]
       registration.competitor_on?(0).should == true
       registration.competitor_on?(1).should == false
-    end
-
-    it "is competitor if the participant is competitor on at least one day" do
-      registration = Registration.new
-      registration.should_not be_competitor
-      registration.schedules << @schedule0
-      registration.should be_competitor
     end
   end
 end

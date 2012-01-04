@@ -20,10 +20,6 @@ class Registration < ActiveRecord::Base
 
   before_validation :fetch_existing_participant
 
-  def competitor?
-    !schedules.empty?
-  end
-
   def competitor_on?(day)
     schedules.map(&:day).include? day
   end
