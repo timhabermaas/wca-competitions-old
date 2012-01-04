@@ -30,7 +30,7 @@ describe "Sessions" do
 
   describe "unauthorized" do
     it "redirects to log in page if user is not authorized" do
-      visit new_competition_path
+      visit new_admin_competition_path
       page.should have_content("You're not authorized to access this page!")
       page.should have_field("email")
       page.should have_field("password")
