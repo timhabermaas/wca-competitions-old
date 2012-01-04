@@ -65,7 +65,7 @@ describe "Competitions" do
     end
 
     it "creates a new competition" do
-      visit new_competition_path
+      visit new_admin_competition_path
       fill_in "Name", :with => "Aachen Open 2012"
       fill_in_date "starts_at", :with => Date.new(2012, 2, 11), :model => "competition"
       fill_in_date "ends_at", :with => Date.new(2012, 2, 13), :model => "competition"
@@ -73,10 +73,8 @@ describe "Competitions" do
       fill_in "Address", :with => "Fake Street 123\nFake City"
       check "Closed"
       click_button "Create Competition"
-      page.should have_content("Aachen Open 2012")
-      page.should have_content("Price Money")
       page.should have_content("Successfully created competition.")
-      page.should have_content("Fake Street")
+      page.should have_content("Aachen Open 2012")
     end
   end
 
@@ -87,11 +85,11 @@ describe "Competitions" do
 
     it "updates competition name" do
       competition = create :competition, :name => "Karlsruhe Open 2012", :user => @user
-      visit edit_competition_path(competition)
+      visit edit_admin_competition_path(competition)
       fill_in "Name", :with => "Aachen Open 2012"
       click_button "Update Competition"
-      page.should have_content("Aachen Open 2012")
       page.should have_content("Successfully updated competition.")
+      page.should have_content("Aachen Open 2012")
     end
   end
 end

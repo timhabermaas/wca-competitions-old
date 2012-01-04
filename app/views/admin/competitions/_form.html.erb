@@ -1,4 +1,4 @@
-<%= simple_form_for @competition do |f| %>
+<%= simple_form_for [:admin, @competition] do |f| %>
   <%= f.input :name %>
   <%= f.input :starts_at %>
   <%= f.input :ends_at %>
