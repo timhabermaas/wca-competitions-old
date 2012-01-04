@@ -19,6 +19,13 @@ describe AdminAbility do
         should be_able_to(:update, news)
         should_not be_able_to(:update, News.new)
       end
+
+      it "can only view those he created" do
+        should be_able_to(:index, competition.news.build)
+        should_not be_able_to(:index, News.new)
+        should be_able_to(:show, competition.news.build)
+        should_not be_able_to(:show, News.new)
+      end
     end
 
     describe "registrations" do

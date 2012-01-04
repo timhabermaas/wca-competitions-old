@@ -8,7 +8,7 @@ class AdminAbility
       can :manage, :all
     elsif user && user.organizer?
       can [:edit, :update], News, :user_id => user.id
-      can [:new, :create], News, :competition => { :user_id => user.id }
+      can :manage, News, :competition => { :user_id => user.id }
       can [:new, :create], Competition
       can [:edit, :update, :show], Competition, :user_id => user.id
       can [:edit, :update], Registration, :competition => { :user_id => user.id }
