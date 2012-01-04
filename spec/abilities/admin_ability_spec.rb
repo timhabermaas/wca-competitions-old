@@ -29,6 +29,11 @@ describe AdminAbility do
     end
 
     describe "competitions" do
+      it "can only have a look at his own competitions" do
+        should be_able_to(:show, competition)
+        should_not be_able_to(:show, Competition.new)
+      end
+
       it "can create them" do
         should be_able_to(:create, Competition.new)
       end

@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "Admin::News" do
   before :each do
-    @user = log_in :as => "user"
+    @user = log_in :as => "admin"
   end
 
   let(:competition) { create :competition, :user => @user }
