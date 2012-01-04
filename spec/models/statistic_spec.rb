@@ -6,11 +6,11 @@ describe Statistic do
     @competition = create :competition, :starts_at => Date.new(2011, 11, 26), :ends_at => Date.new(2011, 11, 27)
     @events = create_list :event, 5
     @schedules = []
-    @schedules[0] = create :schedule, :event => @events[0], :competition => competition, :day => 0, :registerable => true
-    @schedules[1] = create :schedule, :event => @events[1], :competition => competition, :day => 0, :registerable => true
-    @schedules[2] = create :schedule, :event => @events[2], :competition => competition, :day => 1, :registerable => true
-    @schedules[3] = create :schedule, :event => @events[3], :competition => competition, :day => 1, :registerable => true
-    @schedules[4] = create :schedule, :event => @events[4], :competition => competition, :day => 1, :registerable => true
+    @schedules[0] = create :schedule, :event => @events[0], :competition => competition, :day => 0
+    @schedules[1] = create :schedule, :event => @events[1], :competition => competition, :day => 0
+    @schedules[2] = create :schedule, :event => @events[2], :competition => competition, :day => 1
+    @schedules[3] = create :schedule, :event => @events[3], :competition => competition, :day => 1
+    @schedules[4] = create :schedule, :event => @events[4], :competition => competition, :day => 1
   end
 
   let(:competition) { create(:competition, :starts_at => Date.new(2011, 11, 26), :ends_at => Date.new(2011, 11, 27)) }

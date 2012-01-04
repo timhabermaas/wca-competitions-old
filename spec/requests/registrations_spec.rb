@@ -12,11 +12,11 @@ describe "Registrations" do
     @four_bld = create :event, :name => "4x4x4 BLD", :wca => "444bf", :short_name => "4b"
     @pyraminx = create :event, :name => "Pyraminx", :wca => "pyram", :short_name => "py"
     @megaminx = create :event, :name => "Megaminx", :wca => "minx", :short_name => "mx"
-    @schedule_3 = create :schedule, :event => @three, :competition => @competition, :day => 0, :registerable => true
-    @schedule_4 = create :schedule, :event => @four, :competition => @competition, :day => 0, :registerable => true
-    @schedule_4bf = create :schedule, :event => @four_bld, :competition => @competition, :day => 1, :registerable => true
-    @schedule_py = create :schedule, :event => @pyraminx, :competition => @competition, :day => 1, :registerable => true
-    @schedule_mx = create :schedule, :event => @megaminx, :competition => @competition, :day => 1, :registerable => true
+    @schedule_3 = create :schedule, :event => @three, :competition => @competition, :day => 0
+    @schedule_4 = create :schedule, :event => @four, :competition => @competition, :day => 0
+    @schedule_4bf = create :schedule, :event => @four_bld, :competition => @competition, :day => 1
+    @schedule_py = create :schedule, :event => @pyraminx, :competition => @competition, :day => 1
+    @schedule_mx = create :schedule, :event => @megaminx, :competition => @competition, :day => 1
   end
 
   describe "GET /registrations" do

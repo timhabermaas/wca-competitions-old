@@ -32,7 +32,7 @@ FactoryGirl.define do
     starts_at Time.utc(2010, 1, 1, 13, 0)
     ends_at Time.utc(2010, 1, 1, 13, 30)
     day 0
-    registerable true # FIXME is getting ignored
+    registerable { true } # FIXME is getting ignored
   end
 
   factory :news do
