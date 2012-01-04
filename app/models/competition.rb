@@ -10,7 +10,9 @@ class Competition < ActiveRecord::Base
       where("schedules.day" => day)
     end
   end
-  has_many :events, :through => :schedules, :uniq => true, :order => "schedules.day, schedules.starts_at" do
+  has_many :events, :through => :schedules,
+                    :select => "DISTINCT events.*, schedules.day, schedules.starts_at",
+                    :order => "schedules.day, schedules.starts_at" do
     def registerable
       where("schedules.registerable" => true) # FIXME: duplicated code
     end
