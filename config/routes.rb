@@ -11,9 +11,9 @@ WCACompetitions::Application.routes.draw do
       end
       resources :schedules
     end
-    resources :events
 
     namespace :admin do
+      resources :events
       resources :competitions do
         resources :news
       end
