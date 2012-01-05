@@ -55,6 +55,7 @@ describe "Registrations" do
       fill_in "Last name", :with => "Mustermann"
       choose "male"
       select "Austria", :from => "Country"
+      fill_in "Date of birth", :with => "1983-1-1"
       within(".day0") do
         choose "I'll be there"
       end
@@ -123,31 +124,6 @@ describe "Registrations" do
       visit new_competition_registration_path(@competition)
 
       page.should_not have_content(lunch.event.name)
-    end
-  end
-
-  describe "PUT /registrations/" do
-    use_vcr_cassette "requests/registrations/update", :record => :new_episodes
-
-    before :each do
-      log_in :as => "admin"
-    end
-
-    it "changes name of Peter to Karl and removes him from 3x3x3 to add him to Pyraminx" do
-      r = create_registration :participant => build(:participant, :first_name => "Peter"), :competition => @competition, :schedules => [@schedule_3]
-      visit edit_admin_competition_registration_path(@competition, r)
-      fill_in "First name", :with => "Karl"
-      within(".day1") do
-        choose "I'll be there"
-      end
-      check "Pyraminx"
-      uncheck "3x3x3"
-      click_on "Update Registration"
-      page.should have_content "Karl"
-      Registration.first.schedules.should include(@schedule_py)
-      Registration.first.schedules.should_not include(@schedule_3)
-      Registration.first.registration_days.guest.first.day.should == 0
-      Registration.first.registration_days.competitor.first.day.should == 1
     end
   end
 

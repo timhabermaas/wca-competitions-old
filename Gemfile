@@ -7,7 +7,7 @@ gem 'rails', '3.1.3'
 
 gem 'sqlite3'
 
-gem 'simple_form'
+gem 'formtastic'
 gem 'cancan'
 gem 'RedCloth'
 gem 'globalize3'
