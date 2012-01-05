@@ -48,5 +48,6 @@ module WCACompetitions
     config.cache_store = :memory_store
 
     config.wca_api_url = "http://localhost:9292"
+    config.available_locales = [:en, :de]
   end
 end

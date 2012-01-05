@@ -13,7 +13,7 @@
   a.active {
     background-position: 0px 0px;
   }
-  <% I18n.available_locales.each do |locale| %>
+  <% Rails.application.config.available_locales.each do |locale| %>
   a.<%= locale %> {
     background-image: image-url("flags/<%= locale %>.png");
   }

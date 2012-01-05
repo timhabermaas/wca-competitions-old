@@ -1,6 +1,6 @@
 <header id="header">
   <ul id="localeselect">
-    <% I18n.available_locales.each do |locale| %>
+    <% Rails.application.config.available_locales.each do |locale| %>
       <li>
         <%= link_to_flag locale %>
       </li>
