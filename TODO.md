@@ -8,6 +8,7 @@
 * activeadmin is using formtastic - the rest uses simple_form
 * autocompletion lists old versions of people
 * cache expiration for countries could be like forever
+* rescue from failing wca-api and display some infos
 
 Missing Features
 ================
