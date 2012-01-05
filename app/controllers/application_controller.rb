@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale
 
   rescue_from CanCan::AccessDenied do
+    session[:redirect_to] = request.url
     redirect_to login_path, :alert => "You're not authorized to access this page!"
   end
 
