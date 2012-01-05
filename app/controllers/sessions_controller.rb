@@ -3,13 +3,7 @@ class SessionsController < ApplicationController
     user = User.find_by_email params[:email]
     if user.try(:authenticate, params[:password])
       self.current_user = user
-      flash[:notice] = "Successfully logged in."
-      if session[:redirect_to]
-        redirect_to session[:redirect_to]
-        session[:redirect_to] = nil
-      else
-        redirect_to admin_dashboard_path
-      end
+      redirect_to_target_or_default admin_dashboard_path, :notice => "Successfully logged in."
     else
       flash.now.alert = "Invalid email or password!"
       render :new
