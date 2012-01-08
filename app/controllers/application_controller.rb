@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
     redirect_to login_path, :alert => "You're not authorized to access this page!"
   end
 
+  def current_competition
+    @competition ||= Competition.find_by_id params[:competition_id]
+  end
+
   private
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale

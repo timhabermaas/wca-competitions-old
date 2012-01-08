@@ -107,6 +107,11 @@ module ActiveAdmin
     def current_ability
       @current_ability ||= AdminAbility.new(current_user)
     end
+
+    def index
+      authorize! :index, current_competition.send(active_admin_config.plural_underscored_resource_name).build
+      index!
+    end
   end
 
   module Dashboards

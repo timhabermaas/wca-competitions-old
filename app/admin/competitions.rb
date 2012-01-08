@@ -1,6 +1,21 @@
 ActiveAdmin.register Competition do
-  controller.load_and_authorize_resource
-  controller.skip_load_resource :only => :index
+  controller do
+    load_and_authorize_resource :except => :index
+
+    def scoped_collection
+      end_of_association_chain.accessible_by(current_ability)
+    end
+
+    def create
+      @competition = current_user.competitions.build params[:competition]
+      create!
+    end
+
+    def index
+      authorize! :index, Competition
+      index!
+    end
+  end
 
   form do |f|
     f.inputs do
@@ -19,15 +34,8 @@ ActiveAdmin.register Competition do
       link_to competition.name, [:admin, competition]
     end
     column :registrations do |competition|
-      link_to_if current_ability.can?(:index, competition.registrations.build), "Registrations", [:admin, competition, :registrations]
+      link_to_if current_ability.can?(:index, competition.registrations.build), "Registrations", [:admin, :registrations]
     end
     default_actions
-  end
-
-  controller do
-    def create
-      @competition = current_user.competitions.build params[:competition]
-      create!
-    end
   end
 end

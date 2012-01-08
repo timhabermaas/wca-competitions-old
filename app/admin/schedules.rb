@@ -1,22 +1,27 @@
 ActiveAdmin.register Schedule do
-  belongs_to :competition
+  controller do
+    skip_load_and_authorize_resource
+    load_and_authorize_resource :competition
+    load_and_authorize_resource :through => :competition
+  end
+
+  menu :if => proc { controller.current_competition } # TODO and is allowed to view index
+
+  scope_to :current_competition
 
   form do |f|
     f.inputs do
        f.input :event, :required => true, :include_blank => false
        f.input :day, :as => :select, :collection => 0..20, :include_blank => false
        f.input :starts_at, :include_blank => false
-       f.input :ends_at, :include_blank => true, :as => :time
+       f.input :ends_at, :include_blank => true
        f.input :registerable
     end
     f.buttons
   end
 
-  controller do
-    skip_load_and_authorize_resource
-    load_and_authorize_resource :competition
-    load_and_authorize_resource :through => :competition
 
+  controller do
     before_filter :kill_date_for_blank_time, :only => [:create, :update] # FIXME formtastic is is broken...
 
     private

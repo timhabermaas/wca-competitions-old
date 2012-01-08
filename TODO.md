@@ -9,6 +9,7 @@
 * autocompletion lists old versions of people
 * cache expiration for countries could be like forever
 * rescue from failing wca-api and display some infos
+* don't depend on news#user_id for editing, use competitions#user_id instead
 
 Missing Features
 ================
