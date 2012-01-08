@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Registrations" do
+describe "Admin::Registrations" do
   describe "PUT /registrations/" do
     use_vcr_cassette "requests/registrations/update", :record => :new_episodes
 
