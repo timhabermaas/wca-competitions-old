@@ -13,6 +13,8 @@ ActiveAdmin.register Schedule do
   menu :if => proc { controller.current_competition? } # TODO and is allowed to view index
 
   scope_to :current_competition
+  scope :all, :default => true
+  scope :registerable
 
   form do |f|
     f.inputs do
