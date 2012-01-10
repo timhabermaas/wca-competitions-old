@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   def current_competition?
     current_competition
     true
-  rescue
+  rescue ActiveRecord::RecordNotFound
     false
   end
 
