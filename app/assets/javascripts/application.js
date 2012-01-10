@@ -9,3 +9,4 @@
 //= require jquery-ui
 //= require competitions
 //= require registrations
+//= require autocomplete_wca_id

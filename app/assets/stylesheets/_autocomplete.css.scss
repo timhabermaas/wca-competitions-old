@@ -1,0 +1,31 @@
+.ui-autocomplete-loading {
+  background: white image-url("ajax-loader.gif") right center no-repeat;;
+}
+
+ul.ui-autocomplete {
+  width: 270px;
+  line-height: 14pt;
+  overflow: auto;
+  max-height: 180px;
+  border: 1px solid black;
+  list-style: none;
+  padding: 0;
+
+  li {
+    line-height: 16px;
+  }
+  li a {
+    padding: 2px 5px;
+    display: block;
+  }
+  li .ui-state-hover {
+    background-color: #0a246a;
+    color: white;
+  }
+  li:nth-child(2n) {
+    background-color: #eee;
+  }
+  li:nth-child(2n+1) {
+    background-color: #fff;
+  }
+}
