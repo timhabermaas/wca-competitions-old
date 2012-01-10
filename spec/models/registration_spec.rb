@@ -43,12 +43,20 @@ describe Registration do
         Registration.competitor.should include(@r2)
         Registration.competitor.should include(@r3)
       end
+
+      it "must be chainable" do
+        Registration.competitor.where(:competition_id => @competition.id).should include(@r2)
+      end
     end
 
     describe ".guest" do
       it "fetches guests and no cubers" do
         Registration.guest.should have(1).elements
         Registration.guest.should include(@r1)
+      end
+
+      it "must be chainable" do
+        Registration.guest.where(:competition_id => @competition.id).should include(@r1)
       end
     end
 

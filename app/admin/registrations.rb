@@ -12,6 +12,9 @@ ActiveAdmin.register Registration do
   menu :if => proc { controller.current_competition? }, :label => "Competitors"
 
   scope_to :current_competition
+  scope :all, :default => true
+  scope :competitor
+  scope :guest
 
   form :partial => "form"
 
