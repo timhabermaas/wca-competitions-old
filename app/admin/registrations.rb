@@ -5,7 +5,7 @@ ActiveAdmin.register Registration do
     load_and_authorize_resource :through => :competition, :except => :index
 
     def scoped_collection
-      end_of_association_chain.accessible_by(current_ability)
+      end_of_association_chain.accessible_by(current_ability).includes(:schedules, :participant)
     end
   end
 
