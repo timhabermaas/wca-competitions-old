@@ -9,12 +9,6 @@
     <%= render @competition.news %>
   </ul>
 </article>
-<article class="description">
-  <h2>Was ist <%= @competition.name %>?</h2>
-  <p>
-    German Nationals 2011 ist eine sogenannte <em><%= link_to "Speedcubing", "http://de.wikipedia.org/wiki/Speedcubing" %> Competition</em>. Speedcubing bezeichnet dabei die Fähigkeit, einen 3x3x3 <%= link_to "Zauberwürfel", "http://de.wikipedia.org/wiki/Zauberwürfel" %> und verwandte Puzzle in möglichst kurzer Zeit zu lösen.
-  </p>
-</article>
 <article class="venue">
   <h2>Wann und wo?</h2>
   <strong class="date"><%=date_range @competition.days %></strong>
