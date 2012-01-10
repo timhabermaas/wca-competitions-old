@@ -106,4 +106,12 @@ describe Registration do
       registration.competitor_on?(1).should == false
     end
   end
+
+  describe "#guest_on?" do
+    it "is guest on day 0 if he's not registered for any event on day 0, but will come anyway" do
+      registration = Registration.new :schedules => [], :registration_days => [RegistrationDay.new(:day => 0)]
+      registration.guest_on?(0).should == true
+      registration.guest_on?(1).should == false
+    end
+  end
 end

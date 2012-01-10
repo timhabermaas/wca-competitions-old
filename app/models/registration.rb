@@ -20,8 +20,14 @@ class Registration < ActiveRecord::Base
 
   before_validation :fetch_existing_participant
 
+  delegate :full_name, :gender, :wca_id, :country, :age, :to => :participant
+
   def competitor_on?(day)
     schedules.map(&:day).include? day
+  end
+
+  def guest_on?(day)
+    registration_days.map(&:day).include? day
   end
 
   def competes_in?(event)

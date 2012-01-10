@@ -16,6 +16,16 @@ class Participant < ActiveRecord::Base
     first_name + " " + last_name
   end
 
+  def age
+    dob = date_of_birth
+    now = Time.now.utc.to_date
+    now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+  end
+
+  def has_birthday_during_competition?(competition)
+    competition.days.include? date_of_birth
+  end
+
   def fastest_average_for(event)
     WCA::Result.find(:first, :params => { :person_id => wca_id, :event_id => event.wca, :best => "average" }).try(:average) # TODO: move to WCA::Result
   end

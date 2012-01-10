@@ -51,6 +51,22 @@ describe Participant do
     participant.wca_id.should be_nil
   end
 
+  describe "has_birthday_during_competition?" do
+    let :competition do
+      competition = double("competition")
+      competition.stub(:days) { Date.new(2011, 12, 31)..Date.new(2012, 1, 2) }
+      competition
+    end
+
+    it "has birthday if his date_of_birth lies within competition dates" do
+      Participant.new(:date_of_birth => Date.new(2011, 12, 30)).has_birthday_during_competition?(competition).should == false
+      Participant.new(:date_of_birth => Date.new(2011, 12, 31)).has_birthday_during_competition?(competition).should == true
+      Participant.new(:date_of_birth => Date.new(2012, 1, 1)).has_birthday_during_competition?(competition).should == true
+      Participant.new(:date_of_birth => Date.new(2012, 1, 2)).has_birthday_during_competition?(competition).should == true
+      Participant.new(:date_of_birth => Date.new(2012, 1, 3)).has_birthday_during_competition?(competition).should == false
+    end
+  end
+
   describe "#fastest_*_for" do
     use_vcr_cassette "models/participant/fastest_for", :record => :new_episodes
 

@@ -9,9 +9,33 @@ ActiveAdmin.register Registration do
     end
   end
 
-  menu :if => proc { controller.current_competition? }
+  menu :if => proc { controller.current_competition? }, :label => "Competitors"
 
   scope_to :current_competition
 
   form :partial => "form"
+
+  index do
+    column :full_name do |registration|
+      link_to registration.full_name, admin_registration_path(registration)
+    end
+    controller.current_competition.days.each_with_index do |day, index|
+      column "#{l day, :format => :short_day_name}", :day do |registration|
+        if registration.competitor_on?(index)
+          "c"
+        elsif registration.guest_on?(index)
+          "g"
+        end
+      end
+    end
+    column :gender
+    column :wca_id
+    column :country
+    column :email
+    column :age
+    column :birthday do |registration|
+      "x" if registration.participant.has_birthday_during_competition?(controller.current_competition)
+    end
+    default_actions
+  end
 end
