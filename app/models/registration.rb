@@ -5,12 +5,14 @@ class Registration < ActiveRecord::Base
   has_many :registration_day_schedules, :through => :registration_days
   has_many :schedules, :through => :registration_day_schedules
 
-  scope :competitor, where("EXISTS
-                           (SELECT * FROM registration_days WHERE registration_days.registration_id = registrations.id
-                           AND registration_days.id IN (SELECT registration_day_id FROM registration_days_schedules))")
-  scope :guest, where("NOT EXISTS
-                      (SELECT * FROM registration_days WHERE registration_days.registration_id = registrations.id
-                      AND registration_days.id IN (SELECT registration_day_id FROM registration_days_schedules))")
+  scope :competitors, where("EXISTS
+                            (SELECT * FROM registration_days WHERE registration_days.registration_id = registrations.id
+                            AND registration_days.id IN (SELECT registration_day_id FROM registration_days_schedules))").
+                            includes(:participant, :schedules)
+  scope :guests, where("NOT EXISTS
+                       (SELECT * FROM registration_days WHERE registration_days.registration_id = registrations.id
+                       AND registration_days.id IN (SELECT registration_day_id FROM registration_days_schedules))").
+                       includes(:participant, :schedules)
   scope :for_day, lambda { |day| joins(:registration_days).where("registration_days.day" => day) }
   scope :for_event, lambda { |event| joins(:schedules).where("schedules.event_id" => event.id) }
   scope :with_wca_id, joins(:participant).where("participants.wca_id IS NOT NULL")

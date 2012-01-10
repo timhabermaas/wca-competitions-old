@@ -116,7 +116,7 @@ describe "Registrations" do
       click_on "Register"
 
       page.should_not have_content("Peter Mustermann")
-      @competition.registrations.guest.should have(1).element
+      @competition.registrations.guests.should have(1).element
     end
 
     it "doesn't show events which aren't available for registration" do

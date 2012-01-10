@@ -37,26 +37,26 @@ describe Registration do
       @r3 = create_registration :competition => @competition, :guest_days => [0], :schedules => [@schedule1]
     end
 
-    describe ".competitor" do
+    describe ".competitors" do
       it "fetches all cubers and no guests" do
-        Registration.competitor.should have(2).elements
-        Registration.competitor.should include(@r2)
-        Registration.competitor.should include(@r3)
+        Registration.competitors.should have(2).elements
+        Registration.competitors.should include(@r2)
+        Registration.competitors.should include(@r3)
       end
 
       it "must be chainable" do
-        Registration.competitor.where(:competition_id => @competition.id).should include(@r2)
+        Registration.competitors.where(:competition_id => @competition.id).should include(@r2)
       end
     end
 
-    describe ".guest" do
+    describe ".guests" do
       it "fetches guests and no cubers" do
-        Registration.guest.should have(1).elements
-        Registration.guest.should include(@r1)
+        Registration.guests.should have(1).elements
+        Registration.guests.should include(@r1)
       end
 
       it "must be chainable" do
-        Registration.guest.where(:competition_id => @competition.id).should include(@r1)
+        Registration.guests.where(:competition_id => @competition.id).should include(@r1)
       end
     end
 

@@ -4,7 +4,7 @@ class RegistrationsController < ApplicationController
 
   def index
     @events = @competition.events.registerable
-    @registrations = @registrations.includes(:participant, :schedules).competitor # TODO move to model
+    @competitors = @registrations.competitors
   end
 
   def compare

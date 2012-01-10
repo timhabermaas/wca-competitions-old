@@ -13,8 +13,8 @@ ActiveAdmin.register Registration do
 
   scope_to :current_competition
   scope :all, :default => true
-  scope :competitor
-  scope :guest
+  scope :competitors
+  scope :guests
 
   form :partial => "form"
 

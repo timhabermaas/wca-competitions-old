@@ -33,7 +33,7 @@
   </thead>
   <tfoot>
     <tr>
-      <th>&sum;: <%= @competition.registrations.competitor.size %> (<%= t :guest, :count => @competition.registrations.guest.size %>)</th>
+      <th>&sum;: <%= @competition.registrations.competitors.size %> (<%= t :guest, :count => @competition.registrations.guests.size %>)</th>
       <th>Land</th>
       <% @competition.days.each_with_index do |day, index| %>
       <th><%= @competition.registrations.for_day(index).size %></th>
@@ -44,7 +44,7 @@
     </tr>
   </tfoot>
   <tbody>
-    <% @registrations.each do |registration| %>
+    <% @competitors.each do |registration| %>
       <tr class="<%= cycle("even", "odd") %>">
         <td><%= link_to_if registration.participant.wca_id.present?, registration.participant.full_name, wca(registration.participant.wca_id) %></td>
         <td><%= registration.participant.country %></td>
