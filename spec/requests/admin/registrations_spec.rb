@@ -20,7 +20,6 @@ describe "Admin::Registrations" do
       within(".day1") do
         choose "I'll be there"
       end
-      save_and_open_page
       check "Pyraminx"
       uncheck "3x3x3"
       click_on "Update Registration"

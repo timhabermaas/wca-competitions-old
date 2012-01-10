@@ -1,6 +1,7 @@
 ActiveAdmin.register Schedule do
   controller do
     before_filter :current_competition
+    before_filter :kill_date_for_blank_time, :only => [:create, :update] # FIXME formtastic is is broken...
 
     load_and_authorize_resource :through => :competition, :except => :index
 
@@ -26,8 +27,6 @@ ActiveAdmin.register Schedule do
 
 
   controller do
-    before_filter :kill_date_for_blank_time, :only => [:create, :update] # FIXME formtastic is is broken...
-
     private
     def kill_date_for_blank_time
       if params[:schedule]["ends_at(4i)"].blank? and params[:schedule]["ends_at(5i)"].blank?
