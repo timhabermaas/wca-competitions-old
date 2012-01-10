@@ -23,3 +23,4 @@ Missing Features
 * competition logo
 * sending emails
 * participation limit for events
+* make subdomain stuff easier to use

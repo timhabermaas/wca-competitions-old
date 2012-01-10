@@ -37,7 +37,9 @@ Spork.prefork do
     config.include FactoryGirl::Syntax::Methods
     config.include Capybara::DateSelect
     config.include Capybara::SessionHelper
+    config.include Capybara::SubdomainHelper
     config.include WCACompetitions::SpecHelper
+
     config.extend VCR::RSpec::Macros
 
     config.around(:each, :caching) do |example|
@@ -55,6 +57,7 @@ Spork.prefork do
 
     config.after(:each) do
       I18n.locale = I18n.default_locale
+      Capybara.app_host = "http://example.com"
     end
   end
 end

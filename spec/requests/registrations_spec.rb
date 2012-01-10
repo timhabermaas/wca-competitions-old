@@ -28,19 +28,19 @@ describe "Registrations" do
     end
 
     it "lists only registered competitors for Munich Open" do
-      visit competition_registrations_path(@competition)
+      visit_with_subdomain(registrations_path, @competition.subdomain)
       page.should have_link("Dieter Müller", :href => "http://worldcubeassociation.org/results/p.php?i=2008MULL01") # TODO what about linking to a competitors page instead of linking to the WCA profile?
       page.should_not have_content("Peter Müller")
     end
 
     it "displays amount of competitors and guest" do
-      visit competition_registrations_path(@competition)
+      visit_with_subdomain(registrations_path, @competition.subdomain)
       within("#competitors") do
         page.should have_content("∑: 1 (1 guest)")
       end
       p = create :participant
       create_registration :competition => @competition, :participant => p, :guest_days => [0]
-      visit competition_registrations_path(@competition)
+      visit_with_subdomain(registrations_path, @competition.subdomain)
       within("#competitors") do
         page.should have_content("∑: 1 (2 guests)")
       end
@@ -66,7 +66,7 @@ describe "Registrations" do
     end
 
     it "registers Peter at the Competition" do
-      visit new_competition_registration_path(@competition)
+      visit_with_subdomain(new_registration_path, @competition.subdomain)
       fill_in_with_peter
       click_on "Register"
       page.should have_content("Successfully registered")
@@ -75,7 +75,7 @@ describe "Registrations" do
 
     it "doesn't create a new competitor if his WCA ID already exists" do
       create :participant, :first_name => "Peter", :last_name => "Mustermann", :wca_id => "2008MUST01"
-      visit new_competition_registration_path(@competition)
+      visit_with_subdomain(new_registration_path, @competition.subdomain)
       fill_in_with_peter
       fill_in "WCA ID", :with => "2008MUST01"
       click_on "Register"
@@ -85,7 +85,7 @@ describe "Registrations" do
     end
 
     it "registers Peter for 3x3x3 and 4x4x4" do
-      visit new_competition_registration_path(@competition)
+      visit_with_subdomain(new_registration_path, @competition.subdomain)
       fill_in_with_peter
       within(".day0") do
         check "3x3x3"
@@ -104,7 +104,7 @@ describe "Registrations" do
     end
 
     it "registers Peter as a guest for Sunday only and does not list him as a competitor" do
-      visit new_competition_registration_path(@competition)
+      visit_with_subdomain(new_registration_path, @competition.subdomain)
 
       fill_in_with_peter
       within(".day0") do
@@ -121,7 +121,7 @@ describe "Registrations" do
 
     it "doesn't show events which aren't available for registration" do
       lunch = create :schedule, :competition => @competition, :day => 1, :registerable => false
-      visit new_competition_registration_path(@competition)
+      visit_with_subdomain(new_registration_path, @competition.subdomain)
 
       page.should_not have_content(lunch.event.name)
     end
@@ -146,7 +146,7 @@ describe "Registrations" do
     end
 
     it "displays the competitors in order of their 3x3x3 averages" do
-      visit compare_competition_registrations_path(@competition, :event_id => @three.id)
+      visit_with_subdomain(compare_registrations_path(:event_id => @three.id), @competition.subdomain)
       within("table.compare tbody") do
         find(:xpath, ".//tr[1]").text.should match("1")
         find(:xpath, ".//tr[1]").text.should match("Basti")
@@ -166,7 +166,7 @@ describe "Registrations" do
     end
 
     it "displays 4x4 BLD properly" do
-      visit compare_competition_registrations_path(@competition, :event_id => @four_bld.id)
+      visit_with_subdomain(compare_registrations_path(:event_id => @four_bld.id), @competition.subdomain)
       within("table.compare thead") do
         page.should_not have_content("average")
       end
@@ -179,7 +179,7 @@ describe "Registrations" do
     end
 
     it "doesn't show people who don't have records for that event" do
-      visit compare_competition_registrations_path(@competition, :event_id => @pyraminx.id)
+      visit_with_subdomain(compare_registrations_path(:event_id => @pyraminx.id), @competition.subdomain)
       within("table.compare tbody") do
         page.should_not have_content("Shelley")
       end
@@ -188,7 +188,7 @@ describe "Registrations" do
 
   describe "GET /registrations/stats" do
     it "should display countires" do
-      visit stats_competition_registrations_path(@competition)
+      visit_with_subdomain(stats_registrations_path(:event_id => @three.id), @competition.subdomain)
       page.should have_content("Countries")
     end
   end

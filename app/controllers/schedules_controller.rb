@@ -1,6 +1,5 @@
 class SchedulesController < ApplicationController
-  skip_load_and_authorize_resource
-  load_and_authorize_resource :competition
+  before_filter :current_competition
   load_and_authorize_resource :schedule, :through => :competition
 
   def index

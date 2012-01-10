@@ -15,7 +15,7 @@ describe "Admin::Registrations" do
 
     it "changes name of Peter to Karl and removes him from 3x3x3 to add him to Pyraminx" do
       r = create_registration :participant => build(:participant, :first_name => "Peter"), :competition => @competition, :schedules => [@schedule_3]
-      visit edit_admin_competition_registration_path(@competition, r)
+      visit_with_subdomain edit_admin_registration_path(r), @competition.subdomain
       fill_in "First name", :with => "Karl"
       within(".day1") do
         choose "I'll be there"

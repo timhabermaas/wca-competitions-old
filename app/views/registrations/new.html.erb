@@ -1,1 +1,2 @@
-<%= render "form", :path => [@competition, @registration] %>
+<%= @registration.errors.messages %>
+<%= render "form", :path => @registration %>

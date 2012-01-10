@@ -1,6 +1,6 @@
 <%= render "header" %>
 <% if can? :create, @competition.registrations.build %>
-  <%= link_to "Register", new_competition_registration_path(@competition) %>
+  <%= link_to "Register", new_registration_path %>
 <% end %>
 
 <article id="news">

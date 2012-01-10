@@ -19,8 +19,9 @@ class Competition < ActiveRecord::Base
   end
   belongs_to :user
 
-  validates :name, :starts_at, :ends_at, :user_id, :presence => true
-  validates :name, :uniqueness => true
+  validates :name, :starts_at, :ends_at, :user_id, :subdomain, :presence => true
+  validates :name, :subdomain, :uniqueness => true
+  validates :subdomain, :length => { :within => 2..20 }
   validate :starts_before_it_ends
 
   def days

@@ -11,7 +11,7 @@ describe "Admin::Schedules" do
     end
 
     it "successfully creates a schedule entry" do
-      visit new_admin_competition_schedule_path(competition)
+      visit_with_subdomain new_admin_schedule_path, competition.subdomain
       select "Pyraminx", :from => "Event"
       select "0", :from => "Day"
       fill_in_date "starts_at", :with => Time.new(2011, 1, 1, 14, 0), :model => "schedule"
@@ -22,7 +22,7 @@ describe "Admin::Schedules" do
     end
 
     it "successfully creates a schedule entry if ends_at is left blank" do
-      visit new_admin_competition_schedule_path(competition)
+      visit_with_subdomain new_admin_schedule_path, competition.subdomain
       select "Pyraminx", :from => "Event"
       select "0", :from => "Day"
       fill_in_date "starts_at", :with => Time.new(2011, 1, 1, 14, 0), :model => "schedule"

@@ -33,13 +33,16 @@ ActiveAdmin::Dashboards.build do
   #   section "Recent User", :priority => 1
   #
   # Will render the "Recent Users" then the "Recent Posts" sections on the dashboard.
-  section "Your Competitions" do
-    table_for Competition.accessible_by(controller.current_ability).order("starts_at").collect do
-      column :name do |competition|
-        link_to(competition.name, [:admin, competition])
+  section "Recent Registrations" do
+    if controller.current_competition?
+      table_for controller.current_competition.registrations.order("created_at desc").limit(5).collect do
+        column :name do |registration|
+          link_to(registration.participant.full_name, admin_registration_path(registration))
+        end
+        column :created_at
       end
-      column :starts_at
-      column :ends_at
+    else
+
     end
   end
 end

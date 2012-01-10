@@ -10,7 +10,18 @@ describe Competition do
     it { should validate_presence_of :starts_at }
     it { should validate_presence_of :ends_at }
     it { should validate_presence_of :user_id }
+    it { should validate_presence_of :subdomain }
     it { should validate_uniqueness_of :name }
+    it { should validate_uniqueness_of :subdomain }
+
+    it "keeps subdomain size between 2 and 20 characters" do
+      competition = build(:competition, :subdomain => "1211fdlfslafsafasdfaslfksafsd")
+      competition.should_not be_valid
+      competition.errors[:subdomain].should_not be_empty
+      competition = build(:competition, :subdomain => "e")
+      competition.should_not be_valid
+      competition.errors[:subdomain].should_not be_empty
+    end
 
     it "starts before it ends" do
       competition = build(:competition, :starts_at => Date.new(2011, 2, 13),

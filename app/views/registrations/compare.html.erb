@@ -1,5 +1,5 @@
 <div id="compare">
-  <%= select :event, :id, options_for_select(@competition.events.registerable.official.map { |event| [event.name, compare_competition_registrations_url(@competition, :event_id => event.id)] }, compare_competition_registrations_url(@competition, :event_id => params[:event_id])) %>
+  <%= select :event, :id, options_for_select(@competition.events.registerable.official.map { |event| [event.name, compare_registrations_url(:event_id => event.id)] }, compare_registrations_url(:event_id => params[:event_id])) %>
 
   <table class="compare">
     <thead>

@@ -1,6 +1,5 @@
 class RegistrationsController < ApplicationController
-  skip_load_and_authorize_resource
-  load_and_authorize_resource :competition
+  before_filter :current_competition
   load_and_authorize_resource :registration, :through => :competition
 
   def index
@@ -24,7 +23,7 @@ class RegistrationsController < ApplicationController
 
   def create
     if @registration.save
-      redirect_to competition_registrations_path(@competition), :notice => "Successfully registered"
+      redirect_to registrations_path, :notice => "Successfully registered"
     else
       render :new
     end

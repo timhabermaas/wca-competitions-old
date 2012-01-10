@@ -31,7 +31,7 @@ ActiveAdmin.register Competition do
 
   index do
     column :name do |competition|
-      link_to competition.name, [:admin, competition]
+      link_to competition.name, admin_dashboard_url(:subdomain => competition.subdomain)
     end
     column :registrations do |competition|
       link_to_if current_ability.can?(:index, competition.registrations.build), "Registrations", [:admin, :registrations]

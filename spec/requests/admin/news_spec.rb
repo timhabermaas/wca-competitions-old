@@ -12,7 +12,7 @@ describe "Admin::News" do
       create :news, :competition => competition, :content => "hey!"
       I18n.locale = :de
       competition.news.first.update_attribute :content, "huhu"
-      visit admin_competition_news_index_path(competition)
+      visit_with_subdomain admin_news(competition), competition.subdomain
       page.should have_content "huhu"
       page.should have_content "hey!"
     end
@@ -20,7 +20,7 @@ describe "Admin::News" do
 
   describe "POST /news" do
     it "creates a news entry for an existing competition" do
-      visit new_admin_competition_news_path(competition)
+      visit_with_subdomain new_admin_news_path, competition.subdomain
       fill_in "Content", :with => "This competition sucks, just stay away! Seriously!"
       click_on "Create News"
       page.should have_content "News was successfully created."
@@ -28,7 +28,7 @@ describe "Admin::News" do
 
     it "creates a german entry if locale is set to german" do
       Globalize.locale = :de
-      visit new_admin_competition_news_path(competition, :locale => :de)
+      visit_with_subdomain new_admin_news_path(:locale => :de), competition.subdomain
       fill_in "Content", :with => "Deutsch"
       click_on "Create News"
       page.should have_content "Deutsch"
@@ -41,7 +41,7 @@ describe "Admin::News" do
     let (:news) { create :news, :content => "First news", :competition => competition, :user => @user }
 
     it "updates news entry" do
-      visit edit_admin_competition_news_path(competition, news)
+      visit_with_subdomain edit_admin_news_path(news), competition.subdomain
       fill_in "Content", :with => "First updated news"
       click_on "Update News"
       page.should have_content "First updated news"

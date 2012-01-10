@@ -3,10 +3,10 @@
   <h2>Speedcubing Competition</h2>
   <nav>
     <ul>
-      <% { "Informationen" => @competition,
-           "Teilnehmer"    => competition_registrations_path(@competition),
-           "Zeitplan"      => competition_schedules_path(@competition),
-           "Impressum"     => @competition
+      <% { "Informationen" => root_path(:subdomain => @competition.subdomain),
+           "Teilnehmer"    => registrations_path,
+           "Zeitplan"      => schedules_path,
+           "Impressum"     => root_path(:subdomain => @competition.subdomain)
          }.each do |title, path| %>
         <li<%= ' class="active"'.html_safe if current_page?(path)%>><%= link_to title, path %></li>
       <% end %>

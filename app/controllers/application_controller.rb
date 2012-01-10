@@ -11,7 +11,14 @@ class ApplicationController < ActionController::Base
   end
 
   def current_competition
-    @competition ||= Competition.find_by_id params[:competition_id]
+    @competition ||= Competition.find_by_subdomain! request.subdomain
+  end
+
+  def current_competition?
+    current_competition
+    true
+  rescue
+    false
   end
 
   private

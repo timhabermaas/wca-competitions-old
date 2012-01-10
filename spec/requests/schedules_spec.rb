@@ -22,7 +22,7 @@ describe "Schedules" do
     end
 
     it "displays events in order" do
-      visit competition_schedules_path(@competition)
+      visit_with_subdomain schedules_path, @competition.subdomain
 
       within("#schedule") do
         within(".day0 tbody") do
@@ -39,7 +39,7 @@ describe "Schedules" do
     end
 
     it "displays descriptive dates for each day" do
-      visit competition_schedules_path(@competition)
+      visit_with_subdomain schedules_path, @competition.subdomain
 
       find(:xpath, ".//h3[1]").text.should match("Friday, December 02, 2011")
       find(:xpath, ".//h3[2]").text.should match("Saturday, December 03, 2011")
