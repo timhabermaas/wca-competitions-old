@@ -9,7 +9,7 @@ ActiveAdmin.register News do
     end
   end
 
-  menu :if => proc { controller.current_competition? }
+  menu :if => proc { current_competition? }
 
   scope_to :current_competition
 

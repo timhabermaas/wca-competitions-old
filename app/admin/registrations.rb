@@ -9,7 +9,7 @@ ActiveAdmin.register Registration do
     end
   end
 
-  menu :if => proc { controller.current_competition? }, :label => "Competitors"
+  menu :if => proc { current_competition? }, :label => "Competitors"
 
   scope_to :current_competition
   scope :all, :default => true
@@ -22,7 +22,7 @@ ActiveAdmin.register Registration do
     column :full_name do |registration|
       link_to registration.full_name, admin_registration_path(registration)
     end
-    controller.current_competition.days.each_with_index do |day, index|
+    current_competition.days.each_with_index do |day, index|
       column "#{l day, :format => :short_day_name}", :day do |registration|
         if registration.competitor_on?(index)
           "c"
@@ -37,7 +37,7 @@ ActiveAdmin.register Registration do
     column :email
     column :age
     column :birthday do |registration|
-      "x" if registration.participant.has_birthday_during_competition?(controller.current_competition)
+      "x" if registration.participant.has_birthday_during_competition?(current_competition)
     end
     default_actions
   end

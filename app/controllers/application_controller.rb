@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   def current_competition
     @competition ||= Competition.find_by_subdomain! request.subdomain
   end
+  helper_method :current_competition
 
   def current_competition?
     current_competition
@@ -20,6 +21,7 @@ class ApplicationController < ActionController::Base
   rescue ActiveRecord::RecordNotFound
     false
   end
+  helper_method :current_competition?
 
   private
   def set_locale

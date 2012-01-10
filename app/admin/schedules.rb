@@ -10,7 +10,7 @@ ActiveAdmin.register Schedule do
     end
   end
 
-  menu :if => proc { controller.current_competition? } # TODO and is allowed to view index
+  menu :if => proc { current_competition? } # TODO and is allowed to view index
 
   scope_to :current_competition
   scope :all, :default => true
