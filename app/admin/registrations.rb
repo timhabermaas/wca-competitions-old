@@ -25,14 +25,22 @@ ActiveAdmin.register Registration do
     current_competition.days.each_with_index do |day, index|
       column "#{l day, :format => :short_day_name}", :day do |registration|
         if registration.competitor_on?(index)
-          "c"
+          image_tag "competitor.png"
         elsif registration.guest_on?(index)
-          "g"
+          image_tag "guest.png"
         end
       end
     end
-    column :gender
-    column :wca_id
+    column :gender do |registration|
+      if registration.gender == "f"
+        image_tag "female.png"
+      else
+        image_tag "male.png"
+      end
+    end
+    column :wca_id do |registration|
+      wca_link(registration.wca_id)
+    end
     column :country
     column :email
     column :age
