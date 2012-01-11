@@ -73,7 +73,9 @@ FactoryGirl.define do
     gender "m"
     country "Germany"
     factory :participant_with_wca_id do
-      wca_id "2003POCH01"
+      sequence :wca_id do |n|
+        "2003POCH#{n % 100}"
+      end
     end
   end
 

@@ -89,8 +89,16 @@ describe Registration do
 
     describe ".with_wca_id" do
       it "finds all people with WCA ID" do
-        r = create :registration, :competition => @competition, :participant => build(:participant_with_wca_id)
+        r = create :registration, :participant => build(:participant_with_wca_id)
         Registration.with_wca_id.should == [r]
+      end
+    end
+
+    describe ".without_wca_id" do
+      it "finds all people without WCA ID" do
+        r = create :registration, :participant => build(:participant_with_wca_id)
+        Registration.without_wca_id.should_not include(r)
+        Registration.without_wca_id.count.should == 3 # TODO clean up setup
       end
     end
   end

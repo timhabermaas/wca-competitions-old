@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Statistic do
   before :each do
     Participant.any_instance.stub(:country_is_existent)
+    Participant.any_instance.stub(:wca_id_is_existent)
     @competition = create :competition, :starts_at => Date.new(2011, 11, 26), :ends_at => Date.new(2011, 11, 27)
     @events = create_list :event, 5
     @schedules = []
@@ -18,16 +19,27 @@ describe Statistic do
 
   describe "#events" do
     before :each do
-      create_registration :competition => competition, :schedules => @schedules[0..2]
-      create_registration :competition => competition, :schedules => @schedules[1..4]
+      create_registration :competition => competition, :schedules => @schedules[0..2], :participant => build(:participant_with_wca_id)
+      create_registration :competition => competition, :schedules => @schedules[1..4], :participant => build(:participant_with_wca_id)
+      create_registration :competition => competition, :schedules => @schedules[0..0], :participant => build(:participant)
+      create_registration :competition => competition, :schedules => @schedules[2..2], :participant => build(:participant)
+      create_registration :competition => competition, :schedules => @schedules[2..4], :participant => build(:participant)
     end
 
-    it "has two people registered for events 1 and 2 and one for all other events" do
-      subject.events[@events[0]].should == 1
-      subject.events[@events[1]].should == 2
-      subject.events[@events[2]].should == 2
-      subject.events[@events[3]].should == 1
-      subject.events[@events[4]].should == 1
+    it "has two pros registered for events 1 and 2 and one for all other events" do
+      subject.events[@events[0]][:pros].should == 1
+      subject.events[@events[1]][:pros].should == 2
+      subject.events[@events[2]][:pros].should == 2
+      subject.events[@events[3]][:pros].should == 1
+      subject.events[@events[4]][:pros].should == 1
+    end
+
+    it "has two noobs registered for event 2 and one for 0, ..." do
+      subject.events[@events[0]][:noobs].should == 1
+      subject.events[@events[1]][:noobs].should == 0
+      subject.events[@events[2]][:noobs].should == 2
+      subject.events[@events[3]][:noobs].should == 1
+      subject.events[@events[4]][:noobs].should == 1
     end
   end
 

@@ -5,8 +5,11 @@ class Statistic
 
   def events
     result = {}
-    @competition.registrations.joins(:schedules).group("schedules.event_id").order("count_all DESC").count.each do |event_id, count|
-      result[Event.find event_id] = count
+    @competition.events.each do |event|
+      result[event] = {
+        :pros => @competition.registrations.with_wca_id.all.count { |r| r.competes_in? event },
+        :noobs => @competition.registrations.without_wca_id.all.count { |r| r.competes_in? event } # TODO sqlify it
+      }
     end
     result
   end

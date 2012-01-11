@@ -16,6 +16,7 @@ class Registration < ActiveRecord::Base
   scope :for_day, lambda { |day| joins(:registration_days).where("registration_days.day" => day) }
   scope :for_event, lambda { |event| joins(:schedules).where("schedules.event_id" => event.id) }
   scope :with_wca_id, joins(:participant).where("participants.wca_id IS NOT NULL")
+  scope :without_wca_id, joins(:participant).where("participants.wca_id IS NULL")
 
   validates :participant, :competition_id, :email, :presence => true
   validates :participant_id, :uniqueness => { :scope => :competition_id }

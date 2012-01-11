@@ -11,7 +11,8 @@
     <% @statistic.events.each do |event, count| %>
       <tr>
         <th><%= event.name %></th>
-        <td><%= count %></td>
+        <td><%= count[:pros] %></td>
+        <td><%= count[:noobs] %></td>
       </tr>
     <% end %>
   </tbody>
