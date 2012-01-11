@@ -1,5 +1,7 @@
 class Competition < ActiveRecord::Base
-  attr_accessible :name, :starts_at, :ends_at, :address, :details, :closed
+  attr_accessible :name, :starts_at, :ends_at, :address, :details, :closed, :logo
+
+  has_attached_file :logo, :styles => { :large => "500x500>", :thumb => "100x100>" }
 
   has_many :news, :include => :translations, :order => "news.created_at desc"
   has_many :registrations

@@ -2,18 +2,20 @@
 <% if can? :create, @competition.registrations.build %>
   <%= link_to "Register", new_registration_path %>
 <% end %>
-
-<article id="news">
-  <h2>News</h2>
-  <ul>
-    <%= render @competition.news %>
-  </ul>
-</article>
-<article class="venue">
-  <h2>Wann und wo?</h2>
-  <strong class="date"><%=date_range @competition.days %></strong>
-  <address><%=m @competition.address %></address>
-</article>
-<article class="details">
-  <%=m @competition.details %>
-</article>
+<section>
+  <%= image_tag @competition.logo.url(:large), :class => "logo" %>
+  <article id="news">
+    <h2>News</h2>
+    <ul>
+      <%= render @competition.news %>
+    </ul>
+  </article>
+  <article class="venue">
+    <h2>Wann und wo?</h2>
+    <strong class="date"><%=date_range @competition.days %></strong>
+    <address><%=m @competition.address %></address>
+  </article>
+  <article class="details">
+    <%=m @competition.details %>
+  </article>
+</section>

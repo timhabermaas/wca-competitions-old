@@ -17,5 +17,8 @@
 # Ignore compiled assets
 /public/assets
 
+# Ignore uploaded files
+/public/system
+
 # Ignore newrelic config file
 /config/newrelic.yml

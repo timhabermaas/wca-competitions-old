@@ -25,6 +25,7 @@ ActiveAdmin.register Competition do
       f.input :closed
       f.input :address
       f.input :details
+      f.input :logo, :as => :file
     end
     f.buttons
   end

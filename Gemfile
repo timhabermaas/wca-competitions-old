@@ -11,6 +11,7 @@ gem 'formtastic'
 gem 'cancan'
 gem 'RedCloth'
 gem 'globalize3'
+gem 'paperclip', :git => 'git://github.com/thoughtbot/paperclip.git'
 
 gem 'newrelic_rpm'
 
