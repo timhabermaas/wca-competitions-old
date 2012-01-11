@@ -8,7 +8,7 @@
   }
   a {
     background-position: 18px 0px;
-    @include replace-with-image(image-url("flags/en.png"), 18px, 12px);
+    @include replace-with-image("flags/en.png", 18px, 12px);
   }
   a.active {
     background-position: 0px 0px;
@@ -20,10 +20,10 @@
   <% end %>
 }
 
-#header .wca {
+#header a.wca {
   float: right;
   margin: 5px;
-  @include replace-with-image(image-url("wca_small.png"), 50px, 50px);
+  @include replace-with-image("wca_small.png", 50px, 50px);
 }
 
 #header:after {
