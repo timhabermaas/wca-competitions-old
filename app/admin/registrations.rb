@@ -46,7 +46,7 @@ ActiveAdmin.register Registration do
     column :email
     column :age
     column :birthday do |registration|
-      "x" if registration.participant.has_birthday_during_competition?(current_competition)
+      image_tag "birthday.png" if registration.participant.has_birthday_during_competition?(current_competition)
     end
     default_actions
   end

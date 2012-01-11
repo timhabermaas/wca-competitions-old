@@ -23,7 +23,7 @@ class Participant < ActiveRecord::Base
   end
 
   def has_birthday_during_competition?(competition)
-    competition.days.include? date_of_birth
+    competition.days.any? { |day| day.month == date_of_birth.month and day.day == date_of_birth.day }
   end
 
   def fastest_average_for(event)

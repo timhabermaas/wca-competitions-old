@@ -59,11 +59,11 @@ describe Participant do
     end
 
     it "has birthday if his date_of_birth lies within competition dates" do
-      Participant.new(:date_of_birth => Date.new(2011, 12, 30)).has_birthday_during_competition?(competition).should == false
-      Participant.new(:date_of_birth => Date.new(2011, 12, 31)).has_birthday_during_competition?(competition).should == true
-      Participant.new(:date_of_birth => Date.new(2012, 1, 1)).has_birthday_during_competition?(competition).should == true
-      Participant.new(:date_of_birth => Date.new(2012, 1, 2)).has_birthday_during_competition?(competition).should == true
-      Participant.new(:date_of_birth => Date.new(2012, 1, 3)).has_birthday_during_competition?(competition).should == false
+      Participant.new(:date_of_birth => Date.new(1980, 12, 30)).has_birthday_during_competition?(competition).should == false
+      Participant.new(:date_of_birth => Date.new(1980, 12, 31)).has_birthday_during_competition?(competition).should == true
+      Participant.new(:date_of_birth => Date.new(1980, 1, 1)).has_birthday_during_competition?(competition).should == true
+      Participant.new(:date_of_birth => Date.new(1980, 1, 2)).has_birthday_during_competition?(competition).should == true
+      Participant.new(:date_of_birth => Date.new(1980, 1, 3)).has_birthday_during_competition?(competition).should == false
     end
   end
 
