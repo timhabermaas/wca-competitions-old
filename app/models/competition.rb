@@ -23,7 +23,7 @@ class Competition < ActiveRecord::Base
 
   validates :name, :starts_at, :ends_at, :user_id, :subdomain, :presence => true
   validates :name, :subdomain, :uniqueness => true
-  validates :subdomain, :length => { :within => 2..20 }
+  validates :subdomain, :format => { :with => /^[a-zA-Z0-9]{2,20}$/ }
   validate :starts_before_it_ends
 
   def days

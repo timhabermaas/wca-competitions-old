@@ -15,10 +15,19 @@ describe Competition do
     it { should validate_uniqueness_of :subdomain }
 
     it "keeps subdomain size between 2 and 20 characters" do
-      competition = build(:competition, :subdomain => "1211fdlfslafsafasdfaslfksafsd")
+      competition = build :competition, :subdomain => "1211fdlfslafsafasdfaslfksafsd"
       competition.should_not be_valid
       competition.errors[:subdomain].should_not be_empty
-      competition = build(:competition, :subdomain => "e")
+      competition = build :competition, :subdomain => "e"
+      competition.should_not be_valid
+      competition.errors[:subdomain].should_not be_empty
+    end
+
+    it "ensures subdomain is alphanumeric only" do
+      competition = build :competition, :subdomain => "ada/2da"
+      competition.should_not be_valid
+      competition.errors[:subdomain].should_not be_empty
+      competition = build :competition, :subdomain => "ada-2da"
       competition.should_not be_valid
       competition.errors[:subdomain].should_not be_empty
     end
