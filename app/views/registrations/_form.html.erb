@@ -10,6 +10,7 @@
         <%= participant_form.input :date_of_birth, :as => :string, :start_year => Date.today.year - 120, :end_year => Date.today.year %>
       <% end %>
       <%= f.input :email %>
+      <%= f.input :comment %>
     <% end %>
 
     <% @competition.days.each_with_index do |day, index| %>

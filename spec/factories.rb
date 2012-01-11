@@ -80,6 +80,7 @@ FactoryGirl.define do
   factory :registration do
     competition
     participant
+    comment "I'll come alone :("
     registration_days { [RegistrationDay.new(:day => Factory.next(:day))] }
     email "muh@cow.com"
   end

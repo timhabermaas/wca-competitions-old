@@ -19,6 +19,7 @@ class Registration < ActiveRecord::Base
 
   validates :participant, :competition_id, :email, :presence => true
   validates :participant_id, :uniqueness => { :scope => :competition_id }
+  validates :comment, :length => { :maximum => 1000 }
   validate :registered_for_at_least_one_day
 
   accepts_nested_attributes_for :participant

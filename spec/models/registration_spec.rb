@@ -28,6 +28,12 @@ describe Registration do
       reg.should_not be_valid
       reg.errors[:registration_days].should_not be_empty
     end
+
+    it "keeps the comment under 1000 characters" do
+      reg = Registration.new(:comment => "m" * 1001)
+      reg.should_not be_valid
+      reg.errors[:comment].should_not be_empty
+    end
   end
 
   describe "scopes" do
