@@ -1,4 +1,12 @@
 module ApplicationHelper
+  def title
+    if current_competition?
+      current_competition.name
+    else
+      "WCA Competitions"
+    end
+  end
+
   def m(text, *options)
     text.nil? ? "" : RedCloth.new(text, options).to_html.html_safe
   end
