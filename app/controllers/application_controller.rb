@@ -1,13 +1,11 @@
 class ApplicationController < ActionController::Base
-  include Authentication
-
   protect_from_forgery
 
   before_filter :set_locale
 
   rescue_from CanCan::AccessDenied do
-    store_target_location
-    redirect_to login_path, :alert => "You're not authorized to access this page!"
+    session["user_return_to"] = request.url
+    redirect_to new_user_session_path, :alert => "You're not authorized to access this page!"
   end
 
   def current_competition

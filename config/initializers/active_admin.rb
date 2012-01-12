@@ -12,6 +12,13 @@ ActiveAdmin.setup do |config|
   #
   # config.site_title_link = "/"
 
+  # Set an optional image to be displayed for the header
+  # instead of a string (overrides :site_title)
+  #
+  # Note: Recommended image height is 21px to properly fit in the header
+  #
+  # config.site_title_image = "/images/logo.png"
+
   # == Default Namespace
   #
   # Set the default namespace each administration resource
@@ -28,6 +35,17 @@ ActiveAdmin.setup do |config|
   #
   # Default:
   # config.default_namespace = :admin
+  #
+  # You can customize the settings for each namespace by using
+  # a namespace block. For example, to change the site title
+  # within a namespace:
+  #
+  #   config.namespace :admin do |admin|
+  #     admin.site_title = "Custom Admin Title"
+  #   end
+  #
+  # This will ONLY change the title for the admin section. Other
+  # namespaces will continue to use the main "site_title" configuration.
 
   # == User Authentication
   #
@@ -37,7 +55,7 @@ ActiveAdmin.setup do |config|
   #
   # This setting changes the method which Active Admin calls
   # within the controller.
-  config.authentication_method = false
+  config.authentication_method = :authenticate_user!
 
 
   # == Current User
@@ -60,25 +78,30 @@ ActiveAdmin.setup do |config|
   # will call the method to return the path.
   #
   # Default:
-  config.logout_link_path = :logout_path
+  config.logout_link_path = :destroy_user_session_path
 
   # This setting changes the http method used when rendering the
   # link. For example :get, :delete, :put, etc..
   #
   # Default:
-  # config.logout_link_method = :get
+  config.logout_link_method = :delete
 
 
   # == Admin Comments
   #
-  # Admin comments allow you to add comments to any model for admin use
-  #
-  # Admin comments are enabled by default in the default
-  # namespace only. You can turn them on in a namesapce
-  # by adding them to the comments array.
+  # Admin comments allow you to add comments to any model for admin use.
+  # Admin comments are enabled by default.
   #
   # Default:
-  # config.allow_comments_in = [:admin]
+  # config.allow_comments = true
+  #
+  # You can turn them on and off for any given namespace by using a
+  # namespace config block.
+  #
+  # Eg:
+  #   config.namespace :without_comments do |without_comments|
+  #     without_comments.allow_comments = false
+  #   end
 
 
   # == Controller Filters
@@ -97,6 +120,9 @@ ActiveAdmin.setup do |config|
   #
   # To load a stylesheet:
   #   config.register_stylesheet 'my_stylesheet.css'
+  #
+  # You can provide an options hash for more control, which is passed along to stylesheet_link_tag():
+  #   config.register_stylesheet 'my_print_stylesheet.css', :media => :print
   #
   # To load a javascript file:
   #   config.register_javascript 'my_javascript.js'

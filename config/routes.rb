@@ -1,8 +1,6 @@
 WCACompetitions::Application.routes.draw do
   scope "/(:locale)", :locale => /#{Rails.application.config.available_locales.join("|")}/ do
-    get "/log_in" => "sessions#new", :as => "login"
-    get "/log_out" => "sessions#destroy", :as => "logout"
-    resource :session
+    devise_for :users, ActiveAdmin::Devise.config
 
     namespace "admin" do
       get "/" => "dashboard#index", :as => "dashboard"

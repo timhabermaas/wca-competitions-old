@@ -1,9 +1,9 @@
 class User < ActiveRecord::Base
   ROLES = ["admin", "organizer", "user"]
 
-  attr_accessible :name, :email, :password, :password_confirmation
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
 
-  has_secure_password
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me
 
   has_many :competitions
   has_many :news
