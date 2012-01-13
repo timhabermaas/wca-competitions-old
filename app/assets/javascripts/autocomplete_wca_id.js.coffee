@@ -1,6 +1,6 @@
 jQuery ->
   $("#registration_participant_attributes_wca_id").autocomplete(
-    minLength: 5
+    minLength: 4
     source: (request, response) ->
       $.ajax(
         url: "http://localhost:9292/persons/" # TODO move url
