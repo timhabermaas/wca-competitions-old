@@ -1,0 +1,40 @@
+@import "mixins";
+
+form {
+  width: 30em;
+  li.input {
+    margin-bottom: 0.8em;
+  }
+  label {
+    display: block;
+    float: left;
+    width: 9em;
+  }
+  input[type=text], input[type=email], textarea, select {
+    width: 20em;
+    padding: 1px;
+  }
+  fieldset.inputs {
+    margin-bottom: 2em;
+  }
+  fieldset.inputs > legend {
+    font-size: 150%;
+    width: 100%;
+    border-bottom: 1px dotted #E1E1E1;
+    margin-top: 1em;
+
+  }
+  fieldset.inputs > legend + * { /* Fix for Safari */
+    -webkit-margin-top-collapse: separate;
+    margin-top: 1em;
+  }
+  fieldset.choices {
+    legend {
+      display: block;
+      float: left;
+    }
+    li.choice label input {
+      margin-right: 0.5em;
+    }
+  }
+}
