@@ -1,6 +1,6 @@
 ActiveAdmin.register News do
   controller do
-    before_filter :current_competition
+    before_filter :load_competition
 
     load_and_authorize_resource :through => :competition, :except => :index
 
@@ -9,9 +9,9 @@ ActiveAdmin.register News do
     end
   end
 
-  menu :if => proc { current_competition? }
+  menu :if => proc { competition_present? }
 
-  scope_to :current_competition
+  scope_to :load_competition
 
   form do |f|
     f.inputs do
@@ -23,7 +23,7 @@ ActiveAdmin.register News do
   controller do
     def create
       @news = current_user.news.build params[:news]
-      @news.competition = current_competition
+      @news.competition = @competition
       create!
     end
   end

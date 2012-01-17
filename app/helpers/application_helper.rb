@@ -1,7 +1,7 @@
 module ApplicationHelper
   def title
-    if current_competition?
-      current_competition.name
+    if competition_present?
+      @competition.name
     else
       "WCA Competitions"
     end

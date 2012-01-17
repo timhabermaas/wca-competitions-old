@@ -135,7 +135,7 @@ module ActiveAdmin
     end
 
     def index
-      authorize! :index, current_competition.send(active_admin_config.plural_underscored_resource_name).build
+      authorize! :index, @competition.send(active_admin_config.plural_underscored_resource_name).build
       index!
     end
   end

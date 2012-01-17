@@ -1,6 +1,6 @@
 ActiveAdmin.register Registration do
   controller do
-    before_filter :current_competition
+    before_filter :load_competition
 
     load_and_authorize_resource :through => :competition, :except => :index
 
@@ -9,9 +9,9 @@ ActiveAdmin.register Registration do
     end
   end
 
-  menu :if => proc { current_competition? }, :label => "Competitors"
+  menu :if => proc { competition_present? }, :label => "Competitors"
 
-  scope_to :current_competition
+  scope_to :load_competition
   scope :all, :default => true
   scope :competitors
   scope :guests
@@ -30,7 +30,7 @@ ActiveAdmin.register Registration do
         image_tag "male.png"
       end
     end
-    current_competition.days.each_with_index do |day, index|
+    @competition.days.each_with_index do |day, index|
       column "#{l day, :format => :short_day_name}", :day do |registration|
         if registration.competitor_on?(index)
           image_tag "competitor.png"
@@ -46,7 +46,7 @@ ActiveAdmin.register Registration do
     column :email
     column :age
     column :birthday do |registration|
-      image_tag "birthday.png" if registration.participant.has_birthday_during_competition?(current_competition)
+      image_tag "birthday.png" if registration.participant.has_birthday_during_competition?(@competition)
     end
     default_actions
   end

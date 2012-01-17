@@ -1,6 +1,6 @@
 ActiveAdmin.register Schedule do
   controller do
-    before_filter :current_competition
+    before_filter :load_competition
     before_filter :kill_date_for_blank_time, :only => [:create, :update] # FIXME formtastic is is broken...
 
     load_and_authorize_resource :through => :competition, :except => :index
@@ -10,9 +10,9 @@ ActiveAdmin.register Schedule do
     end
   end
 
-  menu :if => proc { current_competition? } # TODO and is allowed to view index
+  menu :if => proc { competition_present? } # TODO and is allowed to view index
 
-  scope_to :current_competition
+  scope_to :load_competition
   scope :all, :default => true
   scope :registerable
 

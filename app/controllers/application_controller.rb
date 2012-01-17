@@ -8,18 +8,17 @@ class ApplicationController < ActionController::Base
     redirect_to new_user_session_path, :alert => "You're not authorized to access this page!"
   end
 
-  def current_competition
+  def load_competition
     @competition ||= Competition.find_by_subdomain! request.subdomain
   end
-  helper_method :current_competition
 
-  def current_competition?
-    current_competition
+  def competition_present?
+    load_competition
     true
   rescue ActiveRecord::RecordNotFound
     false
   end
-  helper_method :current_competition?
+  helper_method :competition_present?
 
   private
   def set_locale
