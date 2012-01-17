@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   def load_competition
     @competition ||= Competition.find_by_subdomain! request.subdomain
   end
+  helper_method :load_competition
 
   def competition_present?
     load_competition

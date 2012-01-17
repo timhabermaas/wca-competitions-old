@@ -35,7 +35,7 @@ ActiveAdmin::Dashboards.build do
   # Will render the "Recent Users" then the "Recent Posts" sections on the dashboard.
   section "Recent Registrations" do
     if competition_present?
-      table_for @competition.registrations.order("created_at desc").limit(5).collect do
+      table_for load_competition.registrations.order("created_at desc").limit(5).collect do
         column :name do |registration|
           link_to(registration.participant.full_name, admin_registration_path(registration))
         end

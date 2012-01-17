@@ -30,7 +30,7 @@ ActiveAdmin.register Registration do
         image_tag "male.png"
       end
     end
-    @competition.days.each_with_index do |day, index|
+    load_competition.days.each_with_index do |day, index|
       column "#{l day, :format => :short_day_name}", :day do |registration|
         if registration.competitor_on?(index)
           image_tag "competitor.png"
@@ -46,7 +46,7 @@ ActiveAdmin.register Registration do
     column :email
     column :age
     column :birthday do |registration|
-      image_tag "birthday.png" if registration.participant.has_birthday_during_competition?(@competition)
+      image_tag "birthday.png" if registration.participant.has_birthday_during_competition?(load_competition)
     end
     default_actions
   end
