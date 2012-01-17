@@ -6,6 +6,10 @@ describe Ability do
   context "open competition" do
     let(:competition) { create :competition }
 
+    it "should see registrations" do
+      should be_able_to(:index, Registration.new(:competition => competition))
+    end
+
     it "should be able to register for open competitions" do
       should be_able_to(:new, Registration.new(:competition => competition))
       should be_able_to(:create, Registration.new(:competition => competition))
